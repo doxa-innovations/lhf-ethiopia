@@ -194,6 +194,21 @@ body {
   overflow-x: hidden;
 }
 
+/* Long Afaan Oromoo / multi-word labels should wrap rather than overflow. */
+.btn {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+.text-display,
+.text-h1,
+.text-h2,
+.text-h3 {
+  overflow-wrap: anywhere;
+  word-break: normal;
+  hyphens: auto;
+}
+
 img, video {
   max-width: 100%;
   height: auto;
@@ -232,12 +247,17 @@ button { cursor: pointer; font-family: inherit; }
 
 .text-display {
   font-family: var(--font-display);
-  font-size: clamp(28px, 8vw, 52px);
+  font-size: clamp(26px, 7.5vw, 52px);
   font-weight: 500;
   line-height: 1.08;
   letter-spacing: -0.018em;
   color: rgb(var(--ink));
 }
+
+/* When the active locale is Afaan Oromoo the words run longer; scale the
+   hero display down slightly so it doesn't break onto an awkward 4th line. */
+:root[lang="om"] .text-display { font-size: clamp(24px, 6.8vw, 46px); }
+:root[lang="om"] .text-h1 { font-size: clamp(21px, 5vw, 34px); }
 
 .text-h1 {
   font-family: var(--font-display);

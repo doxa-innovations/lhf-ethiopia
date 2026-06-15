@@ -8,86 +8,243 @@ import {
   Mail,
   Phone,
   MapPin,
+  ArrowRight,
+  Send,
 } from "lucide-react";
 import { SITE } from "@/lib/content";
 import { useT } from "@/components/providers/LanguageProvider";
-import { LuthersRose } from "@/components/brand/LuthersRose";
+import { LhfMark } from "@/components/brand/LhfMark";
 
-const NAV_KEYS = [
-  { href: "/", labelKey: "nav.home" },
-  { href: "/about", labelKey: "nav.about" },
-  { href: "/publications", labelKey: "nav.publications" },
-  { href: "/podcast", labelKey: "nav.podcast" },
-  { href: "/projects", labelKey: "nav.projects" },
-  { href: "/events", labelKey: "nav.events" },
-  { href: "/stories", labelKey: "nav.stories" },
-  { href: "/news", labelKey: "nav.news" },
-  { href: "/contact", labelKey: "nav.contact" },
-  { href: "/donate", labelKey: "nav.donate" },
-] as const;
+type LinkGroup = {
+  labelKey: string;
+  fallback: string;
+  items: Array<{ href: string; labelKey: string }>;
+};
+
+/* Grouped navigation — modern footer convention: 3 short columns rather than
+   one long vertical list. Each group's heading reads via t() so it stays in
+   sync with the active locale. */
+const LINK_GROUPS: LinkGroup[] = [
+  {
+    labelKey: "footer.groupMission",
+    fallback: "Mission",
+    items: [
+      { href: "/about", labelKey: "nav.about" },
+      { href: "/stories", labelKey: "nav.stories" },
+      { href: "/news", labelKey: "nav.news" },
+    ],
+  },
+  {
+    labelKey: "footer.groupLibrary",
+    fallback: "Library",
+    items: [
+      { href: "/publications", labelKey: "nav.publications" },
+      { href: "/podcast", labelKey: "nav.podcast" },
+      { href: "/events", labelKey: "nav.events" },
+    ],
+  },
+  {
+    labelKey: "footer.groupEngage",
+    fallback: "Engage",
+    items: [
+      { href: "/projects", labelKey: "nav.projects" },
+      { href: "/contact", labelKey: "nav.contact" },
+      { href: "/donate", labelKey: "nav.donate" },
+    ],
+  },
+];
 
 export function Footer() {
   const { t } = useT();
+
+  // Safe t() that falls back to a literal when the key isn't in the dict yet
+  const tFb = (key: string, fb: string) => {
+    const v = t(key as Parameters<typeof t>[0]);
+    return v === key ? fb : v;
+  };
+
   return (
     <footer
       style={{
         background: "rgb(var(--navy-strong))",
         color: "rgba(255,255,255,0.76)",
-        paddingTop: 44,
+        paddingTop: 48,
         paddingBottom: 24,
-        marginTop: 44,
+        marginTop: 48,
       }}
     >
       <div className="container-wide">
-        <div className="footer-grid">
-          <div>
+        {/* TOP: brand + newsletter-style nudge */}
+        <div className="footer-top">
+          <div className="footer-brand">
             <div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: 10,
+                gap: 12,
                 marginBottom: 14,
               }}
             >
-              <LuthersRose size={40} variant="full" />
-              <strong
-                className="font-display"
+              <span
                 style={{
-                  color: "white",
-                  fontSize: 16,
-                  fontWeight: 600,
-                  letterSpacing: "0.01em",
-                  lineHeight: 1.2,
+                  display: "grid",
+                  placeItems: "center",
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid rgba(255,255,255,0.10)",
+                  borderRadius: 12,
+                  padding: 8,
+                  flexShrink: 0,
                 }}
               >
-                {SITE.longName}
-              </strong>
+                <LhfMark size={36} />
+              </span>
+              <span
+                style={{ display: "flex", flexDirection: "column", lineHeight: 1.15, minWidth: 0 }}
+              >
+                <strong
+                  className="font-display"
+                  style={{
+                    color: "white",
+                    fontSize: 18,
+                    fontWeight: 600,
+                    letterSpacing: "0.005em",
+                  }}
+                >
+                  {SITE.name}
+                </strong>
+                <span
+                  style={{
+                    fontSize: 10.5,
+                    fontWeight: 600,
+                    letterSpacing: "0.14em",
+                    textTransform: "uppercase",
+                    color: "rgba(255,255,255,0.5)",
+                    marginTop: 3,
+                  }}
+                >
+                  Lutheran Heritage Foundation
+                </span>
+              </span>
             </div>
-            <p style={{ fontSize: 13.5, lineHeight: 1.65 }}>{SITE.description}</p>
-            <div className="flag-stripe" style={{ marginTop: 16 }}>
+            <p
+              style={{
+                fontSize: 13.5,
+                lineHeight: 1.65,
+                maxWidth: 420,
+              }}
+            >
+              {SITE.description}
+            </p>
+            <div className="flag-stripe" style={{ marginTop: 14 }}>
               <span /> <span /> <span />
             </div>
           </div>
 
-          <div>
-            <h4 className="footer-h">{t("footer.explore")}</h4>
-            <ul
+          <div className="footer-cta">
+            <span
               style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 9,
-                listStyle: "none",
+                fontSize: 11,
+                fontWeight: 700,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "rgb(var(--teal-soft))",
               }}
             >
-              {NAV_KEYS.map((link) => (
-                <li key={link.href}>
-                  <Link href={link.href} style={{ fontSize: 13.5 }}>
-                    {t(link.labelKey as Parameters<typeof t>[0])}
-                  </Link>
-                </li>
-              ))}
-            </ul>
+              {tFb("footer.stayInTouch", "Stay in touch")}
+            </span>
+            <p
+              className="font-display"
+              style={{
+                color: "white",
+                fontSize: 18,
+                fontWeight: 500,
+                marginTop: 6,
+                lineHeight: 1.3,
+                maxWidth: 320,
+              }}
+            >
+              {tFb(
+                "footer.stayInTouchBody",
+                "Quarterly updates from the translation desk and the print floor.",
+              )}
+            </p>
+            <form
+              action={`mailto:${SITE.email}`}
+              method="post"
+              encType="text/plain"
+              style={{
+                marginTop: 12,
+                display: "flex",
+                gap: 6,
+                background: "rgba(255,255,255,0.06)",
+                border: "1px solid rgba(255,255,255,0.12)",
+                borderRadius: 10,
+                padding: 4,
+                maxWidth: 360,
+              }}
+            >
+              <input
+                type="email"
+                name="email"
+                required
+                placeholder={tFb("footer.emailPlaceholder", "you@example.com")}
+                style={{
+                  flex: 1,
+                  background: "transparent",
+                  border: "none",
+                  outline: "none",
+                  color: "white",
+                  padding: "8px 10px",
+                  fontSize: 14,
+                  fontFamily: "inherit",
+                  minWidth: 0,
+                }}
+              />
+              <button
+                type="submit"
+                className="btn btn-sm"
+                style={{
+                  background: "rgb(var(--teal))",
+                  color: "white",
+                  borderColor: "rgb(var(--teal))",
+                  padding: "6px 12px",
+                  flexShrink: 0,
+                }}
+              >
+                <Send size={13} />
+                {tFb("footer.subscribe", "Subscribe")}
+              </button>
+            </form>
           </div>
+        </div>
+
+        {/* MIDDLE: grouped links + office contact */}
+        <div className="footer-grid">
+          {LINK_GROUPS.map((group) => (
+            <div key={group.labelKey}>
+              <h4 className="footer-h">{tFb(group.labelKey, group.fallback)}</h4>
+              <ul
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 9,
+                  listStyle: "none",
+                }}
+              >
+                {group.items.map((link) => (
+                  <li key={link.href}>
+                    <Link
+                      href={link.href}
+                      className="footer-link"
+                      style={{ fontSize: 13.5 }}
+                    >
+                      {t(link.labelKey as Parameters<typeof t>[0])}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
 
           <div>
             <h4 className="footer-h">{t("footer.office")}</h4>
@@ -102,77 +259,117 @@ export function Footer() {
             >
               <li style={{ display: "flex", gap: 8, alignItems: "flex-start" }}>
                 <MapPin size={15} style={{ marginTop: 3, flexShrink: 0 }} />
-                {SITE.address}
+                <span style={{ overflowWrap: "anywhere" }}>{SITE.address}</span>
               </li>
               <li style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                <Phone size={15} />
+                <Phone size={15} style={{ flexShrink: 0 }} />
                 <a href={`tel:${SITE.phone.replace(/\s/g, "")}`}>{SITE.phone}</a>
               </li>
               <li style={{ display: "flex", gap: 8, alignItems: "center" }}>
-                <Mail size={15} />
-                <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+                <Mail size={15} style={{ flexShrink: 0 }} />
+                <a href={`mailto:${SITE.email}`} style={{ overflowWrap: "anywhere" }}>
+                  {SITE.email}
+                </a>
               </li>
             </ul>
-          </div>
 
-          <div>
-            <h4 className="footer-h">{t("footer.follow")}</h4>
-            <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
-              <a href={SITE.social.facebook} aria-label="Facebook" style={socialIcon}>
-                <Facebook size={16} />
-              </a>
-              <a href={SITE.social.instagram} aria-label="Instagram" style={socialIcon}>
-                <Instagram size={16} />
-              </a>
-              <a href={SITE.social.youtube} aria-label="YouTube" style={socialIcon}>
-                <Youtube size={16} />
-              </a>
+            <div style={{ marginTop: 18 }}>
+              <span
+                style={{
+                  fontSize: 10.5,
+                  fontWeight: 700,
+                  letterSpacing: "0.12em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.55)",
+                }}
+              >
+                {t("footer.follow")}
+              </span>
+              <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
+                <a
+                  href={SITE.social.facebook}
+                  aria-label="Facebook"
+                  style={socialIcon}
+                >
+                  <Facebook size={15} />
+                </a>
+                <a
+                  href={SITE.social.instagram}
+                  aria-label="Instagram"
+                  style={socialIcon}
+                >
+                  <Instagram size={15} />
+                </a>
+                <a
+                  href={SITE.social.youtube}
+                  aria-label="YouTube"
+                  style={socialIcon}
+                >
+                  <Youtube size={15} />
+                </a>
+              </div>
             </div>
-            <p style={{ fontSize: 12.5, color: "rgba(255,255,255,0.58)" }}>
-              {SITE.parent}
-            </p>
           </div>
         </div>
 
-        <div
-          style={{
-            marginTop: 28,
-            paddingTop: 18,
-            borderTop: "1px solid rgba(255,255,255,0.10)",
-            display: "flex",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: 10,
-            fontSize: 12.5,
-            color: "rgba(255,255,255,0.5)",
-          }}
-        >
+        {/* BOTTOM */}
+        <div className="footer-bottom">
           <span>
             © {new Date().getFullYear()} {SITE.longName}. {t("footer.rights")}
           </span>
-          <span>{t("common.free")}</span>
+          <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
+            {t("common.free")}
+            <ArrowRight size={12} style={{ color: "rgb(var(--teal-soft))" }} />
+          </span>
         </div>
       </div>
 
       <style>{`
-        .footer-grid {
+        /* Mobile-first: everything stacks */
+        .footer-top {
           display: grid;
           grid-template-columns: 1fr;
           gap: 28px;
+          padding-bottom: 28px;
+          border-bottom: 1px solid rgba(255,255,255,0.08);
+          margin-bottom: 28px;
+        }
+        .footer-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 24px;
         }
         .footer-h {
           color: white;
-          font-size: 12px;
+          font-size: 11px;
           font-weight: 700;
-          margin-bottom: 14px;
-          letter-spacing: 0.1em;
+          margin-bottom: 12px;
+          letter-spacing: 0.14em;
           text-transform: uppercase;
+        }
+        .footer-link {
+          color: rgba(255,255,255,0.76);
+          transition: color 180ms ease;
+          display: inline-block;
+        }
+        .footer-link:hover { color: white; }
+        .footer-bottom {
+          margin-top: 28px;
+          padding-top: 18px;
+          border-top: 1px solid rgba(255,255,255,0.10);
+          display: flex;
+          justify-content: space-between;
+          flex-wrap: wrap;
+          gap: 10px;
+          font-size: 12.5px;
+          color: rgba(255,255,255,0.5);
         }
         @media (min-width: 480px) {
           .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
         }
-        @media (min-width: 900px) {
-          .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1.1fr; gap: 32px; }
+        @media (min-width: 768px) {
+          .footer-top { grid-template-columns: 1.4fr 1fr; gap: 36px; align-items: start; }
+          .footer-grid { grid-template-columns: 1fr 1fr 1fr 1.3fr; gap: 32px; }
         }
       `}</style>
     </footer>
@@ -184,8 +381,9 @@ const socialIcon: React.CSSProperties = {
   height: 36,
   display: "grid",
   placeItems: "center",
-  borderRadius: 8,
-  background: "rgba(255,255,255,0.08)",
+  borderRadius: 10,
+  background: "rgba(255,255,255,0.06)",
+  border: "1px solid rgba(255,255,255,0.10)",
   color: "white",
-  transition: "background var(--duration-fast)",
+  transition: "background var(--duration-fast), border-color var(--duration-fast)",
 };

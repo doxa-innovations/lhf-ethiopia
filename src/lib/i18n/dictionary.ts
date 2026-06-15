@@ -262,6 +262,14 @@ export const dictionary = {
       office: "Office",
       follow: "Follow",
       rights: "All rights reserved.",
+      groupMission: "Mission",
+      groupLibrary: "Library",
+      groupEngage: "Engage",
+      stayInTouch: "Stay in touch",
+      stayInTouchBody:
+        "Quarterly updates from the translation desk and the print floor.",
+      emailPlaceholder: "you@example.com",
+      subscribe: "Subscribe",
     },
     languageModal: {
       title: "Choose your language",
@@ -509,6 +517,13 @@ export const dictionary = {
       office: "ቢሮ",
       follow: "ይከተሉን",
       rights: "መብቱ የተጠበቀ ነው።",
+      groupMission: "ተልዕኮ",
+      groupLibrary: "ቤተ-መጻሕፍት",
+      groupEngage: "ይሳተፉ",
+      stayInTouch: "ይገናኙ",
+      stayInTouchBody: "ከትርጉም ቡድንና ከህትመት ቦታ ሩብ-ዓመታዊ ዝመናዎች።",
+      emailPlaceholder: "you@example.com",
+      subscribe: "ይመዝገቡ",
     },
     languageModal: {
       title: "ቋንቋዎን ይምረጡ",
@@ -760,6 +775,14 @@ export const dictionary = {
       office: "Waajjira",
       follow: "Nu hordofi",
       rights: "Mirgi qabatame.",
+      groupMission: "Ergama",
+      groupLibrary: "Mana Kitaabaa",
+      groupEngage: "Hirmaadhu",
+      stayInTouch: "Walqunnamaa",
+      stayInTouchBody:
+        "Haaromsa kurmaanaa minjaala hiikaa fi lafa maxxansaa irraa.",
+      emailPlaceholder: "you@example.com",
+      subscribe: "Galmaa'i",
     },
     languageModal: {
       title: "Afaan kee filadhu",

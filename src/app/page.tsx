@@ -574,19 +574,79 @@ export default function HomePage() {
             </Button>
           </div>
 
-          <StaggerChildren className="grid-3">
-            {LANGUAGES.slice(0, 6).map((lang) => (
-              <StaggerItem key={lang.code}>
-                <Card style={{ height: "100%" }}>
-                  <CardBody>
-                    <div
+          <Reveal delay={0.05}>
+            <Card>
+              <ul
+                className="lang-list"
+                style={{ listStyle: "none", margin: 0, padding: 0 }}
+              >
+                {LANGUAGES.slice(0, 6).map((lang, i) => (
+                  <li
+                    key={lang.code}
+                    className="lang-row"
+                    style={{
+                      display: "grid",
+                      gridTemplateColumns: "minmax(0, 1.4fr) minmax(0, 1fr) auto",
+                      alignItems: "center",
+                      gap: 12,
+                      padding: "14px 18px",
+                      borderTop: i === 0 ? "none" : "1px solid rgb(var(--border))",
+                    }}
+                  >
+                    <span
                       style={{
                         display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
+                        flexDirection: "column",
+                        gap: 2,
+                        minWidth: 0,
                       }}
                     >
-                      <h3 className="text-h3">{lang.name}</h3>
+                      <span
+                        className="font-display"
+                        style={{
+                          fontSize: 18,
+                          fontWeight: 500,
+                          color: "rgb(var(--brand))",
+                          lineHeight: 1.15,
+                          overflowWrap: "anywhere",
+                        }}
+                      >
+                        {lang.native}
+                      </span>
+                      <span
+                        style={{
+                          fontSize: 12,
+                          color: "rgb(var(--ink-muted))",
+                          fontWeight: 500,
+                        }}
+                      >
+                        {lang.name}
+                      </span>
+                    </span>
+                    <span
+                      className="lang-region"
+                      style={{
+                        fontSize: 12.5,
+                        color: "rgb(var(--ink-faint))",
+                        minWidth: 0,
+                        overflow: "hidden",
+                        textOverflow: "ellipsis",
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {lang.region}
+                    </span>
+                    <span style={{ display: "inline-flex", gap: 8, alignItems: "center", flexShrink: 0 }}>
+                      <span
+                        style={{
+                          fontSize: 11.5,
+                          fontWeight: 600,
+                          color: "rgb(var(--ink-faint))",
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {lang.titles}
+                      </span>
                       <Badge
                         tone={
                           lang.status === "Published"
@@ -598,42 +658,20 @@ export default function HomePage() {
                       >
                         {lang.status}
                       </Badge>
-                    </div>
-                    <p
-                      className="font-display"
-                      style={{
-                        marginTop: 8,
-                        fontSize: 24,
-                        fontWeight: 500,
-                        color: "rgb(var(--brand))",
-                        letterSpacing: "-0.01em",
-                      }}
-                    >
-                      {lang.native}
-                    </p>
-                    <div
-                      style={{
-                        marginTop: 14,
-                        paddingTop: 12,
-                        borderTop: "1px solid rgb(var(--border))",
-                        display: "flex",
-                        justifyContent: "space-between",
-                        fontSize: 12.5,
-                        color: "rgb(var(--ink-faint))",
-                      }}
-                    >
-                      <span>{lang.region}</span>
-                      <span>
-                        {lang.titles}{" "}
-                        {lang.titles === 1 ? "title" : "titles"}
-                      </span>
-                    </div>
-                  </CardBody>
-                </Card>
-              </StaggerItem>
-            ))}
-          </StaggerChildren>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </Card>
+          </Reveal>
         </div>
+
+        <style>{`
+          @media (max-width: 600px) {
+            .lang-row { grid-template-columns: minmax(0, 1fr) auto !important; }
+            .lang-region { display: none !important; }
+          }
+        `}</style>
       </section>
 
       {/* ===================== EVENTS TEASER ===================== */}

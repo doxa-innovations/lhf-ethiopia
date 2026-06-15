@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Button } from "@/components/ui";
 import { LanguageSwitcher } from "@/components/providers/LanguageSwitcher";
 import { useT } from "@/components/providers/LanguageProvider";
-import { LuthersRose } from "@/components/brand/LuthersRose";
+import { LhfMark } from "@/components/brand/LhfMark";
 
 const NAV_KEYS = [
   { href: "/", labelKey: "nav.home" },
@@ -29,7 +29,7 @@ export function Navbar() {
   const { t } = useT();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    const onScroll = () => setScrolled(window.scrollY > 4);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -44,213 +44,204 @@ export function Navbar() {
       className="site-nav"
       style={{
         position: "fixed",
-        top: scrolled ? 10 : 14,
+        top: 0,
         left: 0,
         right: 0,
         zIndex: 50,
-        transition: "top 240ms ease",
-        pointerEvents: "none",
+        background: scrolled
+          ? "rgba(255, 255, 255, 0.92)"
+          : "rgba(255, 255, 255, 0.78)",
+        backdropFilter: "saturate(160%) blur(16px)",
+        WebkitBackdropFilter: "saturate(160%) blur(16px)",
+        borderBottom: scrolled
+          ? "1px solid rgb(var(--border))"
+          : "1px solid transparent",
+        transition: "background 240ms ease, border-color 240ms ease",
       }}
     >
       <div
-        className="container-wide"
+        className="container-wide nav-shell"
         style={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "center",
-          gap: 10,
-          pointerEvents: "none",
+          justifyContent: "space-between",
+          height: scrolled ? 60 : 68,
+          gap: 12,
+          transition: "height 240ms ease",
+          minWidth: 0,
         }}
       >
-        <div
-          className="nav-pill"
+        <Link
+          href="/"
           style={{
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
             gap: 10,
-            padding: "6px 6px 6px 14px",
-            width: "100%",
-            maxWidth: 1180,
-            pointerEvents: "auto",
-            transition: "padding 240ms ease",
+            color: "rgb(var(--ink))",
+            flexShrink: 0,
+            minWidth: 0,
           }}
         >
-          <Link
-            href="/"
+          <motion.span
+            aria-hidden
+            initial={{ rotate: 0 }}
+            whileHover={{ rotate: -5 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+            style={{ display: "grid", placeItems: "center", flexShrink: 0 }}
+          >
+            <LhfMark size={32} />
+          </motion.span>
+          <span
+            className="nav-wordmark"
             style={{
               display: "flex",
-              alignItems: "center",
-              gap: 9,
-              color: "rgb(var(--ink))",
-              flexShrink: 0,
+              flexDirection: "column",
+              lineHeight: 1.04,
               minWidth: 0,
             }}
           >
-            <motion.span
-              aria-hidden
-              initial={{ rotate: 0 }}
-              whileHover={{ rotate: -6 }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              style={{ display: "grid", placeItems: "center", flexShrink: 0 }}
-            >
-              <LuthersRose size={30} variant="full" />
-            </motion.span>
             <span
-              className="nav-wordmark"
+              className="font-display nav-wordmark-main"
               style={{
-                display: "flex",
-                flexDirection: "column",
-                lineHeight: 1.02,
-                minWidth: 0,
+                fontSize: 15.5,
+                fontWeight: 600,
+                letterSpacing: "0.005em",
+                color: "rgb(var(--navy))",
+                whiteSpace: "nowrap",
               }}
             >
-              <span
-                className="font-display nav-wordmark-main"
-                style={{
-                  fontSize: 15,
-                  fontWeight: 600,
-                  letterSpacing: "0.01em",
-                  color: "rgb(var(--navy))",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                LHF Ethiopia
-              </span>
-              <span
-                className="nav-wordmark-sub"
-                style={{
-                  fontSize: 9.5,
-                  fontWeight: 600,
-                  letterSpacing: "0.14em",
-                  textTransform: "uppercase",
-                  color: "rgb(var(--ink-faint))",
-                  marginTop: 1,
-                  whiteSpace: "nowrap",
-                }}
-              >
-                Lutheran Heritage Foundation
-              </span>
+              LHF Ethiopia
             </span>
-          </Link>
-
-          <nav
-            className="nav-desktop"
-            style={{
-              display: "none",
-              alignItems: "center",
-              gap: 2,
-              flex: 1,
-              justifyContent: "center",
-            }}
-          >
-            {NAV_KEYS.map((link) => {
-              const active =
-                link.href === "/"
-                  ? pathname === "/"
-                  : pathname?.startsWith(link.href);
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  style={{
-                    position: "relative",
-                    padding: "8px 11px",
-                    fontSize: 13,
-                    fontWeight: 500,
-                    color: active
-                      ? "rgb(var(--ink))"
-                      : "rgb(var(--ink-muted))",
-                    borderRadius: 999,
-                    transition: "color 180ms ease",
-                  }}
-                >
-                  {t(link.labelKey as Parameters<typeof t>[0])}
-                  {active ? (
-                    <motion.span
-                      layoutId="nav-underline"
-                      style={{
-                        position: "absolute",
-                        left: 11,
-                        right: 11,
-                        bottom: 2,
-                        height: 1.5,
-                        borderRadius: 999,
-                        background: "rgb(var(--brand))",
-                      }}
-                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                    />
-                  ) : null}
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div
-            className="nav-cta"
-            style={{
-              display: "flex",
-              gap: 6,
-              alignItems: "center",
-              flexShrink: 0,
-            }}
-          >
-            <LanguageSwitcher variant="light" />
-            <Link
-              href="/donate"
-              className="btn btn-teal btn-sm nav-donate"
-              style={{ whiteSpace: "nowrap" }}
+            <span
+              className="nav-wordmark-sub"
+              style={{
+                fontSize: 9.5,
+                fontWeight: 600,
+                letterSpacing: "0.12em",
+                textTransform: "uppercase",
+                color: "rgb(var(--ink-faint))",
+                marginTop: 1,
+                whiteSpace: "nowrap",
+              }}
             >
-              {t("nav.donate")}
-            </Link>
-          </div>
+              Lutheran Heritage Foundation
+            </span>
+          </span>
+        </Link>
 
-          <button
-            aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((v) => !v)}
-            className="nav-burger"
-            style={{
-              width: 40,
-              height: 40,
-              display: "inline-flex",
-              alignItems: "center",
-              justifyContent: "center",
-              background: "transparent",
-              border: "none",
-              color: "rgb(var(--ink))",
-              padding: 0,
-              flexShrink: 0,
-              borderRadius: 999,
-            }}
+        <nav
+          className="nav-desktop"
+          style={{
+            display: "none",
+            alignItems: "center",
+            gap: 0,
+          }}
+        >
+          {NAV_KEYS.map((link) => {
+            const active =
+              link.href === "/"
+                ? pathname === "/"
+                : pathname?.startsWith(link.href);
+            return (
+              <Link
+                key={link.href}
+                href={link.href}
+                style={{
+                  position: "relative",
+                  padding: "9px 11px",
+                  fontSize: 13,
+                  fontWeight: 500,
+                  color: active
+                    ? "rgb(var(--ink))"
+                    : "rgb(var(--ink-muted))",
+                  borderRadius: 8,
+                  transition: "color 180ms ease",
+                  whiteSpace: "nowrap",
+                }}
+              >
+                {t(link.labelKey as Parameters<typeof t>[0])}
+                {active ? (
+                  <motion.span
+                    layoutId="nav-underline"
+                    style={{
+                      position: "absolute",
+                      left: 11,
+                      right: 11,
+                      bottom: 3,
+                      height: 1.5,
+                      borderRadius: 999,
+                      background: "rgb(var(--brand))",
+                    }}
+                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  />
+                ) : null}
+              </Link>
+            );
+          })}
+        </nav>
+
+        <div
+          className="nav-cta"
+          style={{
+            display: "none",
+            gap: 8,
+            alignItems: "center",
+            flexShrink: 0,
+          }}
+        >
+          <LanguageSwitcher variant="light" />
+          <Link
+            href="/donate"
+            className="btn btn-teal btn-sm"
+            style={{ whiteSpace: "nowrap" }}
           >
-            {open ? <X size={20} /> : <Menu size={20} />}
-          </button>
+            {t("nav.donate")}
+          </Link>
         </div>
+
+        <button
+          aria-label={open ? "Close menu" : "Open menu"}
+          onClick={() => setOpen((v) => !v)}
+          className="nav-burger"
+          style={{
+            width: 40,
+            height: 40,
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            background: "transparent",
+            border: "none",
+            color: "rgb(var(--ink))",
+            padding: 0,
+            flexShrink: 0,
+            borderRadius: 999,
+          }}
+        >
+          {open ? <X size={20} /> : <Menu size={20} />}
+        </button>
       </div>
 
       <AnimatePresence>
         {open ? (
           <motion.div
-            initial={{ opacity: 0, y: -8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.26, ease: [0.16, 1, 0.3, 1] }}
             style={{
-              pointerEvents: "auto",
-              margin: "10px 12px 0",
-              borderRadius: 18,
-              background: "rgba(255, 255, 255, 0.96)",
+              overflow: "hidden",
+              background: "rgba(255, 255, 255, 0.98)",
               backdropFilter: "blur(20px) saturate(160%)",
               WebkitBackdropFilter: "blur(20px) saturate(160%)",
-              border: "1px solid rgb(var(--border))",
-              boxShadow: "var(--shadow-pill)",
+              borderTop: "1px solid rgb(var(--border))",
             }}
           >
             <nav
+              className="container-wide"
               style={{
                 display: "flex",
                 flexDirection: "column",
-                padding: 8,
+                padding: "8px 16px 20px",
               }}
             >
               {NAV_KEYS.map((link) => {
@@ -263,7 +254,7 @@ export function Navbar() {
                     key={link.href}
                     href={link.href}
                     style={{
-                      padding: "14px 14px",
+                      padding: "13px 4px",
                       fontWeight: 500,
                       fontSize: 16,
                       minHeight: 48,
@@ -272,7 +263,7 @@ export function Navbar() {
                       color: active
                         ? "rgb(var(--brand))"
                         : "rgb(var(--ink))",
-                      borderRadius: 10,
+                      borderBottom: "1px solid rgb(var(--border) / 0.6)",
                     }}
                   >
                     {t(link.labelKey as Parameters<typeof t>[0])}
@@ -282,20 +273,16 @@ export function Navbar() {
               <div
                 style={{
                   display: "flex",
-                  gap: 8,
-                  padding: 10,
-                  marginTop: 4,
-                  borderTop: "1px solid rgb(var(--border))",
+                  gap: 12,
+                  paddingTop: 16,
+                  marginTop: 6,
                   alignItems: "center",
                   justifyContent: "space-between",
+                  flexWrap: "wrap",
                 }}
               >
                 <LanguageSwitcher variant="light" />
-                <Button
-                  href="/donate"
-                  variant="teal"
-                  size="sm"
-                >
+                <Button href="/donate" variant="teal" size="sm">
                   {t("nav.donate")}
                 </Button>
               </div>
@@ -305,23 +292,17 @@ export function Navbar() {
       </AnimatePresence>
 
       <style>{`
-        /* Mobile-first: hide wordmark subtitle on the smallest screens */
         .nav-wordmark-sub { display: none; }
 
         @media (min-width: 380px) {
           .nav-wordmark-sub { display: inline; }
         }
 
-        /* Show desktop nav from xl up; hide burger */
+        /* Show full desktop nav from xl up, hide burger */
         @media (min-width: 1180px) {
           .nav-desktop { display: flex !important; }
           .nav-cta { display: flex !important; }
           .nav-burger { display: none !important; }
-        }
-
-        /* Hide language switcher on the tightest phones; burger still works */
-        @media (max-width: 1179px) {
-          .nav-cta { display: none !important; }
         }
       `}</style>
     </header>
