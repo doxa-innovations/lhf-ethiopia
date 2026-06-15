@@ -34,7 +34,7 @@ export function NewsPageClient() {
               <StaggerItem key={post.slug}>
                 <Card>
                   <CardBody>
-                    <div className="news-row" style={{ display: "grid", gridTemplateColumns: "170px 1fr", gap: 22, alignItems: "flex-start" }}>
+                    <div className="news-row" style={{ display: "grid", gridTemplateColumns: "1fr", gap: 12, alignItems: "flex-start" }}>
                       <div>
                         <Badge tone="cream">{post.tag}</Badge>
                         <div style={{ marginTop: 12, fontSize: 12, color: "rgb(var(--ink-faint))", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
@@ -53,7 +53,7 @@ export function NewsPageClient() {
           </StaggerChildren>
         </div>
 
-        <style>{`@media (max-width: 720px) { .news-row { grid-template-columns: 1fr !important; gap: 12px !important; } }`}</style>
+        <style>{`@media (min-width: 720px) { .news-row { grid-template-columns: 170px 1fr !important; gap: 22px !important; } }`}</style>
       </section>
     </>
   );

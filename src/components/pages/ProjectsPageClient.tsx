@@ -57,7 +57,7 @@ export function ProjectsPageClient() {
                 <StaggerItem key={p.title}>
                   <Card>
                     <CardBody>
-                      <div className="project-row" style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: 32 }}>
+                      <div className="project-row" style={{ display: "grid", gridTemplateColumns: "1fr", gap: 20 }}>
                         <div>
                           <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
                             <Badge>{t("common.open")}</Badge>
@@ -103,7 +103,7 @@ export function ProjectsPageClient() {
           </StaggerChildren>
         </div>
 
-        <style>{`@media (max-width: 900px) { .project-row { grid-template-columns: 1fr !important; } }`}</style>
+        <style>{`@media (min-width: 900px) { .project-row { grid-template-columns: 1.6fr 1fr !important; gap: 32px !important; } }`}</style>
       </section>
     </>
   );

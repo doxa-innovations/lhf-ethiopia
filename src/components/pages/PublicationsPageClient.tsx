@@ -121,7 +121,7 @@ export function PublicationsPageClient() {
             >
               <div
                 style={{
-                  display: "grid",
+                  display: "none",
                   gridTemplateColumns: "2fr 1fr 1fr 1fr",
                   gap: 16,
                   padding: "14px 22px",
@@ -145,9 +145,9 @@ export function PublicationsPageClient() {
                   key={idx}
                   style={{
                     display: "grid",
-                    gridTemplateColumns: "2fr 1fr 1fr 1fr",
-                    gap: 16,
-                    padding: "18px 22px",
+                    gridTemplateColumns: "1fr",
+                    gap: 10,
+                    padding: "16px 18px",
                     borderTop: "1px solid rgb(var(--border))",
                     alignItems: "center",
                   }}
@@ -201,10 +201,9 @@ export function PublicationsPageClient() {
         </div>
 
         <style>{`
-          @media (max-width: 768px) {
-            .pub-row { grid-template-columns: 1fr !important; padding: 14px !important; }
-            .pub-row > span:nth-child(n+2) { font-size: 13px; }
-            .pub-header { display: none !important; }
+          @media (min-width: 768px) {
+            .pub-row { grid-template-columns: 2fr 1fr 1fr 1fr !important; gap: 16px !important; padding: 18px 22px !important; }
+            .pub-header { display: grid !important; }
           }
         `}</style>
       </section>

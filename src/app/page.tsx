@@ -63,13 +63,13 @@ export default function HomePage() {
         <div className="hero-overlay" />
 
         <div
-          className="container-wide"
+          className="container-wide hero-row"
           style={{
             position: "relative",
             zIndex: 2,
             display: "grid",
-            gridTemplateColumns: "1.15fr 1fr",
-            gap: 48,
+            gridTemplateColumns: "1fr",
+            gap: 28,
             alignItems: "center",
           }}
         >
@@ -217,8 +217,10 @@ export default function HomePage() {
         </div>
 
         <style>{`
-          @media (max-width: 1024px) {
-            .hero-collage { display: none !important; }
+          .hero-collage { display: none; }
+          @media (min-width: 1024px) {
+            .hero-row { grid-template-columns: 1.15fr 1fr !important; gap: 48px !important; }
+            .hero-collage { display: block !important; }
           }
         `}</style>
       </section>
@@ -337,8 +339,8 @@ export default function HomePage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1.2fr",
-              gap: 48,
+              gridTemplateColumns: "1fr",
+              gap: 28,
               alignItems: "center",
             }}
             className="podcast-grid"
@@ -502,8 +504,8 @@ export default function HomePage() {
         </div>
 
         <style>{`
-          @media (max-width: 900px) {
-            .podcast-grid { grid-template-columns: 1fr !important; gap: 28px !important; }
+          @media (min-width: 900px) {
+            .podcast-grid { grid-template-columns: 1fr 1.2fr !important; gap: 48px !important; }
           }
         `}</style>
       </section>
@@ -729,8 +731,8 @@ export default function HomePage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1.4fr",
-              gap: 40,
+              gridTemplateColumns: "1fr",
+              gap: 24,
               alignItems: "center",
             }}
             className="stories-teaser"
@@ -815,8 +817,8 @@ export default function HomePage() {
         </div>
 
         <style>{`
-          @media (max-width: 900px) {
-            .stories-teaser { grid-template-columns: 1fr !important; gap: 24px !important; }
+          @media (min-width: 900px) {
+            .stories-teaser { grid-template-columns: 1fr 1.4fr !important; gap: 40px !important; }
           }
         `}</style>
       </section>
@@ -827,8 +829,8 @@ export default function HomePage() {
           <div
             style={{
               display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 44,
+              gridTemplateColumns: "1fr",
+              gap: 26,
               alignItems: "center",
             }}
             className="values-grid"
@@ -892,8 +894,8 @@ export default function HomePage() {
         </div>
 
         <style>{`
-          @media (max-width: 900px) {
-            .values-grid { grid-template-columns: 1fr !important; gap: 26px !important; }
+          @media (min-width: 900px) {
+            .values-grid { grid-template-columns: 1fr 1fr !important; gap: 44px !important; }
           }
         `}</style>
       </section>
@@ -966,11 +968,11 @@ export default function HomePage() {
                 position: "relative",
                 background: "rgb(var(--ink))",
                 borderRadius: 20,
-                padding: "clamp(32px, 5vw, 64px)",
+                padding: "clamp(28px, 5vw, 64px)",
                 color: "white",
                 display: "grid",
-                gridTemplateColumns: "1.4fr 1fr",
-                gap: 28,
+                gridTemplateColumns: "1fr",
+                gap: 22,
                 alignItems: "center",
                 overflow: "hidden",
               }}
@@ -1036,8 +1038,8 @@ export default function HomePage() {
         </div>
 
         <style>{`
-          @media (max-width: 900px) {
-            .cta-shell { grid-template-columns: 1fr !important; }
+          @media (min-width: 900px) {
+            .cta-shell { grid-template-columns: 1.4fr 1fr !important; gap: 28px !important; }
           }
         `}</style>
       </section>

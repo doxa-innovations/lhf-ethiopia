@@ -33,20 +33,13 @@ export function Footer() {
       style={{
         background: "rgb(var(--navy-strong))",
         color: "rgba(255,255,255,0.76)",
-        paddingTop: 56,
-        paddingBottom: 28,
-        marginTop: 56,
+        paddingTop: 44,
+        paddingBottom: 24,
+        marginTop: 44,
       }}
     >
       <div className="container-wide">
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1.5fr 1fr 1fr 1.1fr",
-            gap: 36,
-          }}
-          className="footer-grid"
-        >
+        <div className="footer-grid">
           <div>
             <div
               style={{
@@ -56,15 +49,15 @@ export function Footer() {
                 marginBottom: 14,
               }}
             >
-              <LuthersRose size={42} variant="full" />
-
+              <LuthersRose size={40} variant="full" />
               <strong
                 className="font-display"
                 style={{
                   color: "white",
-                  fontSize: 17,
+                  fontSize: 16,
                   fontWeight: 600,
                   letterSpacing: "0.01em",
+                  lineHeight: 1.2,
                 }}
               >
                 {SITE.longName}
@@ -77,18 +70,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4
-              style={{
-                color: "white",
-                fontSize: 12,
-                fontWeight: 700,
-                marginBottom: 14,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-              }}
-            >
-              {t("footer.explore")}
-            </h4>
+            <h4 className="footer-h">{t("footer.explore")}</h4>
             <ul
               style={{
                 display: "flex",
@@ -108,18 +90,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4
-              style={{
-                color: "white",
-                fontSize: 12,
-                fontWeight: 700,
-                marginBottom: 14,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-              }}
-            >
-              {t("footer.office")}
-            </h4>
+            <h4 className="footer-h">{t("footer.office")}</h4>
             <ul
               style={{
                 display: "flex",
@@ -145,18 +116,7 @@ export function Footer() {
           </div>
 
           <div>
-            <h4
-              style={{
-                color: "white",
-                fontSize: 12,
-                fontWeight: 700,
-                marginBottom: 14,
-                letterSpacing: "0.1em",
-                textTransform: "uppercase",
-              }}
-            >
-              {t("footer.follow")}
-            </h4>
+            <h4 className="footer-h">{t("footer.follow")}</h4>
             <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
               <a href={SITE.social.facebook} aria-label="Facebook" style={socialIcon}>
                 <Facebook size={16} />
@@ -176,8 +136,8 @@ export function Footer() {
 
         <div
           style={{
-            marginTop: 36,
-            paddingTop: 20,
+            marginTop: 28,
+            paddingTop: 18,
             borderTop: "1px solid rgba(255,255,255,0.10)",
             display: "flex",
             justifyContent: "space-between",
@@ -195,11 +155,24 @@ export function Footer() {
       </div>
 
       <style>{`
-        @media (max-width: 900px) {
-          .footer-grid { grid-template-columns: 1fr 1fr !important; }
+        .footer-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 28px;
         }
-        @media (max-width: 540px) {
-          .footer-grid { grid-template-columns: 1fr !important; }
+        .footer-h {
+          color: white;
+          font-size: 12px;
+          font-weight: 700;
+          margin-bottom: 14px;
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+        }
+        @media (min-width: 480px) {
+          .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+        }
+        @media (min-width: 900px) {
+          .footer-grid { grid-template-columns: 1.5fr 1fr 1fr 1.1fr; gap: 32px; }
         }
       `}</style>
     </footer>
@@ -207,8 +180,8 @@ export function Footer() {
 }
 
 const socialIcon: React.CSSProperties = {
-  width: 34,
-  height: 34,
+  width: 36,
+  height: 36,
   display: "grid",
   placeItems: "center",
   borderRadius: 8,

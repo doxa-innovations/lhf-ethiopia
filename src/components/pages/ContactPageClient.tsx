@@ -37,7 +37,7 @@ export function ContactPageClient() {
                 <CardBody>
                   <h2 className="text-h2">{t("contact.formTitle")}</h2>
                   <form style={{ marginTop: 18, display: "grid", gap: 14 }}>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                    <div className="form-row" style={{ display: "grid", gridTemplateColumns: "1fr", gap: 12 }}>
                       <Field label={t("contact.nameLabel")} htmlFor="name">
                         <Input id="name" name="name" placeholder="Full name" required />
                       </Field>
@@ -45,7 +45,7 @@ export function ContactPageClient() {
                         <Input id="role" name="role" placeholder="Pastor / teacher / donor" />
                       </Field>
                     </div>
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                    <div className="form-row" style={{ display: "grid", gridTemplateColumns: "1fr", gap: 12 }}>
                       <Field label={t("contact.emailLabel")} htmlFor="email">
                         <Input id="email" name="email" type="email" placeholder="you@example.com" required />
                       </Field>
@@ -112,6 +112,12 @@ export function ContactPageClient() {
           </div>
         </div>
       </section>
+
+      <style>{`
+        @media (min-width: 600px) {
+          .form-row { grid-template-columns: 1fr 1fr !important; }
+        }
+      `}</style>
     </>
   );
 }

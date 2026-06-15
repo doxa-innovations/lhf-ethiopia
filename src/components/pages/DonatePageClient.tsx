@@ -39,14 +39,14 @@ export function DonatePageClient() {
 
       <section className="section">
         <div className="container">
-          <div className="donate-grid" style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: 32, alignItems: "flex-start" }}>
+          <div className="donate-grid" style={{ display: "grid", gridTemplateColumns: "1fr", gap: 24, alignItems: "flex-start" }}>
             <Reveal>
               <Card>
                 <CardBody>
                   <h2 className="text-h2">{t("donate.makeGiftTitle")}</h2>
                   <p className="text-body" style={{ marginTop: 8 }}>{t("donate.makeGiftBody")}</p>
 
-                  <div className="amount-grid" style={{ marginTop: 22, display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
+                  <div className="amount-grid" style={{ marginTop: 22, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10 }}>
                     {AMOUNTS.map((a) => (
                       <button
                         key={a.value}
@@ -63,7 +63,7 @@ export function DonatePageClient() {
                     <Field label={t("donate.customLabel")} htmlFor="amount">
                       <Input id="amount" name="amount" type="number" min={1} placeholder="50" inputMode="decimal" />
                     </Field>
-                    <div className="grid-2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                    <div className="form-row" style={{ display: "grid", gridTemplateColumns: "1fr", gap: 12 }}>
                       <Field label={t("donate.nameLabel")} htmlFor="name">
                         <Input id="name" name="name" placeholder="Selamawit Bekele" required />
                       </Field>
@@ -123,8 +123,13 @@ export function DonatePageClient() {
         </div>
 
         <style>{`
-          @media (max-width: 900px) { .donate-grid { grid-template-columns: 1fr !important; } }
-          @media (max-width: 600px) { .amount-grid { grid-template-columns: repeat(2, 1fr) !important; } }
+          @media (min-width: 600px) {
+            .amount-grid { grid-template-columns: repeat(4, 1fr) !important; }
+            .form-row { grid-template-columns: 1fr 1fr !important; }
+          }
+          @media (min-width: 900px) {
+            .donate-grid { grid-template-columns: 1.4fr 1fr !important; gap: 28px !important; }
+          }
         `}</style>
       </section>
     </>

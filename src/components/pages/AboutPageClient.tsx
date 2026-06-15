@@ -68,10 +68,10 @@ export function AboutPageClient() {
 
           <StaggerChildren
             style={{
-              marginTop: 36,
+              marginTop: 32,
               display: "grid",
-              gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
-              gap: 16,
+              gridTemplateColumns: "repeat(2, 1fr)",
+              gap: 12,
             }}
             className="about-stats"
           >
@@ -113,8 +113,8 @@ export function AboutPageClient() {
           </StaggerChildren>
 
           <style>{`
-            @media (max-width: 1024px) { .about-stats { grid-template-columns: repeat(3, 1fr) !important; } }
-            @media (max-width: 640px) { .about-stats { grid-template-columns: repeat(2, 1fr) !important; } }
+            @media (min-width: 640px) { .about-stats { grid-template-columns: repeat(3, 1fr) !important; gap: 16px !important; } }
+            @media (min-width: 1024px) { .about-stats { grid-template-columns: repeat(5, minmax(0, 1fr)) !important; } }
           `}</style>
         </div>
       </section>

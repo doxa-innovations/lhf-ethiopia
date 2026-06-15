@@ -47,7 +47,7 @@ export function PodcastPageClient() {
         <div aria-hidden style={{ position: "absolute", inset: 0, zIndex: -1, background: "rgba(8, 12, 22, 0.5)" }} />
 
         <div className="container-wide" style={{ position: "relative" }}>
-          <div className="podcast-hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: 40, alignItems: "center" }}>
+          <div className="podcast-hero-grid" style={{ display: "grid", gridTemplateColumns: "1fr", gap: 24, alignItems: "center" }}>
             <div>
               <Reveal>
                 <span className="badge badge-glass" style={{ padding: "5px 12px" }}>
@@ -106,7 +106,7 @@ export function PodcastPageClient() {
           </div>
         </div>
 
-        <style>{`@media (max-width: 900px) { .podcast-hero-grid { grid-template-columns: 1fr !important; gap: 24px !important; } }`}</style>
+        <style>{`@media (min-width: 900px) { .podcast-hero-grid { grid-template-columns: 1fr 1.4fr !important; gap: 40px !important; } }`}</style>
       </section>
 
       <section className="section">

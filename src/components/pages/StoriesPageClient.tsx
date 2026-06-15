@@ -49,8 +49,12 @@ export function StoriesPageClient() {
               return (
                 <StaggerItem key={story.slug}>
                   <Card>
-                    <div className="story-row" style={{ display: "grid", gridTemplateColumns: reverse ? "1.4fr 1fr" : "1fr 1.4fr", gap: 0 }}>
-                      <div className="photo-wrap" style={{ gridColumn: reverse ? 2 : 1, gridRow: 1, minHeight: 300, borderRadius: 0 }}>
+                    <div
+                      className="story-row"
+                      data-reverse={reverse ? "1" : "0"}
+                      style={{ display: "grid", gridTemplateColumns: "1fr", gap: 0 }}
+                    >
+                      <div className="photo-wrap" style={{ gridColumn: 1, gridRow: 1, minHeight: 240, borderRadius: 0 }}>
                         <SafeImage
                           src={portraitFor(story.slug)}
                           alt={`${story.name} portrait`}
@@ -59,7 +63,7 @@ export function StoriesPageClient() {
                           fallbackLabel={story.role}
                         />
                       </div>
-                      <CardBody style={{ gridColumn: reverse ? 1 : 2, gridRow: 1, padding: "clamp(28px, 4vw, 44px)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
+                      <CardBody style={{ gridColumn: 1, gridRow: 2, padding: "clamp(20px, 4vw, 44px)", display: "flex", flexDirection: "column", justifyContent: "center" }}>
                         <Badge tone="cream">{story.language}</Badge>
                         <Quote size={28} style={{ color: "rgb(var(--brand))", marginTop: 16 }} />
                         <p className="font-display" style={{ marginTop: 10, fontSize: "clamp(17px, 1.6vw, 20px)", fontStyle: "italic", lineHeight: 1.5, color: "rgb(var(--ink))", fontWeight: 500 }}>
@@ -81,10 +85,15 @@ export function StoriesPageClient() {
         </div>
 
         <style>{`
-          @media (max-width: 900px) {
-            .story-row { grid-template-columns: 1fr !important; }
-            .story-row > .photo-wrap { grid-column: 1 !important; grid-row: 1 !important; min-height: 240px !important; }
-            .story-row > .card-body { grid-column: 1 !important; grid-row: 2 !important; }
+          @media (min-width: 900px) {
+            .story-row { grid-template-columns: 1fr 1.4fr !important; }
+            .story-row[data-reverse="1"] { grid-template-columns: 1.4fr 1fr !important; }
+            .story-row > .photo-wrap { grid-row: 1 !important; min-height: 300px !important; }
+            .story-row[data-reverse="0"] > .photo-wrap { grid-column: 1 !important; }
+            .story-row[data-reverse="1"] > .photo-wrap { grid-column: 2 !important; }
+            .story-row > .card-body { grid-row: 1 !important; }
+            .story-row[data-reverse="0"] > .card-body { grid-column: 2 !important; }
+            .story-row[data-reverse="1"] > .card-body { grid-column: 1 !important; }
           }
         `}</style>
       </section>

@@ -1,12 +1,20 @@
 @import "tailwindcss";
 
 /* ============================================================
-   LHF ETHIOPIA — TAILWIND v4 TOKENS
-   Verified palette from lhfmissions.org screenshot (2026-06-15).
-   Flat colors only — no gradients. Image hero with solid overlay.
+   LHF ETHIOPIA — MOBILE-FIRST TAILWIND v4 TOKENS
+   ------------------------------------------------------------
+   Convention: every base style targets a 360px-wide phone first.
+   Breakpoints add density and richness as the viewport grows:
+     bp-sm  ≥ 480px   (large phones / phablets)
+     bp-md  ≥ 768px   (tablets portrait)
+     bp-lg  ≥ 1024px  (tablets landscape / small laptops)
+     bp-xl  ≥ 1180px  (desktop)
+   No max-width media queries — mobile is the default, not the
+   override.
    ============================================================ */
 
 :root {
+  /* Color triplets (R G B) — rgb(var(--…) / <alpha>) composes everywhere */
   --bg: 255 255 255;
   --bg-soft: 248 246 242;
   --surface: 255 255 255;
@@ -50,9 +58,10 @@
   --warn: 196 154 56;
   --danger: 159 31 42;
 
+  /* radii — bigger feel on small screens */
   --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
   --radius-xl: 18px;
   --radius-full: 9999px;
 
@@ -61,16 +70,28 @@
   --shadow-brand: 0 6px 18px rgba(159, 31, 42, 0.22);
   --shadow-teal: 0 6px 18px rgba(46, 142, 142, 0.22);
   --shadow-navy: 0 6px 18px rgba(30, 42, 71, 0.18);
-  --shadow-pill: 0 10px 28px -8px rgba(18, 22, 32, 0.14);
+  --shadow-pill: 0 8px 22px -10px rgba(18, 22, 32, 0.16);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 150ms;
   --duration-base: 260ms;
 
+  /* Mobile-first widths + spacing */
   --max-width: 1200px;
   --max-width-wide: 1260px;
-  --section-py: 72px;
-  --section-py-mobile: 48px;
+  --container-px: 16px;
+  --section-py: 44px;
+}
+
+/* Scale up container + section padding from tablet up */
+@media (min-width: 480px) {
+  :root { --container-px: 20px; --section-py: 52px; }
+}
+@media (min-width: 768px) {
+  :root { --container-px: 24px; --section-py: 64px; }
+}
+@media (min-width: 1024px) {
+  :root { --section-py: 72px; }
 }
 
 @theme {
@@ -119,7 +140,7 @@
   --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
 }
 
-/* legacy aliases */
+/* legacy aliases (older inline styles still resolve) */
 :root {
   --brand-red: rgb(var(--brand));
   --brand-dark: rgb(var(--ink));
@@ -142,6 +163,7 @@
   --shadow-blue: var(--shadow-navy);
 }
 
+/* RESET — mobile-first */
 *,
 *::before,
 *::after {
@@ -155,22 +177,24 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 15px;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
 }
+
+@media (min-width: 768px) { html { font-size: 15.5px; } }
+@media (min-width: 1180px) { html { font-size: 16px; } }
 
 body {
   background: rgb(var(--bg));
   color: rgb(var(--ink));
   font-family: var(--font-sans);
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: 1rem;
+  line-height: 1.6;
   font-weight: 400;
+  overflow-x: hidden;
 }
 
-[lang="am"] body { font-feature-settings: "kern"; }
-[lang="om"] body { font-feature-settings: "kern"; }
-
-img,
-video {
+img, video {
   max-width: 100%;
   height: auto;
   display: block;
@@ -184,28 +208,22 @@ button { cursor: pointer; font-family: inherit; }
   color: rgb(var(--ink));
 }
 
-.container {
-  max-width: var(--max-width);
-  margin-inline: auto;
-  padding-inline: 24px;
-}
-
+/* CONTAINERS */
+.container,
 .container-wide {
-  max-width: var(--max-width-wide);
+  width: 100%;
   margin-inline: auto;
-  padding-inline: 24px;
+  padding-inline: var(--container-px);
 }
 
-@media (max-width: 768px) {
-  .container,
-  .container-wide { padding-inline: 16px; }
-}
+.container { max-width: var(--max-width); }
+.container-wide { max-width: var(--max-width-wide); }
 
+/* SECTIONS */
 .section { padding-block: var(--section-py); }
 
-@media (max-width: 768px) {
-  .section { padding-block: var(--section-py-mobile); }
-}
+/* TYPOGRAPHY — mobile-first base, scale up with clamp()
+   Mobile is intentionally less aggressive so headings don't dominate a small screen. */
 
 .font-display {
   font-family: var(--font-display);
@@ -214,54 +232,71 @@ button { cursor: pointer; font-family: inherit; }
 
 .text-display {
   font-family: var(--font-display);
-  font-size: clamp(32px, 4vw, 52px);
+  font-size: clamp(28px, 8vw, 52px);
   font-weight: 500;
-  line-height: 1.06;
+  line-height: 1.08;
   letter-spacing: -0.018em;
   color: rgb(var(--ink));
 }
 
 .text-h1 {
   font-family: var(--font-display);
-  font-size: clamp(26px, 2.8vw, 38px);
+  font-size: clamp(22px, 5.4vw, 38px);
   font-weight: 500;
-  line-height: 1.14;
+  line-height: 1.16;
   letter-spacing: -0.014em;
   color: rgb(var(--ink));
 }
 
 .text-h2 {
   font-family: var(--font-display);
-  font-size: clamp(20px, 2.1vw, 28px);
+  font-size: clamp(19px, 4.2vw, 28px);
   font-weight: 500;
-  line-height: 1.2;
+  line-height: 1.22;
   letter-spacing: -0.01em;
   color: rgb(var(--ink));
 }
 
 .text-h3 {
-  font-size: clamp(16px, 1.5vw, 19px);
+  font-size: clamp(15px, 3.5vw, 19px);
   font-weight: 600;
-  line-height: 1.32;
+  line-height: 1.34;
   color: rgb(var(--ink));
 }
 
-.text-body-lg { font-size: 16px; line-height: 1.65; color: rgb(var(--ink-muted)); }
-.text-body { font-size: 15px; line-height: 1.6; color: rgb(var(--ink-muted)); }
-.text-caption { font-size: 13px; line-height: 1.5; color: rgb(var(--ink-faint)); }
+.text-body-lg {
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgb(var(--ink-muted));
+}
+@media (min-width: 768px) { .text-body-lg { font-size: 1.06rem; } }
+
+.text-body {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: rgb(var(--ink-muted));
+}
+@media (min-width: 768px) { .text-body { font-size: 1rem; } }
+
+.text-caption {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: rgb(var(--ink-faint));
+}
 
 .section-label {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: rgb(var(--brand));
   margin-bottom: 12px;
   font-family: var(--font-sans);
 }
+@media (min-width: 768px) { .section-label { font-size: 11px; } }
 
 .section-label::before {
   content: "";
@@ -271,105 +306,62 @@ button { cursor: pointer; font-family: inherit; }
   border-radius: 2px;
 }
 
-/* BUTTONS — flat fills only, no gradient shadows */
+/* BUTTONS — 44px min height on mobile for comfortable tap targets */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-height: 42px;
-  padding: 10px 20px;
+  min-height: 44px;
+  padding: 11px 20px;
   border-radius: var(--radius-md);
-  font-size: 14px;
+  font-size: 14.5px;
   font-weight: 600;
-  line-height: 1.18;
+  line-height: 1.2;
   text-align: center;
   border: 1.5px solid transparent;
-  transition: background 200ms ease, border-color 200ms ease, color 200ms ease,
-    transform 200ms var(--ease-out);
+  transition: background 200ms ease, border-color 200ms ease, color 200ms ease, transform 200ms var(--ease-out);
   cursor: pointer;
   font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
 }
 
-.btn-primary {
-  background: rgb(var(--brand));
-  color: white;
-  border-color: rgb(var(--brand));
+@media (min-width: 768px) {
+  .btn { min-height: 42px; padding: 10px 20px; font-size: 14px; }
 }
 
-.btn-primary:hover {
-  background: rgb(var(--brand-strong));
-  border-color: rgb(var(--brand-strong));
-  transform: translateY(-1px);
-}
+.btn-primary { background: rgb(var(--brand)); color: white; border-color: rgb(var(--brand)); }
+.btn-primary:hover { background: rgb(var(--brand-strong)); border-color: rgb(var(--brand-strong)); transform: translateY(-1px); }
 
-.btn-teal {
-  background: rgb(var(--teal));
-  color: white;
-  border-color: rgb(var(--teal));
-}
+.btn-teal { background: rgb(var(--teal)); color: white; border-color: rgb(var(--teal)); }
+.btn-teal:hover { background: rgb(var(--teal-strong)); border-color: rgb(var(--teal-strong)); transform: translateY(-1px); }
 
-.btn-teal:hover {
-  background: rgb(var(--teal-strong));
-  border-color: rgb(var(--teal-strong));
-  transform: translateY(-1px);
-}
+.btn-navy { background: rgb(var(--navy)); color: white; border-color: rgb(var(--navy)); }
+.btn-navy:hover { background: rgb(var(--navy-strong)); border-color: rgb(var(--navy-strong)); transform: translateY(-1px); }
 
-.btn-navy {
-  background: rgb(var(--navy));
-  color: white;
-  border-color: rgb(var(--navy));
-}
-
-.btn-navy:hover {
-  background: rgb(var(--navy-strong));
-  border-color: rgb(var(--navy-strong));
-  transform: translateY(-1px);
-}
-
-.btn-dark {
-  background: rgb(var(--ink));
-  color: white;
-  border-color: rgb(var(--ink));
-}
-
+.btn-dark { background: rgb(var(--ink)); color: white; border-color: rgb(var(--ink)); }
 .btn-dark:hover { background: black; border-color: black; transform: translateY(-1px); }
 
-.btn-gold {
-  background: rgb(var(--brand));
-  color: white;
-  border-color: rgb(var(--brand));
-}
-
-.btn-gold:hover {
-  background: rgb(var(--brand-strong));
-  border-color: rgb(var(--brand-strong));
-  transform: translateY(-1px);
-}
+.btn-gold { background: rgb(var(--brand)); color: white; border-color: rgb(var(--brand)); }
+.btn-gold:hover { background: rgb(var(--brand-strong)); border-color: rgb(var(--brand-strong)); transform: translateY(-1px); }
 
 .btn-secondary {
   background: white;
   color: rgb(var(--ink));
   border-color: rgb(var(--border-strong));
 }
-
-.btn-secondary:hover {
-  border-color: rgb(var(--brand));
-  color: rgb(var(--brand));
-  transform: translateY(-1px);
-}
+.btn-secondary:hover { border-color: rgb(var(--brand)); color: rgb(var(--brand)); transform: translateY(-1px); }
 
 .btn-ghost {
   background: transparent;
   color: rgb(var(--ink));
   border-color: transparent;
-  padding-inline: 10px;
+  padding-inline: 12px;
 }
-
 .btn-ghost:hover { color: rgb(var(--brand)); }
 
-.btn-sm { min-height: 34px; padding: 7px 14px; font-size: 13px; }
-.btn-lg { min-height: 50px; padding: 14px 26px; font-size: 15px; }
+.btn-sm { min-height: 38px; padding: 8px 14px; font-size: 13px; }
+.btn-lg { min-height: 52px; padding: 15px 26px; font-size: 15.5px; }
 
 .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
 
@@ -392,9 +384,11 @@ button { cursor: pointer; font-family: inherit; }
 }
 
 .card-flat { box-shadow: none; }
-.card-body { padding: clamp(16px, 2.4vw, 24px); }
+.card-body { padding: 18px; }
+@media (min-width: 768px) { .card-body { padding: 22px; } }
+@media (min-width: 1024px) { .card-body { padding: 24px; } }
 
-/* GLASS — solid translucent background, no gradients */
+/* GLASS */
 .glass {
   background: rgba(255, 255, 255, 0.78);
   backdrop-filter: saturate(160%) blur(18px);
@@ -455,19 +449,23 @@ button { cursor: pointer; font-family: inherit; }
   -webkit-backdrop-filter: blur(8px);
 }
 
-/* INPUT */
+/* INPUT — 44px tap height on mobile, denser on desktop */
 .input {
   width: 100%;
-  height: 42px;
+  height: 44px;
   padding: 0 14px;
   background: white;
   border: 1.5px solid rgb(var(--border-strong));
   border-radius: var(--radius-md);
-  font-size: 14px;
+  font-size: 16px;          /* >= 16px keeps iOS from auto-zooming on focus */
   font-family: inherit;
   color: rgb(var(--ink));
   outline: none;
   transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+
+@media (min-width: 768px) {
+  .input { height: 42px; font-size: 14px; }
 }
 
 .input::placeholder { color: rgb(var(--ink-faint)); }
@@ -480,17 +478,24 @@ textarea.input {
   height: auto;
   padding: 12px 14px;
   resize: vertical;
-  min-height: 110px;
+  min-height: 120px;
 }
 
-/* HERO — image background with solid color overlay (no gradients) */
+/* HERO */
 .hero-shell {
   position: relative;
-  padding-top: 132px;
-  padding-bottom: 64px;
+  padding-top: 108px;
+  padding-bottom: 44px;
   color: white;
   overflow: hidden;
   isolation: isolate;
+}
+
+@media (min-width: 768px) {
+  .hero-shell { padding-top: 124px; padding-bottom: 56px; }
+}
+@media (min-width: 1024px) {
+  .hero-shell { padding-top: 132px; padding-bottom: 64px; }
 }
 
 .hero-bg {
@@ -517,20 +522,22 @@ textarea.input {
 .hero-shell .text-body { color: rgba(255, 255, 255, 0.78); }
 
 .subhero {
-  padding-top: 132px;
-  padding-bottom: 56px;
+  padding-top: 100px;
+  padding-bottom: 36px;
   background: rgb(var(--bg-soft));
   border-bottom: 1px solid rgb(var(--border));
   position: relative;
   overflow: hidden;
 }
 
-@media (max-width: 768px) {
-  .hero-shell { padding-top: 116px; padding-bottom: 56px; }
-  .subhero { padding-top: 110px; padding-bottom: 40px; }
+@media (min-width: 768px) {
+  .subhero { padding-top: 116px; padding-bottom: 44px; }
+}
+@media (min-width: 1024px) {
+  .subhero { padding-top: 132px; padding-bottom: 56px; }
 }
 
-/* SECTIONS — flat backgrounds only */
+/* SECTIONS — flat backgrounds */
 .section-cream-deep { background: rgb(var(--surface-2)); }
 .section-soft { background: rgb(var(--bg-soft)); }
 .section-ink {
@@ -563,26 +570,28 @@ textarea.input {
 .section-navy-deep .text-body,
 .section-navy-deep .text-body-lg { color: rgba(255, 255, 255, 0.74); }
 
-/* GRIDS */
-.grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
-.grid-3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
-.grid-4 { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+/* GRIDS — single column by default, grow with min-width */
+.grid-2 { display: grid; grid-template-columns: 1fr; gap: 18px; }
+.grid-3 { display: grid; grid-template-columns: 1fr; gap: 18px; }
+.grid-4 { display: grid; grid-template-columns: 1fr; gap: 14px; }
 
-@media (max-width: 1024px) {
-  .grid-4 { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 768px) {
-  .grid-2,
-  .grid-3 { grid-template-columns: 1fr; gap: 18px; }
+@media (min-width: 480px) {
   .grid-4 { grid-template-columns: repeat(2, 1fr); gap: 14px; }
 }
 
-@media (max-width: 480px) {
-  .grid-4 { grid-template-columns: 1fr; }
+@media (min-width: 768px) {
+  .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px; }
+  .grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); gap: 16px; }
 }
 
-/* IMAGES — solid placeholder, no gradient */
+@media (min-width: 1024px) {
+  .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .grid-2 { gap: 24px; }
+}
+
+/* IMAGES */
 .photo-wrap {
   position: relative;
   overflow: hidden;
@@ -631,7 +640,7 @@ textarea.input {
 .flag-stripe > span:nth-child(2) { background: rgb(var(--gold)); }
 .flag-stripe > span:nth-child(3) { background: rgb(var(--brand)); }
 
-/* Marquee — fade mask is functional UX, kept */
+/* Marquee */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -639,14 +648,15 @@ textarea.input {
 
 .marquee-track {
   display: flex;
-  gap: 48px;
+  gap: 36px;
   width: max-content;
   animation: marquee 36s linear infinite;
 }
+@media (min-width: 768px) { .marquee-track { gap: 48px; } }
 
 .marquee-mask {
-  mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
-  -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
 /* Floating-pill navbar */
@@ -669,4 +679,17 @@ textarea.input {
 .apexcharts-tooltip.apexcharts-theme-light {
   background: rgb(var(--surface)) !important;
   color: rgb(var(--ink)) !important;
+}
+
+/* Utility helpers for inline grids that need a mobile-first stack */
+.stack-mobile {
+  display: grid;
+  grid-template-columns: 1fr !important;
+  gap: 18px;
+}
+@media (min-width: 768px) {
+  .stack-mobile { grid-template-columns: repeat(var(--cols-md, 2), minmax(0, 1fr)) !important; gap: 24px; }
+}
+@media (min-width: 1024px) {
+  .stack-mobile { grid-template-columns: repeat(var(--cols-lg, var(--cols-md, 2)), minmax(0, 1fr)) !important; gap: 28px; }
 }
