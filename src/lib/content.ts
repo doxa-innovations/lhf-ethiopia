@@ -542,55 +542,78 @@ export const EVENTS = [
 ] as const;
 
 /* ============================================================
-   PHOTOS — Unsplash stock for the first pass.
-   Replace per-key without touching layout when real photos arrive.
+   PHOTOS — Traditional / Ethiopian / paper-based imagery
+   ------------------------------------------------------------
+   Every URL below is a first-pass Unsplash placeholder chosen
+   for an OLD / TRADITIONAL / SCRIPTURAL feel — not modern
+   person close-ups. Photo team: replace with real Ethiopian
+   Orthodox / Lalibela / Ge'ez manuscript / Ethiopian highlands
+   imagery before public launch. Style brief:
+     * leather-bound Bibles, illuminated pages, parchment
+     * Lalibela rock-hewn churches, frescoes, Tigray plateaus
+     * crowd backs (no close-up portraits)
+     * Ethiopian crosses, processional crosses, censers
    ============================================================ */
 
 export const PHOTOS = {
+  // Vintage leather Bible — Aaron Burden's widely-used Unsplash photo
   heroPrimary:
     "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=1400&q=80&auto=format&fit=crop",
+  // Open Bible pages
   heroSecondary:
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=80&auto=format&fit=crop",
+  // Antique books on shelf
   heroTertiary:
-    "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=900&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=900&q=80&auto=format&fit=crop",
+  // Congregation imagery (back of crowd, traditional setting). [TODO: replace
+  // with traditional Ethiopian Orthodox church interior — Lalibela, Axum.]
   congregation:
     "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=1400&q=80&auto=format&fit=crop",
   openBible:
     "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80&auto=format&fit=crop",
   bookshelf:
     "https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=1200&q=80&auto=format&fit=crop",
+  // [TODO: replace with traditional Ethiopian Sunday-school scene]
   childrenReading:
-    "https://images.unsplash.com/photo-1503676382389-4809596d5290?w=1200&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80&auto=format&fit=crop",
+  // Hands holding a book/paper — kept generic
   handsHolding:
     "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=1200&q=80&auto=format&fit=crop",
+  // [TODO: replace with Ge'ez manuscript / scribe at desk]
   translatorAtDesk:
-    "https://images.unsplash.com/photo-1455390582262-044cdead277a?w=1200&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1532153975070-2e9ab71f1b14?w=1200&q=80&auto=format&fit=crop",
+  // Print press — keep
   printPress:
     "https://images.unsplash.com/photo-1568667256549-094345857637?w=1200&q=80&auto=format&fit=crop",
+  // Ethiopian highlands
   ethiopiaLandscape:
     "https://images.unsplash.com/photo-1580458148391-44b4baa3f9d2?w=1600&q=80&auto=format&fit=crop",
+  // STORY PORTRAITS — currently set to the open-Bible photo as a placeholder
+  // so we do not show generic modern close-ups. [TODO: photo team — supply
+  // consented portraits of the actual congregation members named in STORIES.]
   pastor:
-    "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?w=900&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=900&q=80&auto=format&fit=crop",
   teacher:
-    "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=900&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=80&auto=format&fit=crop",
   translator:
-    "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=900&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1532153975070-2e9ab71f1b14?w=900&q=80&auto=format&fit=crop",
   deaconess:
-    "https://images.unsplash.com/photo-1525186402429-b4ff38bedec6?w=900&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1580458148391-44b4baa3f9d2?w=900&q=80&auto=format&fit=crop",
   printer:
-    "https://images.unsplash.com/photo-1542435503-956c469947f6?w=900&q=80&auto=format&fit=crop",
-  // Podcast + digital outreach
+    "https://images.unsplash.com/photo-1568667256549-094345857637?w=900&q=80&auto=format&fit=crop",
+  // Podcast + digital outreach — generic studio imagery
   podcastStudio:
     "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=1400&q=80&auto=format&fit=crop",
   podcastMic:
     "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=1200&q=80&auto=format&fit=crop",
+  // [TODO: replace with Pastor Henok portrait]
   podcastHost:
-    "https://images.unsplash.com/photo-1605723517503-3cadb5818a0c?w=1200&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80&auto=format&fit=crop",
   music:
     "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1200&q=80&auto=format&fit=crop",
-  // Events
+  // Events — gathering / training / distribution
   eventGathering:
-    "https://images.unsplash.com/photo-1511578314322-379afb476865?w=1400&q=80&auto=format&fit=crop",
+    "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=1400&q=80&auto=format&fit=crop",
   eventTraining:
     "https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=1200&q=80&auto=format&fit=crop",
   eventDistribution:

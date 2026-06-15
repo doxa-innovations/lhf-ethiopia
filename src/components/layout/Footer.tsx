@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import { SITE } from "@/lib/content";
 import { useT } from "@/components/providers/LanguageProvider";
+import { LuthersRose } from "@/components/brand/LuthersRose";
 
 const NAV_KEYS = [
   { href: "/", labelKey: "nav.home" },
@@ -55,22 +56,8 @@ export function Footer() {
                 marginBottom: 14,
               }}
             >
-              <span
-                aria-hidden
-                style={{
-                  width: 38,
-                  height: 38,
-                  borderRadius: 8,
-                  background: "rgb(var(--brand))",
-                  color: "white",
-                  display: "grid",
-                  placeItems: "center",
-                  fontWeight: 700,
-                  fontFamily: "var(--font-display)",
-                }}
-              >
-                LHF
-              </span>
+              <LuthersRose size={42} variant="full" />
+
               <strong
                 className="font-display"
                 style={{

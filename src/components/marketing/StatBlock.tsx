@@ -1,7 +1,3 @@
-"use client";
-
-import { Counter } from "@/components/ui/Counter";
-
 type Stat = {
   value: number;
   suffix?: string;
@@ -9,6 +5,9 @@ type Stat = {
   label: string;
   hint?: string;
 };
+
+const formatNumber = (n: number) =>
+  n.toLocaleString("en-US");
 
 export function StatBlock({
   stats,
@@ -30,28 +29,27 @@ export function StatBlock({
       {stats.map((s) => (
         <div key={s.label}>
           <div
+            className="font-display"
             style={{
-              fontSize: "clamp(34px, 4vw, 52px)",
-              fontWeight: 800,
-              lineHeight: 1,
-              letterSpacing: "-0.02em",
+              fontSize: "clamp(28px, 3.2vw, 40px)",
+              fontWeight: 500,
+              lineHeight: 1.02,
+              letterSpacing: "-0.018em",
               color: isDark ? "white" : "rgb(var(--ink))",
             }}
           >
-            <Counter
-              to={s.value}
-              prefix={s.prefix}
-              suffix={s.suffix ?? ""}
-            />
+            {s.prefix ?? ""}
+            {formatNumber(s.value)}
+            {s.suffix ?? ""}
           </div>
           <div
             style={{
               marginTop: 10,
-              fontSize: 13,
+              fontSize: 12,
               fontWeight: 600,
-              letterSpacing: "0.06em",
+              letterSpacing: "0.08em",
               textTransform: "uppercase",
-              color: isDark ? "rgb(var(--brand) / 1)" : "rgb(var(--brand))",
+              color: isDark ? "rgb(var(--teal-soft))" : "rgb(var(--brand))",
             }}
           >
             {s.label}
@@ -60,7 +58,7 @@ export function StatBlock({
             <div
               style={{
                 marginTop: 4,
-                fontSize: 13,
+                fontSize: 12.5,
                 color: isDark ? "rgba(255,255,255,0.6)" : "rgb(var(--ink-faint))",
               }}
             >

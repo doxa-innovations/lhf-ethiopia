@@ -5,6 +5,7 @@ import { Headphones, Mic, Search, Youtube } from "lucide-react";
 import { motion } from "motion/react";
 import { Badge, Card, CardBody, Input } from "@/components/ui";
 import { PODCAST_EPISODES, PODCAST } from "@/lib/content";
+import { useT } from "@/components/providers/LanguageProvider";
 
 type Episode = (typeof PODCAST_EPISODES)[number];
 
@@ -17,9 +18,18 @@ const TOPICS = [
 ] as const;
 type Topic = (typeof TOPICS)[number];
 
+const TOPIC_LABEL_KEYS: Record<Topic, string> = {
+  All: "podcast.filterAll",
+  "Bible Study": "podcast.filterBibleStudy",
+  Doctrine: "podcast.filterDoctrine",
+  Catechism: "podcast.filterCatechism",
+  Music: "podcast.filterMusic",
+};
+
 const isPlaceholder = (id: string) => id.startsWith("PLACEHOLDER");
 
 export function PodcastBrowser() {
+  const { t } = useT();
   const [query, setQuery] = useState("");
   const [topic, setTopic] = useState<Topic>("All");
 
@@ -63,7 +73,7 @@ export function PodcastBrowser() {
           />
           <Input
             type="search"
-            placeholder="Search episodes, guests, topics…"
+            placeholder={t("podcast.searchPlaceholder")}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             style={{ paddingLeft: 36 }}
@@ -78,13 +88,13 @@ export function PodcastBrowser() {
             justifyContent: "flex-end",
           }}
         >
-          {TOPICS.map((t) => {
-            const active = t === topic;
+          {TOPICS.map((topicValue) => {
+            const active = topicValue === topic;
             return (
               <button
-                key={t}
+                key={topicValue}
                 type="button"
-                onClick={() => setTopic(t)}
+                onClick={() => setTopic(topicValue)}
                 style={{
                   border: "1px solid rgb(var(--border-strong))",
                   background: active ? "rgb(var(--ink))" : "white",
@@ -100,7 +110,7 @@ export function PodcastBrowser() {
                   transition: "all 180ms ease",
                 }}
               >
-                {t}
+                {t(TOPIC_LABEL_KEYS[topicValue] as Parameters<typeof t>[0])}
               </button>
             );
           })}
@@ -114,8 +124,11 @@ export function PodcastBrowser() {
           marginBottom: 14,
         }}
       >
-        {filtered.length} {filtered.length === 1 ? "episode" : "episodes"}
-        {topic !== "All" ? ` · ${topic}` : ""}
+        {(filtered.length === 1
+          ? t("podcast.resultsCountSingular")
+          : t("podcast.resultsCount")
+        ).replace("{n}", String(filtered.length))}
+        {topic !== "All" ? ` · ${t(TOPIC_LABEL_KEYS[topic] as Parameters<typeof t>[0])}` : ""}
       </p>
 
       <div className="grid-3">

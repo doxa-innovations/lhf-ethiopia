@@ -8,6 +8,7 @@ import { motion, AnimatePresence } from "motion/react";
 import { Button } from "@/components/ui";
 import { LanguageSwitcher } from "@/components/providers/LanguageSwitcher";
 import { useT } from "@/components/providers/LanguageProvider";
+import { LuthersRose } from "@/components/brand/LuthersRose";
 
 const NAV_KEYS = [
   { href: "/", labelKey: "nav.home" },
@@ -87,23 +88,14 @@ export function Navbar() {
             <motion.span
               aria-hidden
               initial={{ rotate: 0 }}
-              whileHover={{ rotate: -4 }}
-              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              whileHover={{ rotate: -6 }}
+              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
               style={{
-                width: 30,
-                height: 30,
-                borderRadius: 7,
-                background: "rgb(var(--brand))",
-                color: "white",
                 display: "grid",
                 placeItems: "center",
-                fontWeight: 700,
-                letterSpacing: "-0.02em",
-                fontSize: 11,
-                fontFamily: "var(--font-display)",
               }}
             >
-              LHF
+              <LuthersRose size={34} variant="full" />
             </motion.span>
             <span
               className="nav-wordmark"
