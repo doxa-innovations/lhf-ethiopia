@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   Facebook,
@@ -7,9 +9,24 @@ import {
   Phone,
   MapPin,
 } from "lucide-react";
-import { NAV_LINKS, SITE } from "@/lib/content";
+import { SITE } from "@/lib/content";
+import { useT } from "@/components/providers/LanguageProvider";
+
+const NAV_KEYS = [
+  { href: "/", labelKey: "nav.home" },
+  { href: "/about", labelKey: "nav.about" },
+  { href: "/publications", labelKey: "nav.publications" },
+  { href: "/podcast", labelKey: "nav.podcast" },
+  { href: "/projects", labelKey: "nav.projects" },
+  { href: "/events", labelKey: "nav.events" },
+  { href: "/stories", labelKey: "nav.stories" },
+  { href: "/news", labelKey: "nav.news" },
+  { href: "/contact", labelKey: "nav.contact" },
+  { href: "/donate", labelKey: "nav.donate" },
+] as const;
 
 export function Footer() {
+  const { t } = useT();
   return (
     <footer
       style={{
@@ -66,9 +83,7 @@ export function Footer() {
                 {SITE.longName}
               </strong>
             </div>
-            <p style={{ fontSize: 13.5, lineHeight: 1.65 }}>
-              {SITE.description}
-            </p>
+            <p style={{ fontSize: 13.5, lineHeight: 1.65 }}>{SITE.description}</p>
             <div className="flag-stripe" style={{ marginTop: 16 }}>
               <span /> <span /> <span />
             </div>
@@ -85,7 +100,7 @@ export function Footer() {
                 textTransform: "uppercase",
               }}
             >
-              Explore
+              {t("footer.explore")}
             </h4>
             <ul
               style={{
@@ -95,23 +110,13 @@ export function Footer() {
                 listStyle: "none",
               }}
             >
-              {NAV_LINKS.map((link) => (
+              {NAV_KEYS.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} style={{ fontSize: 13.5 }}>
-                    {link.label}
+                    {t(link.labelKey as Parameters<typeof t>[0])}
                   </Link>
                 </li>
               ))}
-              <li>
-                <Link href="/donate" style={{ fontSize: 13.5 }}>
-                  Donate
-                </Link>
-              </li>
-              <li>
-                <Link href="/contact" style={{ fontSize: 13.5 }}>
-                  Contact
-                </Link>
-              </li>
             </ul>
           </div>
 
@@ -126,7 +131,7 @@ export function Footer() {
                 textTransform: "uppercase",
               }}
             >
-              Office
+              {t("footer.office")}
             </h4>
             <ul
               style={{
@@ -143,9 +148,7 @@ export function Footer() {
               </li>
               <li style={{ display: "flex", gap: 8, alignItems: "center" }}>
                 <Phone size={15} />
-                <a href={`tel:${SITE.phone.replace(/\s/g, "")}`}>
-                  {SITE.phone}
-                </a>
+                <a href={`tel:${SITE.phone.replace(/\s/g, "")}`}>{SITE.phone}</a>
               </li>
               <li style={{ display: "flex", gap: 8, alignItems: "center" }}>
                 <Mail size={15} />
@@ -165,7 +168,7 @@ export function Footer() {
                 textTransform: "uppercase",
               }}
             >
-              Follow
+              {t("footer.follow")}
             </h4>
             <div style={{ display: "flex", gap: 10, marginBottom: 16 }}>
               <a href={SITE.social.facebook} aria-label="Facebook" style={socialIcon}>
@@ -178,9 +181,7 @@ export function Footer() {
                 <Youtube size={16} />
               </a>
             </div>
-            <p
-              style={{ fontSize: 12.5, color: "rgba(255,255,255,0.58)" }}
-            >
+            <p style={{ fontSize: 12.5, color: "rgba(255,255,255,0.58)" }}>
               {SITE.parent}
             </p>
           </div>
@@ -200,9 +201,9 @@ export function Footer() {
           }}
         >
           <span>
-            © {new Date().getFullYear()} {SITE.longName}. All rights reserved.
+            © {new Date().getFullYear()} {SITE.longName}. {t("footer.rights")}
           </span>
-          <span>Books distributed free of charge — never sold.</span>
+          <span>{t("common.free")}</span>
         </div>
       </div>
 

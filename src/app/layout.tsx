@@ -4,6 +4,8 @@ import { Inter, EB_Garamond } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
+import { LanguageProvider } from "@/components/providers/LanguageProvider";
+import { LanguagePromptModal } from "@/components/providers/LanguagePromptModal";
 import { SITE } from "@/lib/content";
 
 const inter = Inter({
@@ -45,6 +47,8 @@ export const metadata: Metadata = {
     "Lutheran mission Ethiopia",
     "Ethiopian Christian podcast",
     "Digital outreach Ethiopia",
+    "ቃሉ ብቻ",
+    "Scripture Alone Podcast",
   ],
   openGraph: {
     title: `${SITE.name} — ${SITE.tagline}`,
@@ -53,6 +57,7 @@ export const metadata: Metadata = {
     siteName: SITE.name,
     type: "website",
     locale: "en_ET",
+    alternateLocale: ["am_ET", "om_ET"],
   },
   twitter: {
     card: "summary_large_image",
@@ -65,13 +70,16 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
-      lang="en-ET"
+      lang="en"
       className={`${inter.variable} ${garamond.variable}`}
     >
       <body>
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <LanguageProvider>
+          <Navbar />
+          <main>{children}</main>
+          <Footer />
+          <LanguagePromptModal />
+        </LanguageProvider>
       </body>
     </html>
   );

@@ -2,47 +2,41 @@
 
 /* ============================================================
    LHF ETHIOPIA — TAILWIND v4 TOKENS
-   Verified from lhfmissions.org screenshot (2026-06-15):
-   - Deep crimson primary
-   - Navy secondary
-   - Teal CTA accent (Donate)
-   - White background
-   - Classical serif headings (EB Garamond)
-   Sized for comfortable reading on a 14" laptop.
+   Verified palette from lhfmissions.org screenshot (2026-06-15).
+   Flat colors only — no gradients. Image hero with solid overlay.
    ============================================================ */
 
 :root {
-  /* triplets (R G B) — rgb(var(--…) / <alpha>) composes everywhere */
-  --bg: 255 255 255;            /* pure white */
-  --bg-soft: 250 248 245;       /* faint warm tint for section bands */
+  --bg: 255 255 255;
+  --bg-soft: 248 246 242;
   --surface: 255 255 255;
-  --surface-2: 246 243 238;
-  --surface-3: 234 228 220;
+  --surface-2: 244 240 234;
+  --surface-3: 232 226 217;
 
-  --ink: 18 22 32;              /* near-black with navy tilt */
+  --ink: 18 22 32;
   --ink-strong: 8 12 22;
   --ink-muted: 88 96 110;
   --ink-faint: 138 145 158;
 
-  --border: 224 222 218;
-  --border-strong: 198 195 188;
+  --border: 226 222 215;
+  --border-strong: 200 194 184;
 
-  --brand: 159 31 42;           /* LHF crimson  #9F1F2A */
+  --brand: 159 31 42;
   --brand-strong: 127 24 33;
   --brand-soft: 196 86 92;
   --brand-muted: 247 232 232;
 
-  --navy: 30 42 71;             /* LHF navy strip  #1E2A47 */
+  --navy: 30 42 71;
   --navy-strong: 18 28 52;
   --navy-soft: 64 80 116;
   --navy-muted: 232 236 244;
 
-  --teal: 46 142 142;           /* LHF Donate teal  #2E8E8E */
+  --teal: 46 142 142;
   --teal-strong: 32 110 110;
   --teal-soft: 102 178 178;
   --teal-muted: 224 240 240;
 
-  --gold: 196 154 56;           /* sparing ecclesiastical gold */
+  --gold: 196 154 56;
   --green: 47 130 89;
   --green-muted: 226 240 232;
 
@@ -67,6 +61,7 @@
   --shadow-brand: 0 6px 18px rgba(159, 31, 42, 0.22);
   --shadow-teal: 0 6px 18px rgba(46, 142, 142, 0.22);
   --shadow-navy: 0 6px 18px rgba(30, 42, 71, 0.18);
+  --shadow-pill: 0 10px 28px -8px rgba(18, 22, 32, 0.14);
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --duration-fast: 150ms;
@@ -79,7 +74,6 @@
 }
 
 @theme {
-  /* expose CSS vars as Tailwind colors */
   --color-bg: rgb(var(--bg));
   --color-bg-soft: rgb(var(--bg-soft));
   --color-surface: rgb(var(--surface));
@@ -101,7 +95,6 @@
   --color-gold: rgb(var(--gold));
   --color-green: rgb(var(--green));
 
-  /* legacy aliases (older inline styles in pages still reference these) */
   --color-brand-red: rgb(var(--brand));
   --color-brand-dark: rgb(var(--ink));
   --color-brand-mid: rgb(var(--ink-muted));
@@ -126,7 +119,7 @@
   --font-sans: var(--font-inter), "Inter", system-ui, sans-serif;
 }
 
-/* legacy var aliases (kept so first-pass inline styles still resolve) */
+/* legacy aliases */
 :root {
   --brand-red: rgb(var(--brand));
   --brand-dark: rgb(var(--ink));
@@ -149,7 +142,6 @@
   --shadow-blue: var(--shadow-navy);
 }
 
-/* RESET */
 *,
 *::before,
 *::after {
@@ -162,7 +154,7 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 15px;             /* slightly tighter base for 14" comfort */
+  font-size: 15px;
 }
 
 body {
@@ -173,6 +165,9 @@ body {
   line-height: 1.55;
   font-weight: 400;
 }
+
+[lang="am"] body { font-feature-settings: "kern"; }
+[lang="om"] body { font-feature-settings: "kern"; }
 
 img,
 video {
@@ -189,7 +184,6 @@ button { cursor: pointer; font-family: inherit; }
   color: rgb(var(--ink));
 }
 
-/* LAYOUT */
 .container {
   max-width: var(--max-width);
   margin-inline: auto;
@@ -213,7 +207,6 @@ button { cursor: pointer; font-family: inherit; }
   .section { padding-block: var(--section-py-mobile); }
 }
 
-/* TYPOGRAPHY — Garamond serif for display, Inter for body */
 .font-display {
   font-family: var(--font-display);
   font-feature-settings: "lnum", "kern";
@@ -255,7 +248,7 @@ button { cursor: pointer; font-family: inherit; }
 
 .text-body-lg { font-size: 16px; line-height: 1.65; color: rgb(var(--ink-muted)); }
 .text-body { font-size: 15px; line-height: 1.6; color: rgb(var(--ink-muted)); }
-.text-caption { font-size: 12px; line-height: 1.5; color: rgb(var(--ink-faint)); }
+.text-caption { font-size: 13px; line-height: 1.5; color: rgb(var(--ink-faint)); }
 
 .section-label {
   display: inline-flex;
@@ -278,7 +271,7 @@ button { cursor: pointer; font-family: inherit; }
   border-radius: 2px;
 }
 
-/* BUTTONS */
+/* BUTTONS — flat fills only, no gradient shadows */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -292,7 +285,8 @@ button { cursor: pointer; font-family: inherit; }
   line-height: 1.18;
   text-align: center;
   border: 1.5px solid transparent;
-  transition: all var(--duration-base) var(--ease-out);
+  transition: background 200ms ease, border-color 200ms ease, color 200ms ease,
+    transform 200ms var(--ease-out);
   cursor: pointer;
   font-family: var(--font-sans);
 }
@@ -301,7 +295,6 @@ button { cursor: pointer; font-family: inherit; }
   background: rgb(var(--brand));
   color: white;
   border-color: rgb(var(--brand));
-  box-shadow: var(--shadow-brand);
 }
 
 .btn-primary:hover {
@@ -314,7 +307,6 @@ button { cursor: pointer; font-family: inherit; }
   background: rgb(var(--teal));
   color: white;
   border-color: rgb(var(--teal));
-  box-shadow: var(--shadow-teal);
 }
 
 .btn-teal:hover {
@@ -341,18 +333,12 @@ button { cursor: pointer; font-family: inherit; }
   border-color: rgb(var(--ink));
 }
 
-.btn-dark:hover {
-  background: black;
-  border-color: black;
-  transform: translateY(-1px);
-}
+.btn-dark:hover { background: black; border-color: black; transform: translateY(-1px); }
 
 .btn-gold {
-  /* back-compat alias — re-routes to primary crimson */
   background: rgb(var(--brand));
   color: white;
   border-color: rgb(var(--brand));
-  box-shadow: var(--shadow-brand);
 }
 
 .btn-gold:hover {
@@ -408,15 +394,13 @@ button { cursor: pointer; font-family: inherit; }
 .card-flat { box-shadow: none; }
 .card-body { padding: clamp(16px, 2.4vw, 24px); }
 
-/* GLASS — translucent surface with blur, used for nav + over-photo cards */
+/* GLASS — solid translucent background, no gradients */
 .glass {
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.78);
   backdrop-filter: saturate(160%) blur(18px);
   -webkit-backdrop-filter: saturate(160%) blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.5);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.5) inset,
-    0 12px 32px rgba(18, 22, 32, 0.12);
+  box-shadow: 0 12px 32px rgba(18, 22, 32, 0.12);
 }
 
 .glass-dark {
@@ -424,14 +408,12 @@ button { cursor: pointer; font-family: inherit; }
   backdrop-filter: saturate(160%) blur(20px);
   -webkit-backdrop-filter: saturate(160%) blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.10);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.06) inset,
-    0 18px 40px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
   color: white;
 }
 
 .glass-brand {
-  background: rgba(159, 31, 42, 0.18);
+  background: rgba(159, 31, 42, 0.22);
   backdrop-filter: saturate(160%) blur(18px);
   -webkit-backdrop-filter: saturate(160%) blur(18px);
   border: 1px solid rgba(255, 255, 255, 0.18);
@@ -501,40 +483,30 @@ textarea.input {
   min-height: 110px;
 }
 
-/* HERO */
+/* HERO — image background with solid color overlay (no gradients) */
 .hero-shell {
   position: relative;
   padding-top: 132px;
   padding-bottom: 64px;
-  background: rgb(var(--navy-strong));
   color: white;
   overflow: hidden;
   isolation: isolate;
 }
 
-.hero-shell::before {
-  content: "";
+.hero-bg {
   position: absolute;
   inset: 0;
   z-index: -2;
-  background:
-    radial-gradient(ellipse 70% 60% at 88% 0%, rgba(159, 31, 42, 0.55), transparent 65%),
-    radial-gradient(ellipse 50% 50% at 0% 100%, rgba(46, 142, 142, 0.28), transparent 70%),
-    linear-gradient(155deg, rgb(var(--navy-strong)) 0%, rgb(var(--navy)) 60%, #182236 100%);
+  background-color: rgb(var(--navy-strong));
+  background-size: cover;
+  background-position: center;
 }
 
-.hero-shell::after {
-  content: "";
+.hero-overlay {
   position: absolute;
   inset: 0;
   z-index: -1;
-  background-image:
-    linear-gradient(to right, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-  background-size: 48px 48px;
-  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black, transparent 80%);
-  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, black, transparent 80%);
-  pointer-events: none;
+  background-color: rgba(8, 12, 22, 0.66);
 }
 
 .hero-shell .text-display,
@@ -542,45 +514,35 @@ textarea.input {
 .hero-shell .text-h2 { color: white; }
 
 .hero-shell .text-body-lg,
-.hero-shell .text-body { color: rgba(255, 255, 255, 0.76); }
+.hero-shell .text-body { color: rgba(255, 255, 255, 0.78); }
 
 .subhero {
-  padding-top: 120px;
-  padding-bottom: 48px;
-  background:
-    linear-gradient(180deg, rgb(var(--surface-2)) 0%, rgb(var(--bg)) 100%);
+  padding-top: 132px;
+  padding-bottom: 56px;
+  background: rgb(var(--bg-soft));
   border-bottom: 1px solid rgb(var(--border));
   position: relative;
   overflow: hidden;
 }
 
-.subhero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgb(var(--border) / 0.4) 1px, transparent 1px),
-    linear-gradient(to bottom, rgb(var(--border) / 0.4) 1px, transparent 1px);
-  background-size: 40px 40px;
-  mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, black, transparent 78%);
-  -webkit-mask-image: radial-gradient(ellipse 60% 70% at 50% 0%, black, transparent 78%);
-}
-
 @media (max-width: 768px) {
-  .hero-shell { padding-top: 108px; padding-bottom: 48px; }
-  .subhero { padding-top: 100px; padding-bottom: 36px; }
+  .hero-shell { padding-top: 116px; padding-bottom: 56px; }
+  .subhero { padding-top: 110px; padding-bottom: 40px; }
 }
 
-/* SECTIONS */
+/* SECTIONS — flat backgrounds only */
 .section-cream-deep { background: rgb(var(--surface-2)); }
+.section-soft { background: rgb(var(--bg-soft)); }
 .section-ink {
   background: rgb(var(--ink));
   color: white;
 }
-
 .section-navy {
   background: rgb(var(--navy));
+  color: white;
+}
+.section-navy-deep {
+  background: rgb(var(--navy-strong));
   color: white;
 }
 
@@ -589,12 +551,17 @@ textarea.input {
 .section-ink .text-h2,
 .section-navy .text-display,
 .section-navy .text-h1,
-.section-navy .text-h2 { color: white; }
+.section-navy .text-h2,
+.section-navy-deep .text-display,
+.section-navy-deep .text-h1,
+.section-navy-deep .text-h2 { color: white; }
 
 .section-ink .text-body,
 .section-ink .text-body-lg,
 .section-navy .text-body,
-.section-navy .text-body-lg { color: rgba(255, 255, 255, 0.74); }
+.section-navy .text-body-lg,
+.section-navy-deep .text-body,
+.section-navy-deep .text-body-lg { color: rgba(255, 255, 255, 0.74); }
 
 /* GRIDS */
 .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
@@ -615,13 +582,12 @@ textarea.input {
   .grid-4 { grid-template-columns: 1fr; }
 }
 
-/* IMAGES */
+/* IMAGES — solid placeholder, no gradient */
 .photo-wrap {
   position: relative;
   overflow: hidden;
   border-radius: var(--radius-lg);
-  background:
-    linear-gradient(135deg, rgb(var(--brand-muted)) 0%, rgb(var(--surface-2)) 100%);
+  background-color: rgb(var(--surface-2));
 }
 
 .photo-wrap img {
@@ -638,9 +604,7 @@ textarea.input {
 .photo-tilt {
   transform: rotate(-1deg);
   transform-origin: center;
-  box-shadow:
-    0 20px 48px -20px rgba(18, 22, 32, 0.45),
-    0 8px 22px -10px rgba(159, 31, 42, 0.18);
+  box-shadow: 0 20px 48px -20px rgba(18, 22, 32, 0.42);
 }
 
 /* SCROLLBAR + FOCUS */
@@ -653,7 +617,7 @@ textarea.input {
   outline-offset: 3px;
 }
 
-/* Ethiopian flag stripe (sparing decorative accent) */
+/* Ethiopian flag stripe */
 .flag-stripe {
   display: flex;
   height: 3px;
@@ -667,7 +631,7 @@ textarea.input {
 .flag-stripe > span:nth-child(2) { background: rgb(var(--gold)); }
 .flag-stripe > span:nth-child(3) { background: rgb(var(--brand)); }
 
-/* Marquee */
+/* Marquee — fade mask is functional UX, kept */
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -683,6 +647,16 @@ textarea.input {
 .marquee-mask {
   mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
   -webkit-mask-image: linear-gradient(to right, transparent, black 12%, black 88%, transparent);
+}
+
+/* Floating-pill navbar */
+.nav-pill {
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: saturate(160%) blur(20px);
+  -webkit-backdrop-filter: saturate(160%) blur(20px);
+  border: 1px solid rgb(var(--border));
+  border-radius: 999px;
+  box-shadow: var(--shadow-pill);
 }
 
 /* Apex tooltip polish */

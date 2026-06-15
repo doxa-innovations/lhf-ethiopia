@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import {
   ArrowRight,
@@ -7,7 +9,6 @@ import {
   HandHeart,
   Headphones,
   MapPin,
-  Mic,
   Quote,
   Users,
   Youtube,
@@ -26,6 +27,7 @@ import {
 import { StatBlock } from "@/components/marketing/StatBlock";
 import { ImpactCharts } from "@/components/marketing/ImpactCharts";
 import { YouTubeEmbed } from "@/components/podcast/YouTubeEmbed";
+import { useT } from "@/components/providers/LanguageProvider";
 import {
   EVENTS,
   LANGUAGES,
@@ -34,12 +36,12 @@ import {
   PHOTOS,
   PODCAST,
   PODCAST_EPISODES,
-  SITE,
   STORIES,
   VALUES,
 } from "@/lib/content";
 
 export default function HomePage() {
+  const { t } = useT();
   const upcomingEvents = EVENTS.filter((e) => e.status === "Upcoming").slice(0, 3);
   const sortedEpisodes = [...PODCAST_EPISODES].sort((a, b) =>
     a.date < b.date ? 1 : -1,
@@ -50,8 +52,16 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ===================== HERO ===================== */}
+      {/* ===================== HERO (image background) ===================== */}
       <section className="hero-shell">
+        <div
+          className="hero-bg"
+          style={{
+            backgroundImage: `url("${PHOTOS.congregation}")`,
+          }}
+        />
+        <div className="hero-overlay" />
+
         <div
           className="container-wide"
           style={{
@@ -75,7 +85,7 @@ export default function HomePage() {
                 >
                   <span /> <span /> <span />
                 </span>
-                The Word at work in Ethiopia
+                {t("common.tagWordAtWork")}
               </span>
             </Reveal>
 
@@ -84,7 +94,7 @@ export default function HomePage() {
                 className="text-display"
                 style={{ marginTop: 18, maxWidth: 580 }}
               >
-                The Gospel,{" "}
+                {t("home.heroTitlePart1")}{" "}
                 <em
                   style={{
                     color: "rgb(var(--brand-soft))",
@@ -92,9 +102,9 @@ export default function HomePage() {
                     fontWeight: 500,
                   }}
                 >
-                  in every heart language
+                  {t("home.heroTitleEm")}
                 </em>{" "}
-                of Ethiopia.
+                {t("home.heroTitlePart2")}
               </h1>
             </Reveal>
 
@@ -103,7 +113,7 @@ export default function HomePage() {
                 className="text-body-lg"
                 style={{ marginTop: 18, maxWidth: 520 }}
               >
-                {SITE.description}
+                {t("home.whatWeDoBody")}
               </p>
             </Reveal>
 
@@ -117,7 +127,7 @@ export default function HomePage() {
                 }}
               >
                 <Button href="/donate" variant="teal" size="md">
-                  Sponsor a book <ArrowRight size={15} />
+                  {t("home.heroCtaPrimary")} <ArrowRight size={15} />
                 </Button>
                 <Button
                   href="/podcast"
@@ -129,7 +139,7 @@ export default function HomePage() {
                     borderColor: "rgba(255,255,255,0.28)",
                   }}
                 >
-                  <Youtube size={15} /> Watch on YouTube
+                  <Youtube size={15} /> {t("home.heroCtaSecondary")}
                 </Button>
               </div>
             </Reveal>
@@ -181,16 +191,6 @@ export default function HomePage() {
                   fallbackLabel="Reading scripture"
                 />
               </div>
-              <div
-                aria-hidden
-                style={{
-                  position: "absolute",
-                  inset: -32,
-                  background:
-                    "radial-gradient(ellipse 50% 50% at 50% 50%, rgba(159, 31, 42, 0.22), transparent 70%)",
-                  zIndex: -1,
-                }}
-              />
             </div>
           </Reveal>
         </div>
@@ -207,10 +207,10 @@ export default function HomePage() {
         >
           <StatBlock
             stats={[
-              { value: 6, suffix: "+", label: "Heart languages" },
-              { value: 42300, suffix: "+", label: "Books distributed" },
-              { value: 180, suffix: "+", label: "Congregations supplied" },
-              { value: 14, label: "Podcast episodes live" },
+              { value: 6, suffix: "+", label: t("home.statLanguages") },
+              { value: 42300, suffix: "+", label: t("home.statBooks") },
+              { value: 180, suffix: "+", label: t("home.statCongregations") },
+              { value: 14, label: t("home.statEpisodes") },
             ]}
             tone="dark"
           />
@@ -243,7 +243,7 @@ export default function HomePage() {
               marginBottom: 12,
             }}
           >
-            Partners & supporters
+            {t("common.partnersLabel")}
           </p>
           <MarqueeStrip items={PARTNERS} />
         </div>
@@ -260,14 +260,10 @@ export default function HomePage() {
                 marginInline: "auto",
               }}
             >
-              <span className="section-label">What we do</span>
-              <h2 className="text-h1">
-                Translate. Print. Distribute. Free of charge.
-              </h2>
+              <span className="section-label">{t("common.sectionWhatWeDo")}</span>
+              <h2 className="text-h1">{t("home.whatWeDoTitle")}</h2>
               <p className="text-body" style={{ marginTop: 12 }}>
-                Lutheran congregations across Ethiopia ask for one thing again
-                and again — solid Christian books they can actually read. LHF
-                Ethiopia closes that gap, language by language.
+                {t("home.whatWeDoBody")}
               </p>
             </div>
           </Reveal>
@@ -276,23 +272,20 @@ export default function HomePage() {
             {[
               {
                 icon: <Globe2 size={18} />,
-                title: "Translation",
-                body:
-                  "Ethiopian pastors and theological reviewers render Luther's catechism, Bible stories, and devotionals into Amharic, Afaan Oromoo, Tigrinya, and more.",
+                title: t("home.translation"),
+                body: t("home.translationBody"),
                 photo: PHOTOS.translatorAtDesk,
               },
               {
                 icon: <BookOpen size={18} />,
-                title: "Printing",
-                body:
-                  "Books are printed locally in Addis Ababa whenever possible, supporting Ethiopian presses and shrinking the time from manuscript to congregation.",
+                title: t("home.printing"),
+                body: t("home.printingBody"),
                 photo: PHOTOS.printPress,
               },
               {
                 icon: <HandHeart size={18} />,
-                title: "Distribution",
-                body:
-                  "We deliver to congregations, Sunday schools, and pastoral training centers countrywide — and they receive every title at no cost.",
+                title: t("home.distribution"),
+                body: t("home.distributionBody"),
                 photo: PHOTOS.handsHolding,
               },
             ].map((step) => (
@@ -338,27 +331,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===================== DIGITAL OUTREACH / PODCAST FEATURE ===================== */}
-      <section
-        style={{
-          position: "relative",
-          padding: "var(--section-py) 0",
-          background: "rgb(var(--navy-strong))",
-          color: "white",
-          overflow: "hidden",
-          isolation: "isolate",
-        }}
-      >
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            inset: 0,
-            zIndex: -1,
-            background:
-              "radial-gradient(ellipse 60% 60% at 90% 100%, rgba(46, 142, 142, 0.32), transparent 60%), radial-gradient(ellipse 50% 50% at 10% 0%, rgba(159, 31, 42, 0.32), transparent 65%)",
-          }}
-        />
+      {/* ===================== DIGITAL OUTREACH / PODCAST ===================== */}
+      <section className="section section-navy-deep">
         <div className="container-wide">
           <div
             style={{
@@ -375,7 +349,8 @@ export default function HomePage() {
                   className="badge badge-glass"
                   style={{ padding: "5px 12px" }}
                 >
-                  <Youtube size={11} /> Digital outreach on YouTube
+                  <Youtube size={11} />{" "}
+                  {t("common.sectionDigitalOutreach")}
                 </span>
                 <h2
                   className="text-h1"
@@ -403,7 +378,7 @@ export default function HomePage() {
                     maxWidth: 460,
                   }}
                 >
-                  {PODCAST.tagline} {PODCAST.cadence}.
+                  {t("home.podcastTagline")} {PODCAST.cadence}.
                 </p>
                 <div
                   style={{
@@ -424,10 +399,19 @@ export default function HomePage() {
                       borderColor: "#FF0000",
                     }}
                   >
-                    <Youtube size={14} /> Subscribe on YouTube
+                    <Youtube size={14} /> {t("common.subscribe")}
                   </a>
-                  <Button href="/podcast" variant="secondary" size="sm" style={{ background: "rgba(255,255,255,0.06)", color: "white", borderColor: "rgba(255,255,255,0.28)" }}>
-                    <Headphones size={13} /> All episodes
+                  <Button
+                    href="/podcast"
+                    variant="secondary"
+                    size="sm"
+                    style={{
+                      background: "rgba(255,255,255,0.06)",
+                      color: "white",
+                      borderColor: "rgba(255,255,255,0.28)",
+                    }}
+                  >
+                    <Headphones size={13} /> {t("home.allEpisodes")}
                   </Button>
                 </div>
 
@@ -449,7 +433,7 @@ export default function HomePage() {
                       color: "rgb(var(--teal-soft))",
                     }}
                   >
-                    More recent episodes
+                    {t("home.moreEpisodes")}
                   </div>
                   {otherEpisodes.map((ep) => (
                     <Link
@@ -476,7 +460,7 @@ export default function HomePage() {
                           fontFamily: "var(--font-display)",
                         }}
                       >
-                        {ep.number}
+                        {ep.number || "•"}
                       </span>
                       <span
                         style={{
@@ -525,10 +509,7 @@ export default function HomePage() {
       </section>
 
       {/* ===================== IMPACT CHARTS ===================== */}
-      <section
-        className="section"
-        style={{ background: "rgb(var(--bg-soft))" }}
-      >
+      <section className="section section-soft">
         <div className="container-wide">
           <div
             style={{
@@ -542,16 +523,17 @@ export default function HomePage() {
           >
             <Reveal>
               <div style={{ maxWidth: 540 }}>
-                <span className="section-label">Impact</span>
-                <h2 className="text-h1">The Word, multiplying.</h2>
+                <span className="section-label">
+                  {t("common.sectionImpact")}
+                </span>
+                <h2 className="text-h1">{t("home.impactTitle")}</h2>
                 <p className="text-body" style={{ marginTop: 10 }}>
-                  Real distribution data — every copy counted, broken down by
-                  language and year. We update these numbers monthly.
+                  {t("home.impactBody")}
                 </p>
               </div>
             </Reveal>
             <Button href="/projects" variant="navy" size="md">
-              Adopt a project <ArrowRight size={14} />
+              {t("common.adoptProject")} <ArrowRight size={14} />
             </Button>
           </div>
 
@@ -576,19 +558,17 @@ export default function HomePage() {
           >
             <Reveal>
               <div style={{ maxWidth: 540 }}>
-                <span className="section-label">Heart languages</span>
-                <h2 className="text-h1">
-                  Six languages today. More on the way.
-                </h2>
+                <span className="section-label">
+                  {t("common.sectionLanguages")}
+                </span>
+                <h2 className="text-h1">{t("home.languagesTitle")}</h2>
                 <p className="text-body" style={{ marginTop: 10 }}>
-                  Ethiopia is home to 90+ languages. We add a new heart
-                  language whenever donors, translators, and a partner
-                  congregation come together.
+                  {t("home.languagesBody")}
                 </p>
               </div>
             </Reveal>
             <Button href="/publications" variant="primary" size="md">
-              Full library <ArrowRight size={14} />
+              {t("home.fullLibrary")} <ArrowRight size={14} />
             </Button>
           </div>
 
@@ -655,10 +635,7 @@ export default function HomePage() {
       </section>
 
       {/* ===================== EVENTS TEASER ===================== */}
-      <section
-        className="section"
-        style={{ background: "rgb(var(--bg-soft))" }}
-      >
+      <section className="section section-soft">
         <div className="container">
           <div
             style={{
@@ -672,14 +649,12 @@ export default function HomePage() {
           >
             <Reveal>
               <div>
-                <span className="section-label">Upcoming</span>
-                <h2 className="text-h1">Events &amp; gatherings</h2>
-                <p
-                  className="text-body"
-                  style={{ marginTop: 8, maxWidth: 500 }}
-                >
-                  Distribution days, pastor trainings, and live podcast
-                  recordings across Ethiopia.
+                <span className="section-label">
+                  {t("common.sectionUpcoming")}
+                </span>
+                <h2 className="text-h1">{t("home.eventsTitle")}</h2>
+                <p className="text-body" style={{ marginTop: 8, maxWidth: 500 }}>
+                  {t("home.eventsBody")}
                 </p>
               </div>
             </Reveal>
@@ -687,7 +662,7 @@ export default function HomePage() {
               href="/events"
               style={{ color: "rgb(var(--brand))", fontWeight: 600 }}
             >
-              All events →
+              {t("home.allEvents")}
             </Link>
           </div>
 
@@ -762,20 +737,16 @@ export default function HomePage() {
           >
             <Reveal>
               <div>
-                <span className="section-label">Stories</span>
-                <h2 className="text-h1">
-                  A Lutheran library, one face at a time.
-                </h2>
-                <p
-                  className="text-body-lg"
-                  style={{ marginTop: 12 }}
-                >
-                  Translators, pastors, Sunday school teachers, and
-                  congregation members carry these books into real life.
+                <span className="section-label">
+                  {t("common.sectionStories")}
+                </span>
+                <h2 className="text-h1">{t("home.storiesTitle")}</h2>
+                <p className="text-body-lg" style={{ marginTop: 12 }}>
+                  {t("home.storiesBody")}
                 </p>
                 <div style={{ marginTop: 22 }}>
                   <Button href="/stories" variant="primary" size="md">
-                    Read the stories <ArrowRight size={14} />
+                    {t("home.readStories")} <ArrowRight size={14} />
                   </Button>
                 </div>
               </div>
@@ -802,10 +773,7 @@ export default function HomePage() {
                       />
                     </div>
                     <CardBody>
-                      <Quote
-                        size={14}
-                        style={{ color: "rgb(var(--brand))" }}
-                      />
+                      <Quote size={14} style={{ color: "rgb(var(--brand))" }} />
                       <p
                         className="font-display"
                         style={{
@@ -834,12 +802,7 @@ export default function HomePage() {
                           {" "}
                           · {story.role}
                         </span>
-                        <div
-                          style={{
-                            color: "rgb(var(--ink-faint))",
-                            marginTop: 2,
-                          }}
-                        >
+                        <div style={{ color: "rgb(var(--ink-faint))", marginTop: 2 }}>
                           {story.congregation}
                         </div>
                       </div>
@@ -859,10 +822,7 @@ export default function HomePage() {
       </section>
 
       {/* ===================== VALUES ===================== */}
-      <section
-        className="section"
-        style={{ background: "rgb(var(--bg-soft))" }}
-      >
+      <section className="section section-soft">
         <div className="container">
           <div
             style={{
@@ -874,10 +834,7 @@ export default function HomePage() {
             className="values-grid"
           >
             <Reveal direction="right">
-              <div
-                className="photo-wrap"
-                style={{ aspectRatio: "4 / 5" }}
-              >
+              <div className="photo-wrap" style={{ aspectRatio: "4 / 5" }}>
                 <SafeImage
                   src={PHOTOS.congregation}
                   alt="Lutheran congregation gathered"
@@ -890,14 +847,12 @@ export default function HomePage() {
 
             <div>
               <Reveal>
-                <span className="section-label">What we believe</span>
-                <h2 className="text-h1">
-                  Bible-based. Christ-centered. Reformation-driven.
-                </h2>
+                <span className="section-label">
+                  {t("common.sectionWhatWeBelieve")}
+                </span>
+                <h2 className="text-h1">{t("home.valuesTitle")}</h2>
               </Reveal>
-              <StaggerChildren
-                style={{ display: "grid", gap: 12, marginTop: 22 }}
-              >
+              <StaggerChildren style={{ display: "grid", gap: 12, marginTop: 22 }}>
                 {VALUES.map((value) => (
                   <StaggerItem key={value.title}>
                     <div
@@ -958,15 +913,15 @@ export default function HomePage() {
           >
             <Reveal>
               <div>
-                <span className="section-label">Latest</span>
-                <h2 className="text-h1">The Word at work</h2>
+                <span className="section-label">{t("common.sectionLatest")}</span>
+                <h2 className="text-h1">{t("common.tagWordAtWork")}</h2>
               </div>
             </Reveal>
             <Link
               href="/news"
               style={{ color: "rgb(var(--brand))", fontWeight: 600 }}
             >
-              All updates →
+              {t("common.seeAllArrow")}
             </Link>
           </div>
           <StaggerChildren className="grid-3">
@@ -1002,7 +957,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===================== BIG CTA ===================== */}
+      {/* ===================== BIG CTA — flat ink background, no gradient ===================== */}
       <section className="section">
         <div className="container">
           <Reveal>
@@ -1021,17 +976,7 @@ export default function HomePage() {
               }}
               className="cta-shell"
             >
-              <div
-                aria-hidden
-                style={{
-                  position: "absolute",
-                  inset: 0,
-                  background:
-                    "radial-gradient(ellipse 65% 65% at 100% 20%, rgba(159, 31, 42, 0.42), transparent 60%), radial-gradient(ellipse 50% 50% at 0% 100%, rgba(46, 142, 142, 0.30), transparent 60%)",
-                  pointerEvents: "none",
-                }}
-              />
-              <div style={{ position: "relative" }}>
+              <div>
                 <div
                   style={{
                     display: "flex",
@@ -1040,10 +985,7 @@ export default function HomePage() {
                     marginBottom: 10,
                   }}
                 >
-                  <Users
-                    size={15}
-                    style={{ color: "rgb(var(--teal-soft))" }}
-                  />
+                  <Users size={15} style={{ color: "rgb(var(--teal-soft))" }} />
                   <span
                     style={{
                       fontSize: 11,
@@ -1053,33 +995,28 @@ export default function HomePage() {
                       color: "rgb(var(--teal-soft))",
                     }}
                   >
-                    Adopt a project
+                    {t("common.adoptProject")}
                   </span>
                 </div>
                 <h2 className="text-h1" style={{ color: "white" }}>
-                  $7 prints a catechism. $1,200 opens a new language.
+                  {t("home.ctaTitle")}
                 </h2>
                 <p
                   className="text-body"
-                  style={{
-                    color: "rgba(255,255,255,0.78)",
-                    marginTop: 10,
-                  }}
+                  style={{ color: "rgba(255,255,255,0.78)", marginTop: 10 }}
                 >
-                  Every project on our list is a real congregation, a real
-                  translator, and a real shelf waiting to be filled.
+                  {t("home.ctaBody")}
                 </p>
               </div>
               <div
                 style={{
-                  position: "relative",
                   display: "flex",
                   flexDirection: "column",
                   gap: 10,
                 }}
               >
                 <Button href="/projects" variant="teal" size="md">
-                  See projects needing adoption
+                  {t("home.ctaPrimary")}
                 </Button>
                 <Button
                   href="/donate"
@@ -1091,7 +1028,7 @@ export default function HomePage() {
                     borderColor: "rgba(255,255,255,0.28)",
                   }}
                 >
-                  Give where most needed
+                  {t("home.ctaSecondary")}
                 </Button>
               </div>
             </div>

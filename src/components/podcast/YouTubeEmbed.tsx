@@ -93,8 +93,7 @@ export function YouTubeEmbed({
             style={{
               position: "absolute",
               inset: 0,
-              background:
-                "linear-gradient(180deg, transparent 0%, transparent 50%, rgba(0,0,0,0.55) 100%)",
+              background: "rgba(0,0,0,0.32)",
             }}
           />
           <span
@@ -180,8 +179,7 @@ function PlaceholderCard({
       style={{
         position: "absolute",
         inset: 0,
-        background:
-          "linear-gradient(135deg, rgb(var(--brand-strong)) 0%, rgb(var(--navy-strong)) 100%)",
+        background: "rgb(var(--navy-strong))",
         color: "white",
         display: "grid",
         placeItems: "center",

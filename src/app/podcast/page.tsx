@@ -28,8 +28,8 @@ export default function PodcastPage() {
       <section
         style={{
           position: "relative",
-          paddingTop: 120,
-          paddingBottom: 48,
+          paddingTop: 132,
+          paddingBottom: 56,
           background: "rgb(var(--navy-strong))",
           color: "white",
           overflow: "hidden",
@@ -41,9 +41,20 @@ export default function PodcastPage() {
           style={{
             position: "absolute",
             inset: 0,
+            zIndex: -2,
+            backgroundImage: `url("${PHOTOS.podcastStudio}")`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            opacity: 0.18,
+          }}
+        />
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: 0,
             zIndex: -1,
-            background:
-              "radial-gradient(ellipse 60% 60% at 90% 0%, rgba(46, 142, 142, 0.34), transparent 60%), radial-gradient(ellipse 55% 55% at 0% 100%, rgba(159, 31, 42, 0.28), transparent 70%), linear-gradient(155deg, rgb(var(--navy-strong)) 0%, rgb(var(--navy)) 60%, #182236 100%)",
+            background: "rgba(8, 12, 22, 0.5)",
           }}
         />
         <div className="container-wide" style={{ position: "relative" }}>

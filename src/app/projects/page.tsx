@@ -169,8 +169,7 @@ export default function ProjectsPage() {
                                 style={{
                                   width: `${pct}%`,
                                   height: "100%",
-                                  background:
-                                    "linear-gradient(90deg, rgb(var(--brand)) 0%, rgb(var(--brand-strong)) 100%)",
+                                  background: "rgb(var(--brand))",
                                   transition: "width 600ms ease",
                                 }}
                               />

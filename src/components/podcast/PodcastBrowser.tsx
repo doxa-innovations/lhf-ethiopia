@@ -172,8 +172,7 @@ function EpisodeCard({ ep }: { ep: Episode }) {
             position: "relative",
             display: "block",
             aspectRatio: "16 / 9",
-            background:
-              "linear-gradient(135deg, rgb(var(--brand-strong)) 0%, rgb(var(--navy-strong)) 100%)",
+            background: "rgb(var(--navy-strong))",
             overflow: "hidden",
           }}
         >
@@ -216,8 +215,7 @@ function EpisodeCard({ ep }: { ep: Episode }) {
                 style={{
                   position: "absolute",
                   inset: 0,
-                  background:
-                    "linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 50%, rgba(0,0,0,0.5) 100%)",
+                  background: "rgba(0,0,0,0.22)",
                 }}
               />
             </>
