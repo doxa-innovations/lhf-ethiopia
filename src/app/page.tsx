@@ -24,8 +24,8 @@ import {
   StaggerChildren,
   StaggerItem,
 } from "@/components/ui";
-import { StatBlock } from "@/components/marketing/StatBlock";
 import { ImpactCharts } from "@/components/marketing/ImpactCharts";
+import { HeroBackdrop } from "@/components/marketing/HeroBackdrop";
 import { YouTubeEmbed } from "@/components/podcast/YouTubeEmbed";
 import { useT } from "@/components/providers/LanguageProvider";
 import {
@@ -52,15 +52,12 @@ export default function HomePage() {
 
   return (
     <>
-      {/* ===================== HERO (image background) ===================== */}
-      <section className="hero-shell">
-        <div
-          className="hero-bg"
-          style={{
-            backgroundImage: `url("${PHOTOS.congregation}")`,
-          }}
-        />
-        <div className="hero-overlay" />
+      {/* ===================== HERO (geometric SVG backdrop, no image load) ===================== */}
+      <section
+        className="hero-shell"
+        style={{ background: "rgb(var(--navy-strong))" }}
+      >
+        <HeroBackdrop />
 
         <div
           className="container-wide hero-row"
@@ -195,27 +192,6 @@ export default function HomePage() {
           </Reveal>
         </div>
 
-        <div
-          className="container-wide"
-          style={{
-            position: "relative",
-            zIndex: 2,
-            marginTop: 48,
-            paddingTop: 28,
-            borderTop: "1px solid rgba(255,255,255,0.10)",
-          }}
-        >
-          <StatBlock
-            stats={[
-              { value: 6, suffix: "+", label: t("home.statLanguages") },
-              { value: 42300, suffix: "+", label: t("home.statBooks") },
-              { value: 180, suffix: "+", label: t("home.statCongregations") },
-              { value: 14, label: t("home.statEpisodes") },
-            ]}
-            tone="dark"
-          />
-        </div>
-
         <style>{`
           .hero-collage { display: none; }
           @media (min-width: 1024px) {
@@ -225,12 +201,145 @@ export default function HomePage() {
         `}</style>
       </section>
 
+      {/* ===================== STATS — restyled "By the numbers" ===================== */}
+      <section
+        style={{
+          background: "rgb(var(--surface))",
+          paddingTop: 28,
+          paddingBottom: 28,
+          borderBottom: "1px solid rgb(var(--border))",
+          position: "relative",
+        }}
+      >
+        <div className="container-wide">
+          <div className="stat-grid">
+            {[
+              {
+                icon: <Globe2 size={16} />,
+                value: "6+",
+                label: t("home.statLanguages"),
+                hint: "Amharic · Afaan Oromoo · Tigrinya · …",
+              },
+              {
+                icon: <BookOpen size={16} />,
+                value: "42,300+",
+                label: t("home.statBooks"),
+                hint: "Distributed since 2020",
+              },
+              {
+                icon: <Users size={16} />,
+                value: "180+",
+                label: t("home.statCongregations"),
+                hint: "Across Oromia, Amhara, Tigray, Sidama",
+              },
+              {
+                icon: <Headphones size={16} />,
+                value: "14",
+                label: t("home.statEpisodes"),
+                hint: "New episode every Friday",
+              },
+            ].map((s, i) => (
+              <div key={s.label} className="stat-cell">
+                <div className="stat-cell-head">
+                  <span
+                    aria-hidden
+                    style={{
+                      width: 28,
+                      height: 28,
+                      borderRadius: 6,
+                      background: "rgb(var(--brand-muted))",
+                      color: "rgb(var(--brand))",
+                      display: "grid",
+                      placeItems: "center",
+                      flexShrink: 0,
+                    }}
+                  >
+                    {s.icon}
+                  </span>
+                  {i === 1 ? (
+                    <span
+                      className="flag-stripe"
+                      style={{ width: 22, height: 2.5 }}
+                    >
+                      <span /> <span /> <span />
+                    </span>
+                  ) : null}
+                </div>
+                <div
+                  className="font-display"
+                  style={{
+                    marginTop: 14,
+                    fontSize: "clamp(26px, 4vw, 38px)",
+                    fontWeight: 500,
+                    color: "rgb(var(--ink))",
+                    letterSpacing: "-0.018em",
+                    lineHeight: 1,
+                  }}
+                >
+                  {s.value}
+                </div>
+                <div
+                  style={{
+                    marginTop: 6,
+                    fontSize: 11.5,
+                    fontWeight: 700,
+                    letterSpacing: "0.12em",
+                    textTransform: "uppercase",
+                    color: "rgb(var(--brand))",
+                  }}
+                >
+                  {s.label}
+                </div>
+                <div
+                  style={{
+                    marginTop: 4,
+                    fontSize: 12,
+                    color: "rgb(var(--ink-faint))",
+                    lineHeight: 1.45,
+                  }}
+                >
+                  {s.hint}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <style>{`
+          .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+          }
+          .stat-cell {
+            padding: 18px 18px;
+            border-right: 1px solid rgb(var(--border));
+            border-bottom: 1px solid rgb(var(--border));
+          }
+          .stat-cell:nth-child(2n) { border-right: none; }
+          .stat-cell:nth-last-child(-n+2) { border-bottom: none; }
+          .stat-cell-head {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            min-height: 28px;
+          }
+          @media (min-width: 768px) {
+            .stat-grid { grid-template-columns: repeat(4, 1fr); }
+            .stat-cell { padding: 20px 24px; border-bottom: none; }
+            .stat-cell:nth-child(2n) { border-right: 1px solid rgb(var(--border)); }
+            .stat-cell:last-child { border-right: none; }
+          }
+        `}</style>
+      </section>
+
       {/* ===================== PARTNER MARQUEE ===================== */}
       <section
         style={{
           padding: "20px 0",
           borderBottom: "1px solid rgb(var(--border))",
-          background: "rgb(var(--surface))",
+          background: "rgb(var(--bg-soft))",
         }}
       >
         <div className="container-wide">

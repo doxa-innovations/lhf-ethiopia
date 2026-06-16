@@ -10,7 +10,7 @@ export const SITE = {
     "LHF Ethiopia translates, prints, and distributes Bible-based, Christ-centered Lutheran books in Amharic, Afaan Oromoo, Tigrinya, Somali, Sidaamu Afoo, and Wolayttattuwaa — free of charge — and reaches new audiences through podcasting, events, and digital outreach.",
   parent:
     "A regional initiative of the Lutheran Heritage Foundation (LHF), Macomb, MI, USA.",
-  email: "ethiopia@lhfmissions.org",
+  email: "Info@lhfethiopia.org",
   phone: "+251 911 000 000",
   address: "Bole Sub-City, Addis Ababa, Ethiopia",
   social: {
