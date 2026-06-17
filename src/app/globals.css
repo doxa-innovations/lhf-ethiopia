@@ -646,19 +646,14 @@ textarea.input {
   outline-offset: 3px;
 }
 
-/* Ethiopian flag stripe */
-.flag-stripe {
-  display: flex;
-  height: 3px;
+/* Decorative hairline accent (no flag colours — neutral brand stripe) */
+.brand-accent {
+  display: block;
+  height: 2px;
   border-radius: 999px;
-  overflow: hidden;
-  width: 56px;
+  background: rgb(var(--brand));
+  width: 44px;
 }
-
-.flag-stripe > span { flex: 1; }
-.flag-stripe > span:nth-child(1) { background: rgb(var(--green)); }
-.flag-stripe > span:nth-child(2) { background: rgb(var(--gold)); }
-.flag-stripe > span:nth-child(3) { background: rgb(var(--brand)); }
 
 /* Marquee */
 @keyframes marquee {

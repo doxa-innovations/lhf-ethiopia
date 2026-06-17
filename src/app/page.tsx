@@ -9,7 +9,6 @@ import {
   HandHeart,
   Headphones,
   MapPin,
-  Quote,
   Users,
   Youtube,
 } from "lucide-react";
@@ -18,7 +17,6 @@ import {
   Button,
   Card,
   CardBody,
-  MarqueeStrip,
   Reveal,
   SafeImage,
   StaggerChildren,
@@ -32,11 +30,9 @@ import {
   EVENTS,
   LANGUAGES,
   NEWS,
-  PARTNERS,
   PHOTOS,
   PODCAST,
   PODCAST_EPISODES,
-  STORIES,
   VALUES,
 } from "@/lib/content";
 
@@ -77,11 +73,15 @@ export default function HomePage() {
                 style={{ padding: "5px 12px" }}
               >
                 <span
-                  className="flag-stripe"
-                  style={{ width: 18, height: 2.5 }}
-                >
-                  <span /> <span /> <span />
-                </span>
+                  aria-hidden
+                  style={{
+                    width: 18,
+                    height: 2,
+                    borderRadius: 999,
+                    background: "rgb(var(--brand-soft))",
+                    display: "inline-block",
+                  }}
+                />
                 {t("common.tagWordAtWork")}
               </span>
             </Reveal>
@@ -332,32 +332,6 @@ export default function HomePage() {
             .stat-cell:last-child { border-right: none; }
           }
         `}</style>
-      </section>
-
-      {/* ===================== PARTNER MARQUEE ===================== */}
-      <section
-        style={{
-          padding: "20px 0",
-          borderBottom: "1px solid rgb(var(--border))",
-          background: "rgb(var(--bg-soft))",
-        }}
-      >
-        <div className="container-wide">
-          <p
-            style={{
-              textAlign: "center",
-              fontSize: 10.5,
-              fontWeight: 700,
-              letterSpacing: "0.2em",
-              textTransform: "uppercase",
-              color: "rgb(var(--ink-faint))",
-              marginBottom: 12,
-            }}
-          >
-            {t("common.partnersLabel")}
-          </p>
-          <MarqueeStrip items={PARTNERS} />
-        </div>
       </section>
 
       {/* ===================== WHAT WE DO ===================== */}
@@ -870,104 +844,6 @@ export default function HomePage() {
             ))}
           </StaggerChildren>
         </div>
-      </section>
-
-      {/* ===================== STORIES TEASER ===================== */}
-      <section className="section">
-        <div className="container-wide">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr",
-              gap: 24,
-              alignItems: "center",
-            }}
-            className="stories-teaser"
-          >
-            <Reveal>
-              <div>
-                <span className="section-label">
-                  {t("common.sectionStories")}
-                </span>
-                <h2 className="text-h1">{t("home.storiesTitle")}</h2>
-                <p className="text-body-lg" style={{ marginTop: 12 }}>
-                  {t("home.storiesBody")}
-                </p>
-                <div style={{ marginTop: 22 }}>
-                  <Button href="/stories" variant="primary" size="md">
-                    {t("home.readStories")} <ArrowRight size={14} />
-                  </Button>
-                </div>
-              </div>
-            </Reveal>
-
-            <StaggerChildren className="grid-2">
-              {STORIES.slice(0, 2).map((story) => (
-                <StaggerItem key={story.slug}>
-                  <Card style={{ height: "100%" }}>
-                    <div
-                      className="photo-wrap"
-                      style={{ aspectRatio: "4 / 3", borderRadius: 0 }}
-                    >
-                      <SafeImage
-                        src={
-                          story.photo.startsWith("/")
-                            ? PHOTOS.pastor
-                            : story.photo
-                        }
-                        alt={story.name}
-                        fill
-                        sizes="(max-width: 1024px) 50vw, 300px"
-                        fallbackLabel={story.role}
-                      />
-                    </div>
-                    <CardBody>
-                      <Quote size={14} style={{ color: "rgb(var(--brand))" }} />
-                      <p
-                        className="font-display"
-                        style={{
-                          marginTop: 8,
-                          fontSize: 16,
-                          fontStyle: "italic",
-                          lineHeight: 1.5,
-                          color: "rgb(var(--ink))",
-                          fontWeight: 500,
-                        }}
-                      >
-                        &ldquo;{story.quote}&rdquo;
-                      </p>
-                      <div
-                        style={{
-                          marginTop: 14,
-                          paddingTop: 12,
-                          borderTop: "1px solid rgb(var(--border))",
-                          fontSize: 12.5,
-                        }}
-                      >
-                        <strong style={{ color: "rgb(var(--ink))" }}>
-                          {story.name}
-                        </strong>
-                        <span style={{ color: "rgb(var(--ink-faint))" }}>
-                          {" "}
-                          · {story.role}
-                        </span>
-                        <div style={{ color: "rgb(var(--ink-faint))", marginTop: 2 }}>
-                          {story.congregation}
-                        </div>
-                      </div>
-                    </CardBody>
-                  </Card>
-                </StaggerItem>
-              ))}
-            </StaggerChildren>
-          </div>
-        </div>
-
-        <style>{`
-          @media (min-width: 900px) {
-            .stories-teaser { grid-template-columns: 1fr 1.4fr !important; gap: 40px !important; }
-          }
-        `}</style>
       </section>
 
       {/* ===================== VALUES ===================== */}

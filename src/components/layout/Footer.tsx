@@ -135,9 +135,7 @@ export function Footer() {
             >
               {SITE.description}
             </p>
-            <div className="flag-stripe" style={{ marginTop: 14 }}>
-              <span /> <span /> <span />
-            </div>
+            <span className="brand-accent" style={{ marginTop: 14, display: "block" }} />
           </div>
 
           <div className="footer-cta">

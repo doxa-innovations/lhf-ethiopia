@@ -29,8 +29,63 @@ export const NAV_LINKS = [
   { href: "/podcast", label: "Podcast" },
   { href: "/projects", label: "Projects" },
   { href: "/events", label: "Events" },
-  { href: "/stories", label: "Stories" },
   { href: "/news", label: "News" },
+  { href: "/contact", label: "Contact" },
+] as const;
+
+/* Grouped navigation used by the dropdown navbar. Each top-level item
+   either links straight to a page, or opens a small menu of children. */
+export const NAV_GROUPS = [
+  { kind: "link" as const, href: "/", labelKey: "nav.home" },
+  {
+    kind: "menu" as const,
+    labelKey: "nav.about",
+    href: "/about",
+    items: [
+      { href: "/about", labelKey: "nav.about", descKey: "navMenu.aboutDesc" },
+      {
+        href: "/about#believe",
+        labelKey: "common.sectionWhatWeBelieve",
+        descKey: "navMenu.believeDesc",
+      },
+    ],
+  },
+  {
+    kind: "menu" as const,
+    labelKey: "navMenu.library",
+    href: "/publications",
+    items: [
+      {
+        href: "/publications",
+        labelKey: "nav.publications",
+        descKey: "navMenu.publicationsDesc",
+      },
+      {
+        href: "/podcast",
+        labelKey: "nav.podcast",
+        descKey: "navMenu.podcastDesc",
+      },
+    ],
+  },
+  {
+    kind: "menu" as const,
+    labelKey: "navMenu.engage",
+    href: "/projects",
+    items: [
+      {
+        href: "/projects",
+        labelKey: "nav.projects",
+        descKey: "navMenu.projectsDesc",
+      },
+      {
+        href: "/events",
+        labelKey: "nav.events",
+        descKey: "navMenu.eventsDesc",
+      },
+    ],
+  },
+  { kind: "link" as const, href: "/news", labelKey: "nav.news" },
+  { kind: "link" as const, href: "/contact", labelKey: "nav.contact" },
 ] as const;
 
 export const STATS = [
@@ -255,26 +310,49 @@ export const NEWS = [
   },
 ] as const;
 
+/* What we believe — confessional Lutheran content drawn from the LCMS
+   "What about…" series and the Book of Concord. Plain-English summaries
+   suitable for a public site; the doctrinal substance follows lcms.org. */
 export const VALUES = [
   {
-    title: "Heart language first",
+    title: "Sola Scriptura — Scripture Alone",
     body:
-      "We translate so people can meet Christ in the language they think and pray in — not the language imposed on them.",
+      "The Bible is the only rule and norm of faith and life. Holy Scripture is the written Word of God — inspired, inerrant, and the sole authority by which every doctrine is tested. We teach what Scripture teaches and confess what Scripture confesses.",
   },
   {
-    title: "Free of charge",
+    title: "Sola Gratia — Grace Alone",
     body:
-      "Congregations, pastors, and Sunday schools never pay for our books. Donors carry that cost so the Gospel travels free.",
+      "Salvation is the free gift of God's grace. We are saved not by what we have done or could do, but by the unmerited favor of God in Christ Jesus, who came to seek and save the lost.",
   },
   {
-    title: "Confessional & Bible-based",
+    title: "Sola Fide — Faith Alone",
     body:
-      "Every title is Bible-rooted, Christ-centered, and grounded in the historic Lutheran confessions — reviewed before it prints.",
+      "We are justified — declared righteous before God — through faith alone in Jesus Christ, apart from works of the law. This good news is the central article of the Christian faith and the heart of every book LHF Ethiopia distributes.",
   },
   {
-    title: "Local partnership",
+    title: "Solus Christus — Christ Alone",
     body:
-      "Ethiopian pastors, teachers, and translators lead the work. We resource the people God has already placed here.",
+      "Jesus Christ, true God and true man, is the one mediator between God and humanity. There is no other name under heaven by which we must be saved. His life, death, and resurrection accomplish our salvation in full.",
+  },
+  {
+    title: "Soli Deo Gloria — Glory to God Alone",
+    body:
+      "Every congregation served, every book printed, every podcast recorded is offered to the glory of God alone. We labour in His name, by His grace, for the spread of His Word in Ethiopia.",
+  },
+  {
+    title: "Word and Sacrament",
+    body:
+      "Christ comes to us through the means of grace: the preached Word of the Gospel, Holy Baptism, and the Lord's Supper. We support congregations in the regular, faithful use of these means so the saving work of Christ is delivered into the lives of God's people.",
+  },
+  {
+    title: "The Book of Concord",
+    body:
+      "We confess the unaltered Augsburg Confession (1530), Luther's Small and Large Catechisms, and the other Lutheran Confessions gathered in the Book of Concord — because they are a faithful exposition of Holy Scripture. Confessional Lutheran teaching shapes every title we choose to translate.",
+  },
+  {
+    title: "Heart language, free of charge",
+    body:
+      "People meet Christ best in the language they think and pray in. LHF Ethiopia translates, prints, and freely distributes Lutheran books in Amharic, Afaan Oromoo, Tigrinya, Somali, Sidaamu Afoo, and beyond — never sold, always given.",
   },
 ];
 

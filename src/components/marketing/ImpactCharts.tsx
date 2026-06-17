@@ -47,10 +47,10 @@ export function ImpactCharts() {
               tooltip: { shared: true, y: { formatter: (v) => `${v} copies` } },
               markers: { size: 0, hover: { size: 4 } },
               colors: [
-                "rgb(var(--brand))",
-                "rgb(var(--ink))",
-                "rgb(var(--gold))",
-                "rgb(var(--green))",
+                "rgb(var(--brand))",       // Amharic — crimson
+                "rgb(var(--teal))",        // Afaan Oromoo — teal
+                "rgb(var(--navy))",        // Tigrinya — navy
+                "rgb(var(--brand-soft))",  // Other — rose
               ],
             }}
           />

@@ -271,6 +271,16 @@ export const dictionary = {
       emailPlaceholder: "you@example.com",
       subscribe: "Subscribe",
     },
+    navMenu: {
+      library: "Library",
+      engage: "Engage",
+      aboutDesc: "Our mission and history in Ethiopia.",
+      believeDesc: "Confessional Lutheran teaching, Scripture alone.",
+      publicationsDesc: "Books in Amharic, Afaan Oromoo, Tigrinya and more.",
+      podcastDesc: "Scripture Alone Podcast — Bible study on YouTube.",
+      projectsDesc: "Adopt a translation, reprint, or distribution.",
+      eventsDesc: "Distribution days, trainings, launches.",
+    },
     languageModal: {
       title: "Choose your language",
       subtitle: "You can change this at any time from the navigation bar.",
@@ -524,6 +534,16 @@ export const dictionary = {
       stayInTouchBody: "ከትርጉም ቡድንና ከህትመት ቦታ ሩብ-ዓመታዊ ዝመናዎች።",
       emailPlaceholder: "you@example.com",
       subscribe: "ይመዝገቡ",
+    },
+    navMenu: {
+      library: "ቤተ-መጻሕፍት",
+      engage: "ይሳተፉ",
+      aboutDesc: "የእኛ ተልዕኮ እና በኢትዮጵያ ያለ ታሪክ።",
+      believeDesc: "በመጽሐፍ ቅዱስ ላይ ብቻ የተመሰረተ የሉተራን ትምህርት።",
+      publicationsDesc: "በአማርኛ፣ አፋን ኦሮሞ፣ ትግርኛ እና ሌሎች መጻሕፍት።",
+      podcastDesc: "Scripture Alone Podcast — በዩቲዩብ የመጽሐፍ ቅዱስ ጥናት።",
+      projectsDesc: "ትርጉም፣ እንደገና ህትመት ወይም ስርጭት ይምረጡ።",
+      eventsDesc: "የስርጭት ቀኖች፣ ስልጠናዎች፣ ምረቃዎች።",
     },
     languageModal: {
       title: "ቋንቋዎን ይምረጡ",
@@ -784,6 +804,16 @@ export const dictionary = {
       emailPlaceholder: "you@example.com",
       subscribe: "Galmaa'i",
     },
+    navMenu: {
+      library: "Mana Kitaabaa",
+      engage: "Hirmaadhu",
+      aboutDesc: "Ergama keenya fi seenaa Itoophiyaa keessaa.",
+      believeDesc: "Barsiisa Luuteraanaa amantii — Caaffanni qulqullaa'oon qofa.",
+      publicationsDesc: "Kitaabota Amaariffa, Afaan Oromoo, Tigriiffa fi kkf.",
+      podcastDesc: "Scripture Alone Podcast — qo'annoo Macaafa Qulqulluu YouTube irratti.",
+      projectsDesc: "Hiika, deebii maxxansaa ykn raabsaa filadhu.",
+      eventsDesc: "Guyyoota raabsaa, leenjii, eebbifama.",
+    },
     languageModal: {
       title: "Afaan kee filadhu",
       subtitle: "Yeroo kamiyyuu jijjiiruu ni dandeessa.",
@@ -796,6 +826,7 @@ export const dictionary = {
 export type Dictionary = typeof dictionary.en;
 export type TKey =
   | `nav.${keyof Dictionary["nav"]}`
+  | `navMenu.${keyof Dictionary["navMenu"]}`
   | `common.${keyof Dictionary["common"]}`
   | `home.${keyof Dictionary["home"]}`
   | `about.${keyof Dictionary["about"]}`

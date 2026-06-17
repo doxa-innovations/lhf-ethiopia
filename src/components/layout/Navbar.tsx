@@ -9,18 +9,15 @@ import { Button } from "@/components/ui";
 import { LanguageSwitcher } from "@/components/providers/LanguageSwitcher";
 import { useT } from "@/components/providers/LanguageProvider";
 import { LhfMark } from "@/components/brand/LhfMark";
+import { NavDropdown } from "@/components/layout/NavDropdown";
+import { NAV_GROUPS } from "@/lib/content";
 
-const NAV_KEYS = [
-  { href: "/", labelKey: "nav.home" },
-  { href: "/about", labelKey: "nav.about" },
-  { href: "/publications", labelKey: "nav.publications" },
-  { href: "/podcast", labelKey: "nav.podcast" },
-  { href: "/projects", labelKey: "nav.projects" },
-  { href: "/events", labelKey: "nav.events" },
-  { href: "/stories", labelKey: "nav.stories" },
-  { href: "/news", labelKey: "nav.news" },
-  { href: "/contact", labelKey: "nav.contact" },
-] as const;
+type MobileEntry = {
+  href: string;
+  labelKey: string;
+  isGroup: boolean;
+  isChild: boolean;
+};
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -134,48 +131,58 @@ export function Navbar() {
           style={{
             display: "none",
             alignItems: "center",
-            gap: 0,
+            gap: 2,
           }}
         >
-          {NAV_KEYS.map((link) => {
-            const active =
-              link.href === "/"
-                ? pathname === "/"
-                : pathname?.startsWith(link.href);
+          {NAV_GROUPS.map((group) => {
+            if (group.kind === "link") {
+              const active =
+                group.href === "/"
+                  ? pathname === "/"
+                  : pathname?.startsWith(group.href);
+              return (
+                <Link
+                  key={group.href}
+                  href={group.href}
+                  style={{
+                    position: "relative",
+                    padding: "9px 11px",
+                    fontSize: 13,
+                    fontWeight: 500,
+                    color: active
+                      ? "rgb(var(--ink))"
+                      : "rgb(var(--ink-muted))",
+                    borderRadius: 8,
+                    transition: "color 180ms ease",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {t(group.labelKey as Parameters<typeof t>[0])}
+                  {active ? (
+                    <motion.span
+                      layoutId="nav-underline"
+                      style={{
+                        position: "absolute",
+                        left: 11,
+                        right: 11,
+                        bottom: 3,
+                        height: 1.5,
+                        borderRadius: 999,
+                        background: "rgb(var(--brand))",
+                      }}
+                      transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                    />
+                  ) : null}
+                </Link>
+              );
+            }
             return (
-              <Link
-                key={link.href}
-                href={link.href}
-                style={{
-                  position: "relative",
-                  padding: "9px 11px",
-                  fontSize: 13,
-                  fontWeight: 500,
-                  color: active
-                    ? "rgb(var(--ink))"
-                    : "rgb(var(--ink-muted))",
-                  borderRadius: 8,
-                  transition: "color 180ms ease",
-                  whiteSpace: "nowrap",
-                }}
-              >
-                {t(link.labelKey as Parameters<typeof t>[0])}
-                {active ? (
-                  <motion.span
-                    layoutId="nav-underline"
-                    style={{
-                      position: "absolute",
-                      left: 11,
-                      right: 11,
-                      bottom: 3,
-                      height: 1.5,
-                      borderRadius: 999,
-                      background: "rgb(var(--brand))",
-                    }}
-                    transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                  />
-                ) : null}
-              </Link>
+              <NavDropdown
+                key={group.labelKey}
+                labelKey={group.labelKey}
+                fallbackHref={group.href}
+                items={group.items}
+              />
             );
           })}
         </nav>
@@ -244,20 +251,51 @@ export function Navbar() {
                 padding: "8px 16px 20px",
               }}
             >
-              {NAV_KEYS.map((link) => {
+              {NAV_GROUPS.flatMap((g): MobileEntry[] =>
+                g.kind === "link"
+                  ? [{ href: g.href, labelKey: g.labelKey, isGroup: false, isChild: false }]
+                  : [
+                      { href: g.href, labelKey: g.labelKey, isGroup: true, isChild: false },
+                      ...g.items.map((i) => ({
+                        href: i.href,
+                        labelKey: i.labelKey,
+                        isGroup: false,
+                        isChild: true,
+                      } as MobileEntry)),
+                    ],
+              ).map((entry) => {
                 const active =
-                  link.href === "/"
+                  entry.href === "/"
                     ? pathname === "/"
-                    : pathname?.startsWith(link.href);
+                    : pathname?.startsWith(entry.href.split("#")[0]);
+                const isChild = entry.isChild;
+                if (entry.isGroup) {
+                  return (
+                    <div
+                      key={entry.labelKey}
+                      style={{
+                        padding: "16px 4px 6px",
+                        fontSize: 11,
+                        fontWeight: 700,
+                        letterSpacing: "0.14em",
+                        textTransform: "uppercase",
+                        color: "rgb(var(--ink-faint))",
+                      }}
+                    >
+                      {t(entry.labelKey as Parameters<typeof t>[0])}
+                    </div>
+                  );
+                }
                 return (
                   <Link
-                    key={link.href}
-                    href={link.href}
+                    key={entry.href + entry.labelKey}
+                    href={entry.href}
                     style={{
-                      padding: "13px 4px",
+                      padding: "12px 4px 12px",
+                      paddingLeft: isChild ? 14 : 4,
                       fontWeight: 500,
-                      fontSize: 16,
-                      minHeight: 48,
+                      fontSize: 15.5,
+                      minHeight: 46,
                       display: "flex",
                       alignItems: "center",
                       color: active
@@ -266,7 +304,7 @@ export function Navbar() {
                       borderBottom: "1px solid rgb(var(--border) / 0.6)",
                     }}
                   >
-                    {t(link.labelKey as Parameters<typeof t>[0])}
+                    {t(entry.labelKey as Parameters<typeof t>[0])}
                   </Link>
                 );
               })}
@@ -298,8 +336,7 @@ export function Navbar() {
           .nav-wordmark-sub { display: inline; }
         }
 
-        /* Show full desktop nav from xl up, hide burger */
-        @media (min-width: 1180px) {
+        @media (min-width: 1024px) {
           .nav-desktop { display: flex !important; }
           .nav-cta { display: flex !important; }
           .nav-burger { display: none !important; }
