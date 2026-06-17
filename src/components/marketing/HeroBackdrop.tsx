@@ -157,13 +157,14 @@ export function HeroBackdrop({
           </g>
         </g>
 
-        {/* Layer 3 — Luther's Rose watermark, lower-left */}
-        <g transform="translate(80, 540)" opacity="0.55">
+        {/* Layer 3 — Luther's Rose watermark, moved to right edge
+             so it never overlays the headline copy on the left. */}
+        <g transform="translate(1180, 580)" opacity="0.55">
           <use href="#luthers-rose" width="220" height="220" />
         </g>
-        {/* Small second rose, mid-right edge */}
-        <g transform="translate(1280, 720)" opacity="0.32">
-          <use href="#luthers-rose" width="120" height="120" />
+        {/* Smaller secondary rose lower-right corner */}
+        <g transform="translate(1320, 760)" opacity="0.32">
+          <use href="#luthers-rose" width="100" height="100" />
         </g>
 
         {/* Layer 4 — survey baseline + a few accent dots in open field */}

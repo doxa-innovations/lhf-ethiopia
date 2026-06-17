@@ -93,8 +93,7 @@ export function NavDropdown({
           }}
         />
         {active ? (
-          <motion.span
-            layoutId="nav-underline"
+          <span
             style={{
               position: "absolute",
               left: 11,
@@ -104,7 +103,6 @@ export function NavDropdown({
               borderRadius: 999,
               background: "rgb(var(--brand))",
             }}
-            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
           />
         ) : null}
       </button>
