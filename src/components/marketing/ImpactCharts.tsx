@@ -3,8 +3,27 @@
 import { Card, CardBody } from "@/components/ui";
 import { Chart } from "@/components/charts/Chart";
 import { IMPACT_TIMESERIES, TITLES_PER_LANGUAGE } from "@/lib/content";
+import { useT } from "@/components/providers/LanguageProvider";
+
+// ApexCharts evaluates color strings against the SVG fill attribute, which
+// does not resolve CSS custom properties. Pass literal hex values mirroring
+// the brand palette so charts don't fall back to Apex's default greys.
+const BRAND = "#9F1F2A";
+const TEAL = "#2E8E8E";
+const NAVY = "#1E2A47";
+const BRAND_SOFT = "#C4565C";
+const GOLD = "#C49A38";
+const INK = "#121620";
+const INK_FAINT = "#8A919E";
+
+const AREA_COLORS = [BRAND, TEAL, NAVY, BRAND_SOFT];
+const BAR_COLORS = [BRAND, TEAL, NAVY, GOLD, INK, INK_FAINT];
 
 export function ImpactCharts() {
+  const { t } = useT();
+  const seriesCopies = t("home.impactChart1Series");
+  const seriesTitles = t("home.impactChart2Series");
+
   return (
     <div style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr", gap: 20 }} className="impact-grid">
       <Card>
@@ -16,13 +35,13 @@ export function ImpactCharts() {
                 fontWeight: 700,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: "rgb(var(--brand))",
+                color: BRAND,
               }}
             >
-              Books distributed per year
+              {t("home.impactChart1Title")}
             </p>
             <h3 className="text-h3" style={{ marginTop: 4 }}>
-              By heart language, 2020 → 2026
+              {t("home.impactChart1Subtitle")}
             </h3>
           </header>
           <Chart
@@ -30,28 +49,32 @@ export function ImpactCharts() {
             height={340}
             series={IMPACT_TIMESERIES.series.map((s) => ({ name: s.name, data: [...s.data] }))}
             options={{
+              chart: { toolbar: { show: false }, background: "transparent" },
               xaxis: { categories: [...IMPACT_TIMESERIES.years] },
-              stroke: { curve: "smooth", width: 2 },
+              stroke: { curve: "smooth", width: 2.5 },
               fill: {
                 type: "gradient",
-                gradient: { opacityFrom: 0.42, opacityTo: 0.04, stops: [0, 100] },
-              },
-              legend: { position: "top", horizontalAlign: "left" },
-              yaxis: {
-                labels: { formatter: (v) => `${v}` },
-                title: {
-                  text: "Copies distributed",
-                  style: { color: "rgb(var(--ink-faint))", fontWeight: 500 },
+                gradient: {
+                  shade: "light",
+                  type: "vertical",
+                  shadeIntensity: 0.25,
+                  opacityFrom: 0.55,
+                  opacityTo: 0.08,
+                  stops: [0, 100],
                 },
               },
-              tooltip: { shared: true, y: { formatter: (v) => `${v} copies` } },
-              markers: { size: 0, hover: { size: 4 } },
-              colors: [
-                "rgb(var(--brand))",       // Amharic — crimson
-                "rgb(var(--teal))",        // Afaan Oromoo — teal
-                "rgb(var(--navy))",        // Tigrinya — navy
-                "rgb(var(--brand-soft))",  // Other — rose
-              ],
+              legend: { position: "top", horizontalAlign: "left", labels: { colors: INK } },
+              yaxis: {
+                labels: { formatter: (v) => `${v}`, style: { colors: INK_FAINT } },
+                title: {
+                  text: seriesCopies,
+                  style: { color: INK_FAINT, fontWeight: 500 },
+                },
+              },
+              tooltip: { shared: true, y: { formatter: (v) => `${v} ${seriesCopies.toLowerCase()}` } },
+              markers: { size: 0, hover: { size: 5 } },
+              dataLabels: { enabled: false },
+              colors: AREA_COLORS,
             }}
           />
         </CardBody>
@@ -66,13 +89,13 @@ export function ImpactCharts() {
                 fontWeight: 700,
                 letterSpacing: "0.12em",
                 textTransform: "uppercase",
-                color: "rgb(var(--brand))",
+                color: BRAND,
               }}
             >
-              Titles per language
+              {t("home.impactChart2Title")}
             </p>
             <h3 className="text-h3" style={{ marginTop: 4 }}>
-              The library today
+              {t("home.impactChart2Subtitle")}
             </h3>
           </header>
           <Chart
@@ -80,15 +103,16 @@ export function ImpactCharts() {
             height={340}
             series={[
               {
-                name: "Titles",
+                name: seriesTitles,
                 data: TITLES_PER_LANGUAGE.map((t) => t.titles),
               },
             ]}
             options={{
+              chart: { toolbar: { show: false }, background: "transparent" },
               plotOptions: {
                 bar: {
                   horizontal: true,
-                  borderRadius: 4,
+                  borderRadius: 6,
                   barHeight: "62%",
                   distributed: true,
                   dataLabels: { position: "top" },
@@ -96,10 +120,11 @@ export function ImpactCharts() {
               },
               dataLabels: {
                 enabled: true,
-                offsetX: 8,
+                offsetX: 12,
                 style: {
                   fontWeight: 700,
-                  colors: ["rgb(var(--ink))"],
+                  fontSize: "12px",
+                  colors: [INK],
                 },
                 formatter: (v) => `${v}`,
               },
@@ -111,20 +136,14 @@ export function ImpactCharts() {
               },
               yaxis: {
                 labels: {
-                  style: { colors: "rgb(var(--ink))", fontSize: "12px", fontWeight: 500 },
+                  style: { colors: INK, fontSize: "12px", fontWeight: 500 },
                 },
               },
               grid: { show: false },
               legend: { show: false },
-              tooltip: { y: { formatter: (v) => `${v} titles` } },
-              colors: [
-                "rgb(var(--brand))",
-                "rgb(var(--brand) / 0.85)",
-                "rgb(var(--brand) / 0.7)",
-                "rgb(var(--brand) / 0.55)",
-                "rgb(var(--brand) / 0.4)",
-                "rgb(var(--brand) / 0.3)",
-              ],
+              tooltip: { y: { formatter: (v) => `${v} ${seriesTitles.toLowerCase()}` } },
+              colors: BAR_COLORS,
+              stroke: { show: false },
             }}
           />
         </CardBody>

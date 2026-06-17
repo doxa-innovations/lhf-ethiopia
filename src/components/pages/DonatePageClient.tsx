@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { BookOpen, Globe2, ShieldCheck, Truck } from "lucide-react";
 import {
   Button,
@@ -14,15 +15,15 @@ import { AllocationDonut } from "@/components/marketing/AllocationDonut";
 import { useT } from "@/components/providers/LanguageProvider";
 import { SITE } from "@/lib/content";
 
-const AMOUNTS = [
-  { value: 7, label: "$7", caption: "1 catechism printed" },
-  { value: 35, label: "$35", caption: "Sunday-school pack of 5" },
-  { value: 120, label: "$120", caption: "Pastor's library starter set" },
-  { value: 500, label: "$500", caption: "Print run of 100 catechisms" },
-];
-
 export function DonatePageClient() {
   const { t } = useT();
+  const AMOUNTS = [
+    { value: 7, label: "$7", caption: t("donate.amountLabel1") },
+    { value: 35, label: "$35", caption: t("donate.amountLabel2") },
+    { value: 120, label: "$120", caption: t("donate.amountLabel3") },
+    { value: 500, label: "$500", caption: t("donate.amountLabel4") },
+  ];
+  const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   return (
     <>
       <section className="subhero">
@@ -47,16 +48,30 @@ export function DonatePageClient() {
                   <p className="text-body" style={{ marginTop: 8 }}>{t("donate.makeGiftBody")}</p>
 
                   <div className="amount-grid" style={{ marginTop: 22, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10 }}>
-                    {AMOUNTS.map((a) => (
-                      <button
-                        key={a.value}
-                        type="button"
-                        style={{ background: "white", border: "1.5px solid rgb(var(--border-strong))", borderRadius: 12, padding: "14px 12px", textAlign: "left", cursor: "pointer", transition: "all 180ms ease" }}
-                      >
-                        <div className="font-display" style={{ fontSize: 22, fontWeight: 500, color: "rgb(var(--brand))", letterSpacing: "-0.02em" }}>{a.label}</div>
-                        <div style={{ fontSize: 12, color: "rgb(var(--ink-faint))", marginTop: 4 }}>{a.caption}</div>
-                      </button>
-                    ))}
+                    {AMOUNTS.map((a) => {
+                      const active = selectedAmount === a.value;
+                      return (
+                        <button
+                          key={a.value}
+                          type="button"
+                          aria-pressed={active}
+                          onClick={() => setSelectedAmount(a.value)}
+                          className="amount-btn"
+                          style={{
+                            background: active ? "rgb(var(--brand-muted))" : "white",
+                            border: `1.5px solid ${active ? "rgb(var(--brand))" : "rgb(var(--border-strong))"}`,
+                            borderRadius: 12,
+                            padding: "14px 12px",
+                            textAlign: "left",
+                            cursor: "pointer",
+                            transition: "all 180ms ease",
+                          }}
+                        >
+                          <div className="font-display" style={{ fontSize: 22, fontWeight: 500, color: "rgb(var(--brand))", letterSpacing: "-0.02em" }}>{a.label}</div>
+                          <div style={{ fontSize: 12, color: "rgb(var(--ink-faint))", marginTop: 4 }}>{a.caption}</div>
+                        </button>
+                      );
+                    })}
                   </div>
 
                   <form style={{ marginTop: 24, display: "grid", gap: 14 }}>
@@ -72,7 +87,7 @@ export function DonatePageClient() {
                       </Field>
                     </div>
                     <Field label={t("donate.designateLabel")} htmlFor="designate" hint={t("donate.designateHint")}>
-                      <Input id="designate" name="designate" placeholder="Where most needed" />
+                      <Input id="designate" name="designate" defaultValue="Ethiopia" placeholder="Where most needed" />
                     </Field>
                     <Field label={t("donate.noteLabel")} htmlFor="note">
                       <Textarea id="note" name="note" rows={3} placeholder="Anything we should know?" />
@@ -94,10 +109,10 @@ export function DonatePageClient() {
                       <AllocationDonut height={280} />
                     </div>
                     <ul style={{ marginTop: 6, display: "grid", gap: 10, listStyle: "none", fontSize: 13 }}>
-                      <Legend icon={<Truck size={14} />} label="Printing & paper" pct={42} color="rgb(var(--brand))" />
-                      <Legend icon={<BookOpen size={14} />} label="Translation review" pct={28} color="rgb(var(--ink))" />
-                      <Legend icon={<Globe2 size={14} />} label="Distribution & customs" pct={22} color="rgb(var(--teal))" />
-                      <Legend icon={<ShieldCheck size={14} />} label="Operations & admin" pct={8} color="rgb(var(--ink-faint))" />
+                      <Legend icon={<Truck size={14} />} label={t("donate.allocPrinting")} pct={42} color="rgb(var(--brand))" />
+                      <Legend icon={<BookOpen size={14} />} label={t("donate.allocTranslation")} pct={28} color="rgb(var(--ink))" />
+                      <Legend icon={<Globe2 size={14} />} label={t("donate.allocDistribution")} pct={22} color="rgb(var(--teal))" />
+                      <Legend icon={<ShieldCheck size={14} />} label={t("donate.allocOps")} pct={8} color="rgb(var(--ink-faint))" />
                     </ul>
                   </CardBody>
                 </Card>

@@ -2,6 +2,7 @@
 
 import { BookOpen, Globe2, Headphones, Users } from "lucide-react";
 import { useT } from "@/components/providers/LanguageProvider";
+import { CountUp, Parallax } from "@/components/ui";
 
 /* ============================================================
    StatsBand — horizontal navy panel with a subtle dot texture,
@@ -11,25 +12,34 @@ import { useT } from "@/components/providers/LanguageProvider";
 export function StatsBand() {
   const { t } = useT();
 
-  const STATS = [
+  const STATS: Array<{
+    icon: React.ReactNode;
+    value: number;
+    suffix: string;
+    label: string;
+  }> = [
     {
       icon: <Globe2 size={20} />,
-      value: "6+",
+      value: 6,
+      suffix: "+",
       label: t("home.statLanguages"),
     },
     {
       icon: <BookOpen size={20} />,
-      value: "42,300+",
+      value: 42300,
+      suffix: "+",
       label: t("home.statBooks"),
     },
     {
       icon: <Users size={20} />,
-      value: "180+",
+      value: 180,
+      suffix: "+",
       label: t("home.statCongregations"),
     },
     {
       icon: <Headphones size={20} />,
-      value: "14",
+      value: 14,
+      suffix: "",
       label: t("home.statEpisodes"),
     },
   ];
@@ -46,28 +56,30 @@ export function StatsBand() {
         isolation: "isolate",
       }}
     >
-      {/* Texture: SVG dot grid, masked to fade at edges */}
-      <svg
-        aria-hidden
-        viewBox="0 0 1200 240"
-        preserveAspectRatio="xMidYMid slice"
-        style={{ position: "absolute", inset: 0, width: "100%", height: "100%", zIndex: 0 }}
-      >
-        <defs>
-          <pattern id="dotgrid" width="14" height="14" patternUnits="userSpaceOnUse">
-            <circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.10)" />
-          </pattern>
-          <radialGradient id="dotfade" cx="50%" cy="50%" r="70%">
-            <stop offset="0%" stopColor="white" stopOpacity="1" />
-            <stop offset="70%" stopColor="white" stopOpacity="0.55" />
-            <stop offset="100%" stopColor="white" stopOpacity="0" />
-          </radialGradient>
-          <mask id="dotmask">
-            <rect width="1200" height="240" fill="url(#dotfade)" />
-          </mask>
-        </defs>
-        <rect width="1200" height="240" fill="url(#dotgrid)" mask="url(#dotmask)" />
-      </svg>
+      {/* Texture: SVG dot grid, masked to fade at edges, drifting on scroll */}
+      <Parallax speed={0.18} style={{ position: "absolute", inset: 0, zIndex: 0, pointerEvents: "none" }}>
+        <svg
+          aria-hidden
+          viewBox="0 0 1200 240"
+          preserveAspectRatio="xMidYMid slice"
+          style={{ width: "100%", height: "100%" }}
+        >
+          <defs>
+            <pattern id="dotgrid" width="14" height="14" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1" fill="rgba(255,255,255,0.10)" />
+            </pattern>
+            <radialGradient id="dotfade" cx="50%" cy="50%" r="70%">
+              <stop offset="0%" stopColor="white" stopOpacity="1" />
+              <stop offset="70%" stopColor="white" stopOpacity="0.55" />
+              <stop offset="100%" stopColor="white" stopOpacity="0" />
+            </radialGradient>
+            <mask id="dotmask">
+              <rect width="1200" height="240" fill="url(#dotfade)" />
+            </mask>
+          </defs>
+          <rect width="1200" height="240" fill="url(#dotgrid)" mask="url(#dotmask)" />
+        </svg>
+      </Parallax>
 
       <div
         className="container-wide"
@@ -101,7 +113,7 @@ export function StatsBand() {
                       lineHeight: 1,
                     }}
                   >
-                    {s.value}
+                    <CountUp value={s.value} suffix={s.suffix} />
                   </span>
                   <span
                     style={{

@@ -122,7 +122,7 @@ export function Footer() {
                     marginTop: 3,
                   }}
                 >
-                  Lutheran Heritage Foundation
+                  {t("nav.orgFullName")}
                 </span>
               </span>
             </div>

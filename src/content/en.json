@@ -1,0 +1,436 @@
+{
+  "languages": [
+    {
+      "code": "am",
+      "name": "Amharic",
+      "native": "አማርኛ",
+      "region": "Addis Ababa, Amhara",
+      "speakers": "32 million",
+      "status": "Published",
+      "statusLabel": "Published",
+      "titles": 14
+    },
+    {
+      "code": "om",
+      "name": "Afaan Oromoo",
+      "native": "Afaan Oromoo",
+      "region": "Oromia",
+      "speakers": "37 million",
+      "status": "Published",
+      "statusLabel": "Published",
+      "titles": 9
+    },
+    {
+      "code": "ti",
+      "name": "Tigrinya",
+      "native": "ትግርኛ",
+      "region": "Tigray",
+      "speakers": "9 million",
+      "status": "Published",
+      "statusLabel": "Published",
+      "titles": 6
+    },
+    {
+      "code": "so",
+      "name": "Somali",
+      "native": "Soomaali",
+      "region": "Somali Region",
+      "speakers": "8 million",
+      "status": "In translation",
+      "statusLabel": "In translation",
+      "titles": 2
+    },
+    {
+      "code": "sid",
+      "name": "Sidaama",
+      "native": "Sidaamu Afoo",
+      "region": "Sidama",
+      "speakers": "4 million",
+      "status": "In translation",
+      "statusLabel": "In translation",
+      "titles": 1
+    },
+    {
+      "code": "wal",
+      "name": "Wolaytta",
+      "native": "Wolayttattuwaa",
+      "region": "South Ethiopia",
+      "speakers": "2 million",
+      "status": "Requested",
+      "statusLabel": "Requested",
+      "titles": 0
+    }
+  ],
+  "publications": [
+    {
+      "slug": "small-catechism-amharic",
+      "title": "Luther's Small Catechism",
+      "language": "Amharic",
+      "native": "የሉተር ትንሹ ካቴኪዝም",
+      "audience": "All ages",
+      "pages": 112,
+      "status": "In print",
+      "statusLabel": "In print"
+    },
+    {
+      "slug": "good-news-jesus-oromoo",
+      "title": "The Good News About Jesus",
+      "language": "Afaan Oromoo",
+      "native": "Misiraachoo Yesuusiif",
+      "audience": "Children",
+      "pages": 64,
+      "status": "In print",
+      "statusLabel": "In print"
+    },
+    {
+      "slug": "garden-bible-stories-amharic",
+      "title": "A Child's Garden of Bible Stories",
+      "language": "Amharic",
+      "native": "የልጆች የመጽሐፍ ቅዱስ ታሪኮች",
+      "audience": "Children",
+      "pages": 96,
+      "status": "In print",
+      "statusLabel": "In print"
+    },
+    {
+      "slug": "small-catechism-tigrinya",
+      "title": "Luther's Small Catechism",
+      "language": "Tigrinya",
+      "native": "ናይ ሉተር ንእሽቶ ካቴኪዝም",
+      "audience": "All ages",
+      "pages": 108,
+      "status": "In print",
+      "statusLabel": "In print"
+    },
+    {
+      "slug": "augsburg-confession-amharic",
+      "title": "The Augsburg Confession",
+      "language": "Amharic",
+      "native": "የአውግስቡርግ የእምነት መግለጫ",
+      "audience": "Pastors & teachers",
+      "pages": 86,
+      "status": "Reprint requested",
+      "statusLabel": "Reprint requested"
+    },
+    {
+      "slug": "small-catechism-somali",
+      "title": "Luther's Small Catechism",
+      "language": "Somali",
+      "native": "Catechism-ka yar ee Luther",
+      "audience": "All ages",
+      "pages": 110,
+      "status": "In translation",
+      "statusLabel": "In translation"
+    },
+    {
+      "slug": "daily-devotions-amharic",
+      "title": "Daily Devotions for Families",
+      "language": "Amharic",
+      "native": "የቤተሰብ ዕለታዊ ጸሎቶች",
+      "audience": "All ages",
+      "pages": 144,
+      "status": "In print",
+      "statusLabel": "In print"
+    },
+    {
+      "slug": "lords-prayer-oromoo",
+      "title": "The Lord's Prayer Explained",
+      "language": "Afaan Oromoo",
+      "native": "Kadhannaa Gooftaa",
+      "audience": "All ages",
+      "pages": 48,
+      "status": "In print",
+      "statusLabel": "In print"
+    },
+    {
+      "slug": "reformation-hymns-amharic",
+      "title": "Hymns of the Reformation",
+      "language": "Amharic",
+      "native": "የሪፎርሜሽን መዝሙራት",
+      "audience": "Congregations",
+      "pages": 78,
+      "status": "In translation",
+      "statusLabel": "In translation"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "sidaama-catechism-first-edition",
+      "title": "Sidaama Catechism — First Edition",
+      "region": "Sidama Region",
+      "need": "Translation review + 2,000-copy first print run",
+      "raised": 4200,
+      "goal": 11500,
+      "impact": "Equips 40 rural congregations with their first Lutheran catechism in Sidaamu Afoo."
+    },
+    {
+      "slug": "tigray-pastor-library-reprint",
+      "title": "Pastor's Library — Tigray Reprint",
+      "region": "Tigray",
+      "need": "Reprint of 8 Amharic and Tigrinya titles, post-conflict restoration",
+      "raised": 9800,
+      "goal": 18000,
+      "impact": "Replaces libraries lost during the 2020–2022 conflict for 65 pastors."
+    },
+    {
+      "slug": "oromia-childrens-bible-stories",
+      "title": "Children's Bible Stories — Oromia Outreach",
+      "region": "Oromia",
+      "need": "10,000 copies of A Child's Garden in Afaan Oromoo",
+      "raised": 6300,
+      "goal": 14000,
+      "impact": "Sunday school curriculum for 220 congregations across Oromia."
+    },
+    {
+      "slug": "somali-translation-year-one",
+      "title": "Somali Translation — Year One",
+      "region": "Somali Region",
+      "need": "Salary support for two reviewers + theological consultant",
+      "raised": 2100,
+      "goal": 9000,
+      "impact": "Opens a new heart language: first Lutheran texts ever in Soomaali."
+    },
+    {
+      "slug": "podcast-studio-phase-1",
+      "title": "Podcast Studio — Phase 1",
+      "region": "Addis Ababa",
+      "need": "Acoustic treatment + microphones + interface for the new studio",
+      "raised": 3500,
+      "goal": 8400,
+      "impact": "Triples weekly recording capacity and lifts audio quality for sermon, music, and teaching episodes."
+    }
+  ],
+  "news": [
+    {
+      "slug": "tigrinya-catechism-reprint",
+      "date": "2026-05-18",
+      "title": "Tigrinya catechism reprint reaches 65 congregations",
+      "excerpt": "After the conflict years, replacement copies of Luther's Small Catechism in Tigrinya have arrived in Mekelle and surrounding parishes.",
+      "tag": "Distribution",
+      "image": "https://images.unsplash.com/photo-1592496431122-2349e0fbc666?w=1400&q=80&auto=format&fit=crop",
+      "body": "Five thousand copies of Luther's Small Catechism in Tigrinya have arrived in Mekelle, marking the completion of a two-year reprint effort that began after the regional conflict ended in late 2022.\n\nThe first 1,800 copies were hand-distributed last week by Pastor Tadesse Bekele and a team of five seminary students to 65 congregations across Tigray, Amhara, and the highlands of Wollo. Each parish received a starter set of 20 copies — enough to seat every elder and Sunday-school teacher with their own catechism.\n\n\"For two years I had been preaching from notes in the margin of my one borrowed catechism,\" Pastor Tadesse said. \"To put a copy in the hands of every elder in our parish is to put the Word of God back in the language they pray in.\"\n\nThe remaining copies will ship in three monthly waves through August, with the final shipment dedicated to the Sunday schools of St. Mark Lutheran Mekelle. Donors who underwrote the reprint will receive a parish-by-parish distribution log."
+    },
+    {
+      "slug": "afaan-oromoo-childrens-stories",
+      "date": "2026-04-02",
+      "title": "Children's Bible Stories enters its third printing in Afaan Oromoo",
+      "excerpt": "Demand from Sunday schools across Oromia keeps growing — the third printing of 5,000 copies is now on press in Addis Ababa.",
+      "tag": "Publication",
+      "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1400&q=80&auto=format&fit=crop",
+      "body": "A Child's Garden of Bible Stories in Afaan Oromoo enters its third printing this month, with 5,000 fresh copies on press at Addis Lutheran Press. Combined with the first two printings, more than 16,000 copies will have shipped to congregations across Oromia by year-end.\n\nThe demand has come almost entirely from Sunday schools. \"The first printing was meant to last two years,\" said Abdi Lemma, the lead translator. \"We were out of stock in eleven months.\" Bale Lutheran Parish alone has requested 320 copies for its catechism camp this summer.\n\nThe new printing includes minor editorial corrections suggested by teachers in the field — six idiomatic phrasings adjusted for the Bale dialect, and a glossary added at the back for the Wollega congregations. The interior illustrations remain unchanged.\n\nDistribution begins May 18 from the Adama warehouse."
+    },
+    {
+      "slug": "sidaama-translation-launch",
+      "date": "2026-02-14",
+      "title": "Sidaama translation team begins work on the Small Catechism",
+      "excerpt": "A new translation effort opens a sixth heart language for LHF Ethiopia. Three reviewers met in Hawassa to set the editorial standard.",
+      "tag": "Translation",
+      "image": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1400&q=80&auto=format&fit=crop",
+      "body": "Three reviewers convened at Hawassa Lutheran College last week to begin the first-ever translation of Luther's Small Catechism into Sidaamu Afoo, opening a sixth heart language for LHF Ethiopia's confessional library.\n\nThe team is led by Deaconess Almaz Wolde, with theological oversight from Pastor Markos Daniel of the LCMS partnership program. A first draft of the Ten Commandments and the Apostles' Creed is expected by September, with a finished manuscript targeted for early 2027.\n\n\"For the first time in my lifetime, I am holding a Lutheran book in Sidaamu Afoo,\" Deaconess Almaz said of the 1996 hymnal that started this work. \"This catechism will be the second. It will not be the last.\"\n\nThe project is partially funded; the first-edition print run is currently $4,200 toward an $11,500 goal. Donors can adopt the project on the LHF Ethiopia projects page."
+    },
+    {
+      "slug": "addis-warehouse-opens",
+      "date": "2026-01-09",
+      "title": "LHF Ethiopia opens a distribution warehouse in Addis Ababa",
+      "excerpt": "A dedicated office and warehouse in Bole simplifies customs clearance and inland shipping to congregations countrywide.",
+      "tag": "Operations",
+      "image": "https://images.unsplash.com/photo-1553413077-190dd305871c?w=1400&q=80&auto=format&fit=crop",
+      "body": "LHF Ethiopia opened its first dedicated distribution warehouse this month — a 220 m² facility in Bole sub-city that consolidates inbound shipping, customs clearance, and parish-by-parish dispatch under one roof.\n\nBefore the warehouse opened, every container of Lutheran books shipped from the US or Europe had to be cleared through a series of third-party brokers, then transferred to congregations through a patchwork of regional drop points. Average customs-to-parish time was 47 days.\n\nThe Bole facility cuts that to 14 days for Addis-area parishes and around 22 days for outlying regions. Quarterly distribution events — the first of which is scheduled for July 12 — will now happen on site, with pastors and parish administrators collecting their parish shipments directly.\n\nThe warehouse was funded through a one-time donation from a Lutheran congregation in St. Louis and a small grant from the LHF parent organization in Macomb."
+    }
+  ],
+  "values": [
+    {
+      "slug": "sola-scriptura",
+      "title": "Sola Scriptura — Scripture Alone",
+      "body": "The Bible is the only rule and norm of faith and life. Holy Scripture is the written Word of God — inspired, inerrant, and the sole authority by which every doctrine is tested. We teach what Scripture teaches and confess what Scripture confesses."
+    },
+    {
+      "slug": "sola-gratia",
+      "title": "Sola Gratia — Grace Alone",
+      "body": "Salvation is the free gift of God's grace. We are saved not by what we have done or could do, but by the unmerited favor of God in Christ Jesus, who came to seek and save the lost."
+    },
+    {
+      "slug": "sola-fide",
+      "title": "Sola Fide — Faith Alone",
+      "body": "We are justified — declared righteous before God — through faith alone in Jesus Christ, apart from works of the law. This good news is the central article of the Christian faith and the heart of every book LHF Ethiopia distributes."
+    },
+    {
+      "slug": "solus-christus",
+      "title": "Solus Christus — Christ Alone",
+      "body": "Jesus Christ, true God and true man, is the one mediator between God and humanity. There is no other name under heaven by which we must be saved. His life, death, and resurrection accomplish our salvation in full."
+    },
+    {
+      "slug": "soli-deo-gloria",
+      "title": "Soli Deo Gloria — Glory to God Alone",
+      "body": "Every congregation served, every book printed, every podcast recorded is offered to the glory of God alone. We labour in His name, by His grace, for the spread of His Word in Ethiopia."
+    },
+    {
+      "slug": "word-and-sacrament",
+      "title": "Word and Sacrament",
+      "body": "Christ comes to us through the means of grace: the preached Word of the Gospel, Holy Baptism, and the Lord's Supper. We support congregations in the regular, faithful use of these means so the saving work of Christ is delivered into the lives of God's people."
+    },
+    {
+      "slug": "book-of-concord",
+      "title": "The Book of Concord",
+      "body": "We confess the unaltered Augsburg Confession (1530), Luther's Small and Large Catechisms, and the other Lutheran Confessions gathered in the Book of Concord — because they are a faithful exposition of Holy Scripture. Confessional Lutheran teaching shapes every title we choose to translate."
+    },
+    {
+      "slug": "heart-language-free",
+      "title": "Heart language, free of charge",
+      "body": "People meet Christ best in the language they think and pray in. LHF Ethiopia translates, prints, and freely distributes Lutheran books in Amharic, Afaan Oromoo, Tigrinya, Somali, Sidaamu Afoo, and beyond — never sold, always given."
+    }
+  ],
+  "stories": [
+    {
+      "slug": "pastor-tadesse",
+      "name": "Pastor Tadesse Bekele",
+      "role": "Pastor",
+      "congregation": "St. Mark Lutheran · Mekelle",
+      "language": "Tigrinya",
+      "quote": "When the reprints arrived, I cried. For two years I had been preaching from notes in the margin of my one borrowed catechism. Now every elder in our parish has their own."
+    },
+    {
+      "slug": "selam-teacher",
+      "name": "Selam Girma",
+      "role": "Sunday school teacher",
+      "congregation": "Bole Lutheran · Addis Ababa",
+      "language": "Amharic",
+      "quote": "The children's Bible stories in Amharic changed our Sunday school. The kids read aloud to their parents at home — sometimes the parents are the ones who learn."
+    },
+    {
+      "slug": "abdi-translator",
+      "name": "Abdi Lemma",
+      "role": "Translator",
+      "congregation": "LHF Ethiopia · Oromia desk",
+      "language": "Afaan Oromoo",
+      "quote": "Translating Luther into Afaan Oromoo is not just word-for-word. We choose words a farmer in Bale would actually say, so the catechism lives in the language of the kitchen, not the lecture hall."
+    },
+    {
+      "slug": "almaz-deaconess",
+      "name": "Almaz Wolde",
+      "role": "Deaconess",
+      "congregation": "Hawassa Lutheran · Sidama",
+      "language": "Sidaamu Afoo",
+      "quote": "For the first time in my lifetime, I am holding a Lutheran book in Sidaamu Afoo. It is one small first edition — and it is everything."
+    },
+    {
+      "slug": "yohannes-printer",
+      "name": "Yohannes Asfaw",
+      "role": "Print partner",
+      "congregation": "Addis Ababa press",
+      "language": "Multilingual",
+      "quote": "Most jobs through our press are textbooks or government forms. LHF Ethiopia is different — when those books leave the dock, they leave for free, and the press knows it."
+    }
+  ],
+  "events": [
+    {
+      "slug": "addis-distribution-day-jun",
+      "title": "Addis Distribution Day",
+      "date": "2026-07-12",
+      "location": "Bole warehouse, Addis Ababa",
+      "audience": "Pastors & parish administrators",
+      "summary": "Quarterly hand-off of new shipments to Addis-area congregations. Bring your parish letter and we'll load your cart.",
+      "status": "Upcoming",
+      "statusLabel": "Upcoming"
+    },
+    {
+      "slug": "mekelle-pastor-training-aug",
+      "title": "Mekelle Pastor Training Weekend",
+      "date": "2026-08-23",
+      "location": "St. Mark Lutheran, Mekelle",
+      "audience": "Pastors from Tigray and Amhara",
+      "summary": "Two-day training on using the Tigrinya catechism in parish life, with discussion sessions led by Pastor Tadesse.",
+      "status": "Upcoming",
+      "statusLabel": "Upcoming"
+    },
+    {
+      "slug": "hawassa-sidaama-launch",
+      "title": "Sidaamu Afoo First-Edition Launch",
+      "date": "2026-09-14",
+      "location": "Hawassa University Chapel",
+      "audience": "Open to the public",
+      "summary": "Public launch of the first Lutheran catechism in Sidaamu Afoo. Open service, music, and book hand-off to delegated parishes.",
+      "status": "Upcoming",
+      "statusLabel": "Upcoming"
+    },
+    {
+      "slug": "addis-podcast-live-may",
+      "title": "Live Podcast Recording — Reformation Music",
+      "date": "2026-05-04",
+      "location": "Bole studio, Addis Ababa",
+      "audience": "Public",
+      "summary": "Live audience recording of The Word at Work — Ethiopia, featuring the St. Mark choir.",
+      "status": "Past",
+      "statusLabel": "Past"
+    },
+    {
+      "slug": "oromia-distribution-mar",
+      "title": "Oromia Spring Distribution",
+      "date": "2026-03-18",
+      "location": "Adama warehouse, Oromia",
+      "audience": "Pastors & parish leaders",
+      "summary": "Spring distribution of Afaan Oromoo children's Bible stories to 80 parishes across Oromia.",
+      "status": "Past",
+      "statusLabel": "Past"
+    }
+  ],
+  "podcastEpisodes": [
+    {
+      "slug": "ep-129-salvation-by-faith",
+      "title": "Salvation by Faith — መዳን በእምነት",
+      "summary": "Salvation by faith alone, or by faith plus works? A scripture-grounded walk-through of the Lutheran answer in Amharic and English.",
+      "language": "Amharic / English"
+    },
+    {
+      "slug": "ep-128-original-sin",
+      "title": "Original Sin — የውርስ ሃጥያት",
+      "summary": "What does scripture teach about original sin, and how does it shape the way we read the Gospel? Episode 128, in Amharic with English exposition.",
+      "language": "Amharic / English"
+    },
+    {
+      "slug": "ep-127-1-tim-1-our-hope",
+      "title": "1 Timothy 1:1 — Our Hope, Jesus Christ",
+      "summary": "Verse-by-verse study of 1 Timothy 1:1 — ተስፋችን እየሱስ ክርስቶስ. Why Paul opens with hope, and what it means for the Ethiopian church today.",
+      "language": "Amharic / English"
+    },
+    {
+      "slug": "ep-126-small-catechism",
+      "title": "Luther's Small Catechism — የሉተር ትንሹ ካቴኪዝም",
+      "summary": "Why the Small Catechism still matters 500 years on — a walk-through of its structure and how it shapes parish life in Ethiopia.",
+      "language": "Amharic / English"
+    },
+    {
+      "slug": "short-salvation-by-faith",
+      "title": "Salvation by Faith — short clip",
+      "summary": "A one-minute clip from the Original Sin episode — what scripture says about inherited sin.",
+      "language": "Amharic"
+    },
+    {
+      "slug": "short-our-hope-jesus",
+      "title": "Our Hope, Jesus Christ — short clip",
+      "summary": "ተስፋችን እየሱስ ክርስቶስ — a short reflection from the 1 Timothy series.",
+      "language": "Amharic"
+    },
+    {
+      "slug": "short-small-catechism",
+      "title": "Small Catechism — short clip",
+      "summary": "Why every Lutheran congregation needs a copy of Luther's Small Catechism in its heart language.",
+      "language": "Amharic"
+    },
+    {
+      "slug": "short-channel-trailer",
+      "title": "Channel trailer — ቃሉ ብቻ ፖድካስት",
+      "summary": "A short introduction to the show — scripture alone, in Amharic, for the Ethiopian church.",
+      "language": "Amharic"
+    }
+  ],
+  "impactSeriesNames": ["Amharic", "Afaan Oromoo", "Tigrinya", "Other heart languages"],
+  "titlesPerLanguage": [
+    { "language": "Amharic", "titles": 14 },
+    { "language": "Afaan Oromoo", "titles": 9 },
+    { "language": "Tigrinya", "titles": 6 },
+    { "language": "Somali", "titles": 2 },
+    { "language": "Sidaamu Afoo", "titles": 1 },
+    { "language": "Wolayttattuwaa", "titles": 0 }
+  ]
+}

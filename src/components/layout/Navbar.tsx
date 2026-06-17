@@ -121,7 +121,7 @@ export function Navbar() {
                 whiteSpace: "nowrap",
               }}
             >
-              Lutheran Heritage Foundation
+              {t("nav.orgFullName")}
             </span>
           </span>
         </Link>
@@ -205,7 +205,8 @@ export function Navbar() {
         </div>
 
         <button
-          aria-label={open ? "Close menu" : "Open menu"}
+          aria-label={open ? t("nav.closeMenu") : t("nav.openMenu")}
+          aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
           className="nav-burger"
           style={{
@@ -317,7 +318,7 @@ export function Navbar() {
                   flexWrap: "wrap",
                 }}
               >
-                <LanguageSwitcher variant="light" />
+                <LanguageSwitcher variant="chips" />
                 <Button href="/donate" variant="teal" size="sm">
                   {t("nav.donate")}
                 </Button>

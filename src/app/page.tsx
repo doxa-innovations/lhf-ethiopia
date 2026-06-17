@@ -27,24 +27,30 @@ import { StatsBand } from "@/components/marketing/StatsBand";
 import { ImpactCharts } from "@/components/marketing/ImpactCharts";
 import { YouTubeEmbed } from "@/components/podcast/YouTubeEmbed";
 import { useT } from "@/components/providers/LanguageProvider";
+import { useContent } from "@/lib/i18n/useContent";
 import {
-  EVENTS,
-  LANGUAGES,
-  NEWS,
   PHOTOS,
   PODCAST,
   PODCAST_EPISODES,
-  VALUES,
 } from "@/lib/content";
+import { ValuesAccordion } from "@/components/ui/ValuesAccordion";
 
 export default function HomePage() {
   const { t } = useT();
-  const upcomingEvents = EVENTS.filter((e) => e.status === "Upcoming").slice(0, 3);
-  const sortedEpisodes = [...PODCAST_EPISODES].sort((a, b) =>
-    a.date < b.date ? 1 : -1,
+  const { events, languages, news, podcastEpisodes, values } = useContent();
+  const upcomingEvents = events.filter((e) => e.status === "Upcoming").slice(0, 3);
+  // Sort by date — pull stable date from PODCAST_EPISODES base by slug.
+  const dateFor = (slug: string) =>
+    PODCAST_EPISODES.find((e) => e.slug === slug)?.date ?? "";
+  const sortedEpisodes = [...podcastEpisodes].sort((a, b) =>
+    dateFor(a.slug) < dateFor(b.slug) ? 1 : -1,
   );
+  // For the "more episodes" mini-list we also need stable `number` + `durationMin`.
+  const otherEpisodes = sortedEpisodes.slice(1, 4).map((ep) => {
+    const base = PODCAST_EPISODES.find((e) => e.slug === ep.slug);
+    return { ...ep, number: base?.number ?? 0, durationMin: base?.durationMin ?? 0 };
+  });
   const latestEpisode = sortedEpisodes[0];
-  const otherEpisodes = sortedEpisodes.slice(1, 4);
   const featuredYoutubeId = PODCAST.featuredYoutubeId;
 
   return (
@@ -96,9 +102,9 @@ export default function HomePage() {
               },
             ].map((step) => (
               <StaggerItem key={step.title}>
-                <Card style={{ height: "100%" }}>
+                <Card style={{ height: "100%" }} className="card-lift">
                   <div
-                    className="photo-wrap"
+                    className="photo-wrap photo-kenburns"
                     style={{ aspectRatio: "16 / 10", borderRadius: 0 }}
                   >
                     <SafeImage
@@ -315,7 +321,7 @@ export default function HomePage() {
       </section>
 
       {/* ===================== IMPACT CHARTS ===================== */}
-      <section className="section section-soft">
+      <section className="section section-data">
         <div className="container-wide">
           <div
             style={{
@@ -384,7 +390,7 @@ export default function HomePage() {
                 className="lang-list"
                 style={{ listStyle: "none", margin: 0, padding: 0 }}
               >
-                {LANGUAGES.slice(0, 6).map((lang, i) => (
+                {languages.slice(0, 6).map((lang, i) => (
                   <li
                     key={lang.code}
                     className="lang-row"
@@ -460,7 +466,7 @@ export default function HomePage() {
                               : "cream"
                         }
                       >
-                        {lang.status}
+                        {lang.statusLabel}
                       </Badge>
                     </span>
                   </li>
@@ -516,7 +522,7 @@ export default function HomePage() {
                 <Card style={{ height: "100%" }}>
                   <CardBody>
                     <Badge tone="teal">
-                      <Calendar size={11} /> {ev.status}
+                      <Calendar size={11} /> {ev.statusLabel}
                     </Badge>
                     <h3 className="text-h3" style={{ marginTop: 12 }}>
                       {ev.title}
@@ -598,41 +604,9 @@ export default function HomePage() {
                 </span>
                 <h2 className="text-h1">{t("home.valuesTitle")}</h2>
               </Reveal>
-              <StaggerChildren style={{ display: "grid", gap: 12, marginTop: 22 }}>
-                {VALUES.map((value) => (
-                  <StaggerItem key={value.title}>
-                    <div
-                      style={{
-                        background: "rgb(var(--surface))",
-                        border: "1px solid rgb(var(--border))",
-                        borderLeft: "3px solid rgb(var(--brand))",
-                        borderRadius: 10,
-                        padding: 16,
-                      }}
-                    >
-                      <h3
-                        style={{
-                          fontSize: 15,
-                          fontWeight: 700,
-                          color: "rgb(var(--ink))",
-                        }}
-                      >
-                        {value.title}
-                      </h3>
-                      <p
-                        style={{
-                          marginTop: 4,
-                          fontSize: 13.5,
-                          color: "rgb(var(--ink-muted))",
-                          lineHeight: 1.6,
-                        }}
-                      >
-                        {value.body}
-                      </p>
-                    </div>
-                  </StaggerItem>
-                ))}
-              </StaggerChildren>
+              <div style={{ marginTop: 22 }}>
+                <ValuesAccordion values={values} defaultOpenSlug={values[0]?.slug} compact />
+              </div>
             </div>
           </div>
         </div>
@@ -671,32 +645,49 @@ export default function HomePage() {
             </Link>
           </div>
           <StaggerChildren className="grid-3">
-            {NEWS.slice(0, 3).map((post) => (
+            {news.slice(0, 3).map((post) => (
               <StaggerItem key={post.slug}>
-                <Card style={{ height: "100%" }}>
-                  <CardBody>
-                    <Badge tone="cream">{post.tag}</Badge>
-                    <h3 className="text-h3" style={{ marginTop: 12 }}>
-                      {post.title}
-                    </h3>
-                    <p className="text-body" style={{ marginTop: 6 }}>
-                      {post.excerpt}
-                    </p>
-                    <div
-                      style={{
-                        marginTop: 14,
-                        fontSize: 12.5,
-                        color: "rgb(var(--ink-faint))",
-                      }}
-                    >
-                      {new Date(post.date).toLocaleDateString("en-US", {
-                        year: "numeric",
-                        month: "long",
-                        day: "numeric",
-                      })}
-                    </div>
-                  </CardBody>
-                </Card>
+                <Link
+                  href={`/news/${post.slug}`}
+                  style={{ display: "block", height: "100%" }}
+                  className="news-card-link"
+                >
+                  <Card style={{ height: "100%" }} className="card-lift">
+                    {post.image ? (
+                      <div className="photo-wrap" style={{ aspectRatio: "16 / 10", borderRadius: 0 }}>
+                        <SafeImage
+                          src={post.image}
+                          alt={post.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 33vw"
+                          fallbackLabel={post.title}
+                        />
+                      </div>
+                    ) : null}
+                    <CardBody>
+                      <Badge tone="cream">{post.tag}</Badge>
+                      <h3 className="text-h3" style={{ marginTop: 12, overflowWrap: "anywhere" }}>
+                        {post.title}
+                      </h3>
+                      <p className="text-body" style={{ marginTop: 6 }}>
+                        {post.excerpt}
+                      </p>
+                      <div
+                        style={{
+                          marginTop: 14,
+                          fontSize: 12.5,
+                          color: "rgb(var(--ink-faint))",
+                        }}
+                      >
+                        {new Date(post.date).toLocaleDateString("en-US", {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </div>
+                    </CardBody>
+                  </Card>
+                </Link>
               </StaggerItem>
             ))}
           </StaggerChildren>

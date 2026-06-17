@@ -1,6 +1,6 @@
 "use client";
 
-import { Calendar, MapPin, Users } from "lucide-react";
+import { Calendar, CalendarPlus, Mail, MapPin, Users } from "lucide-react";
 import {
   Badge,
   Button,
@@ -12,12 +12,17 @@ import {
   StaggerItem,
 } from "@/components/ui";
 import { useT } from "@/components/providers/LanguageProvider";
-import { EVENTS, PHOTOS } from "@/lib/content";
+import { useContent, type LocalizedContent } from "@/lib/i18n/useContent";
+import { PHOTOS, SITE } from "@/lib/content";
+import { downloadIcs } from "@/lib/ics";
+
+type Event = LocalizedContent["events"][number];
 
 export function EventsPageClient() {
   const { t } = useT();
-  const upcoming = EVENTS.filter((e) => e.status === "Upcoming");
-  const past = EVENTS.filter((e) => e.status === "Past");
+  const { events } = useContent();
+  const upcoming = events.filter((e) => e.status === "Upcoming");
+  const past = events.filter((e) => e.status === "Past");
 
   return (
     <>
@@ -70,7 +75,8 @@ export function EventsPageClient() {
             <Card>
               <CardBody>
                 <div style={{ textAlign: "center", padding: "32px 16px", color: "rgb(var(--ink-faint))" }}>
-                  {t("events.noUpcoming")}
+                  <Calendar size={28} style={{ marginInline: "auto", marginBottom: 10, color: "rgb(var(--ink-faint))" }} />
+                  <div>{t("events.noUpcoming")}</div>
                 </div>
               </CardBody>
             </Card>
@@ -101,27 +107,77 @@ export function EventsPageClient() {
   );
 }
 
-function EventCard({ ev, dimmed }: { ev: (typeof EVENTS)[number]; dimmed?: boolean }) {
+function EventCard({ ev, dimmed }: { ev: Event; dimmed?: boolean }) {
+  const { t } = useT();
+  const isUpcoming = ev.status === "Upcoming";
+  const mailtoHref = `mailto:${SITE.email}?subject=${encodeURIComponent(
+    `RSVP — ${ev.title}`,
+  )}&body=${encodeURIComponent(
+    `Hello LHF Ethiopia,\n\nI would like to attend "${ev.title}" on ${ev.date} at ${ev.location}.\n\nThank you,\n`,
+  )}`;
+
   return (
-    <Card style={{ height: "100%", opacity: dimmed ? 0.78 : 1 }}>
-      <CardBody>
-        <Badge tone={ev.status === "Upcoming" ? "teal" : "cream"}>
-          <Calendar size={11} /> {ev.status}
+    <Card
+      style={{ height: "100%", opacity: dimmed ? 0.78 : 1, display: "flex", flexDirection: "column" }}
+      className="card-lift"
+    >
+      <CardBody style={{ display: "flex", flexDirection: "column", flex: 1 }}>
+        <Badge tone={isUpcoming ? "teal" : "cream"}>
+          <Calendar size={11} /> {ev.statusLabel}
         </Badge>
-        <h3 className="text-h3" style={{ marginTop: 12 }}>{ev.title}</h3>
+        <h3 className="text-h3" style={{ marginTop: 12, overflowWrap: "anywhere" }}>{ev.title}</h3>
         <p className="text-body" style={{ marginTop: 8 }}>{ev.summary}</p>
         <div style={{ marginTop: 14, paddingTop: 12, borderTop: "1px solid rgb(var(--border))", display: "grid", gap: 4, fontSize: 12.5, color: "rgb(var(--ink-muted))" }}>
           <span style={{ display: "inline-flex", gap: 6, alignItems: "center" }}>
             <Calendar size={12} />{" "}
             {new Date(ev.date).toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" })}
           </span>
-          <span style={{ display: "inline-flex", gap: 6, alignItems: "center" }}>
+          <span style={{ display: "inline-flex", gap: 6, alignItems: "center", overflowWrap: "anywhere" }}>
             <MapPin size={12} /> {ev.location}
           </span>
-          <span style={{ display: "inline-flex", gap: 6, alignItems: "center" }}>
+          <span style={{ display: "inline-flex", gap: 6, alignItems: "center", overflowWrap: "anywhere" }}>
             <Users size={12} /> {ev.audience}
           </span>
         </div>
+        {isUpcoming ? (
+          <div
+            style={{
+              marginTop: 16,
+              paddingTop: 14,
+              borderTop: "1px solid rgb(var(--border))",
+              display: "flex",
+              gap: 8,
+              flexWrap: "wrap",
+            }}
+          >
+            <button
+              type="button"
+              onClick={() =>
+                downloadIcs({
+                  slug: ev.slug,
+                  title: ev.title,
+                  date: ev.date,
+                  location: ev.location,
+                  summary: ev.summary,
+                })
+              }
+              className="btn btn-sm"
+              style={{
+                background: "rgb(var(--brand))",
+                color: "white",
+                borderColor: "rgb(var(--brand))",
+              }}
+            >
+              <CalendarPlus size={13} /> {t("events.addToCalendar")}
+            </button>
+            <a
+              href={mailtoHref}
+              className="btn btn-sm btn-secondary"
+            >
+              <Mail size={13} /> {t("events.emailOffice")}
+            </a>
+          </div>
+        ) : null}
       </CardBody>
     </Card>
   );

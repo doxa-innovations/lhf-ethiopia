@@ -6,3 +6,5 @@ export { SafeImage } from "./Image";
 export { Reveal, StaggerChildren, StaggerItem } from "./Reveal";
 export { Counter } from "./Counter";
 export { MarqueeStrip } from "./MarqueeStrip";
+export { Parallax } from "./Parallax";
+export { CountUp } from "./CountUp";

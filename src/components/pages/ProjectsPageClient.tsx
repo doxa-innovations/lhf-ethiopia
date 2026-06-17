@@ -1,7 +1,11 @@
 "use client";
 
 import Link from "next/link";
+import { useRef } from "react";
 import { HandHeart, MapPin } from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import {
   Badge,
   Button,
@@ -13,10 +17,62 @@ import {
   StaggerItem,
 } from "@/components/ui";
 import { useT } from "@/components/providers/LanguageProvider";
-import { PHOTOS, PROJECTS, formatUsd } from "@/lib/content";
+import { useContent } from "@/lib/i18n/useContent";
+import { PHOTOS, formatUsd } from "@/lib/content";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
+
+function ProjectProgress({ pct, raisedLabel }: { pct: number; raisedLabel: string }) {
+  const wrapRef = useRef<HTMLDivElement>(null);
+
+  useGSAP(
+    () => {
+      const wrap = wrapRef.current;
+      if (!wrap) return;
+      const bar = wrap.querySelector<HTMLDivElement>(".pp-bar");
+      const label = wrap.querySelector<HTMLSpanElement>(".pp-label");
+      if (!bar || !label) return;
+      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        bar.style.width = `${pct}%`;
+        label.textContent = `${pct}%`;
+        return;
+      }
+      const obj = { n: 0 };
+      gsap.to(obj, {
+        n: pct,
+        duration: 1.2,
+        ease: "power2.out",
+        scrollTrigger: { trigger: wrap, start: "top 88%", once: true },
+        onUpdate: () => {
+          const v = Math.round(obj.n);
+          bar.style.width = `${v}%`;
+          label.textContent = `${v}%`;
+        },
+      });
+    },
+    { scope: wrapRef, dependencies: [pct] },
+  );
+
+  return (
+    <div ref={wrapRef}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
+        <span style={{ fontSize: 13, color: "rgb(var(--ink-faint))" }}>{raisedLabel}</span>
+        <span className="pp-label" style={{ fontSize: 13, fontWeight: 700, color: "rgb(var(--brand))" }}>
+          0%
+        </span>
+      </div>
+      <div style={{ height: 10, borderRadius: 999, background: "white", border: "1px solid rgb(var(--border))", overflow: "hidden" }}>
+        <div className="pp-bar" style={{ width: "0%", height: "100%", background: "rgb(var(--brand))" }} />
+      </div>
+    </div>
+  );
+}
 
 export function ProjectsPageClient() {
   const { t } = useT();
+  const { projects } = useContent();
   return (
     <>
       <section className="subhero">
@@ -51,10 +107,10 @@ export function ProjectsPageClient() {
       <section className="section">
         <div className="container">
           <StaggerChildren style={{ display: "grid", gap: 24 }}>
-            {PROJECTS.map((p) => {
+            {projects.map((p) => {
               const pct = Math.min(100, Math.round((p.raised / p.goal) * 100));
               return (
-                <StaggerItem key={p.title}>
+                <StaggerItem key={p.slug}>
                   <Card>
                     <CardBody>
                       <div className="project-row" style={{ display: "grid", gridTemplateColumns: "1fr", gap: 20 }}>
@@ -76,13 +132,7 @@ export function ProjectsPageClient() {
 
                         <div style={{ background: "rgb(var(--surface-2))", borderRadius: 16, padding: 22, display: "flex", flexDirection: "column", justifyContent: "space-between", gap: 16 }}>
                           <div>
-                            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 8 }}>
-                              <span style={{ fontSize: 13, color: "rgb(var(--ink-faint))" }}>{t("common.raised")}</span>
-                              <span style={{ fontSize: 13, fontWeight: 700, color: "rgb(var(--brand))" }}>{pct}%</span>
-                            </div>
-                            <div style={{ height: 10, borderRadius: 999, background: "white", border: "1px solid rgb(var(--border))", overflow: "hidden" }}>
-                              <div style={{ width: `${pct}%`, height: "100%", background: "rgb(var(--brand))", transition: "width 600ms ease" }} />
-                            </div>
+                            <ProjectProgress pct={pct} raisedLabel={t("common.raised")} />
                             <div className="font-display" style={{ marginTop: 14, display: "flex", alignItems: "baseline", gap: 8 }}>
                               <strong style={{ fontSize: 24, color: "rgb(var(--ink))", letterSpacing: "-0.02em" }}>{formatUsd(p.raised)}</strong>
                               <span style={{ fontSize: 13, color: "rgb(var(--ink-faint))" }}>

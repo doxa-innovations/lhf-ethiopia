@@ -6,16 +6,19 @@ import {
   Button,
   Card,
   CardBody,
+  Parallax,
   Reveal,
   SafeImage,
   StaggerChildren,
   StaggerItem,
 } from "@/components/ui";
 import { useT } from "@/components/providers/LanguageProvider";
-import { LANGUAGES, PHOTOS, PUBLICATIONS } from "@/lib/content";
+import { useContent } from "@/lib/i18n/useContent";
+import { PHOTOS } from "@/lib/content";
 
 export function PublicationsPageClient() {
   const { t } = useT();
+  const { languages, publications } = useContent();
   return (
     <>
       <section className="subhero">
@@ -29,15 +32,17 @@ export function PublicationsPageClient() {
               </p>
             </Reveal>
             <Reveal direction="left">
-              <div className="photo-wrap" style={{ aspectRatio: "5 / 4" }}>
-                <SafeImage
-                  src={PHOTOS.bookshelf}
-                  alt="Books on shelf"
-                  fill
-                  sizes="(max-width: 900px) 100vw, 460px"
-                  fallbackLabel="Bookshelf"
-                />
-              </div>
+              <Parallax speed={0.18}>
+                <div className="photo-wrap photo-kenburns" style={{ aspectRatio: "5 / 4" }}>
+                  <SafeImage
+                    src={PHOTOS.bookshelf}
+                    alt="Books on shelf"
+                    fill
+                    sizes="(max-width: 900px) 100vw, 460px"
+                    fallbackLabel="Bookshelf"
+                  />
+                </div>
+              </Parallax>
             </Reveal>
           </div>
         </div>
@@ -50,12 +55,12 @@ export function PublicationsPageClient() {
             <h2 className="text-h1">{t("publications.heartLanguagesTitle")}</h2>
           </Reveal>
           <StaggerChildren className="grid-3" style={{ marginTop: 32 }}>
-            {LANGUAGES.map((lang) => (
+            {languages.map((lang) => (
               <StaggerItem key={lang.code}>
                 <Card style={{ height: "100%" }}>
                   <CardBody>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <h3 className="text-h3">{lang.name}</h3>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                      <h3 className="text-h3" style={{ overflowWrap: "anywhere" }}>{lang.name}</h3>
                       <Badge
                         tone={
                           lang.status === "Published"
@@ -65,7 +70,7 @@ export function PublicationsPageClient() {
                               : "cream"
                         }
                       >
-                        {lang.status}
+                        {lang.statusLabel}
                       </Badge>
                     </div>
                     <p
@@ -76,6 +81,7 @@ export function PublicationsPageClient() {
                         fontWeight: 500,
                         color: "rgb(var(--brand))",
                         letterSpacing: "-0.01em",
+                        overflowWrap: "anywhere",
                       }}
                     >
                       {lang.native}
@@ -90,9 +96,9 @@ export function PublicationsPageClient() {
                         fontSize: 12.5,
                       }}
                     >
-                      <Row label="Region" value={lang.region} />
-                      <Row label="Speakers" value={lang.speakers} />
-                      <Row label="Titles" value={String(lang.titles)} />
+                      <Row label={t("publications.labelRegion")} value={lang.region} />
+                      <Row label={t("publications.labelSpeakers")} value={lang.speakers} />
+                      <Row label={t("publications.labelTitles")} value={String(lang.titles)} />
                     </dl>
                   </CardBody>
                 </Card>
@@ -140,9 +146,9 @@ export function PublicationsPageClient() {
                 <span style={{ textAlign: "right" }}>{t("publications.colStatus")}</span>
               </div>
 
-              {PUBLICATIONS.map((pub, idx) => (
+              {publications.map((pub) => (
                 <div
-                  key={idx}
+                  key={pub.slug}
                   style={{
                     display: "grid",
                     gridTemplateColumns: "1fr",
@@ -153,7 +159,7 @@ export function PublicationsPageClient() {
                   }}
                   className="pub-row"
                 >
-                  <div style={{ display: "flex", gap: 12, alignItems: "center" }}>
+                  <div style={{ display: "flex", gap: 12, alignItems: "center", minWidth: 0 }}>
                     <span
                       style={{
                         width: 38,
@@ -168,15 +174,15 @@ export function PublicationsPageClient() {
                     >
                       <BookOpen size={16} />
                     </span>
-                    <div>
-                      <div style={{ fontWeight: 600, color: "rgb(var(--ink))" }}>{pub.title}</div>
-                      <div style={{ fontSize: 12.5, color: "rgb(var(--ink-faint))", marginTop: 2 }}>
-                        {pub.native} · {pub.pages} pages
+                    <div style={{ minWidth: 0 }}>
+                      <div style={{ fontWeight: 600, color: "rgb(var(--ink))", overflowWrap: "anywhere" }}>{pub.title}</div>
+                      <div style={{ fontSize: 12.5, color: "rgb(var(--ink-faint))", marginTop: 2, overflowWrap: "anywhere" }}>
+                        {pub.native} · {pub.pages} {t("publications.pagesLabel")}
                       </div>
                     </div>
                   </div>
-                  <span style={{ color: "rgb(var(--ink-muted))" }}>{pub.language}</span>
-                  <span style={{ color: "rgb(var(--ink-muted))" }}>{pub.audience}</span>
+                  <span style={{ color: "rgb(var(--ink-muted))", overflowWrap: "anywhere" }}>{pub.language}</span>
+                  <span style={{ color: "rgb(var(--ink-muted))", overflowWrap: "anywhere" }}>{pub.audience}</span>
                   <span style={{ textAlign: "right" }}>
                     <Badge
                       tone={
@@ -187,7 +193,7 @@ export function PublicationsPageClient() {
                             : "cream"
                       }
                     >
-                      {pub.status}
+                      {pub.statusLabel}
                     </Badge>
                   </span>
                 </div>

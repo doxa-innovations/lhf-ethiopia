@@ -9,7 +9,7 @@ import { LOCALES, LOCALE_LABELS } from "@/lib/i18n/dictionary";
 export function LanguageSwitcher({
   variant = "light",
 }: {
-  variant?: "light" | "dark";
+  variant?: "light" | "dark" | "chips";
 }) {
   const { locale, setLocale } = useT();
   const [open, setOpen] = useState(false);
@@ -25,6 +25,55 @@ export function LanguageSwitcher({
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
   }, [open]);
+
+  // Inline chip variant for places where a popup would be clipped
+  // (mobile menu drawer, overflow:hidden containers).
+  if (variant === "chips") {
+    return (
+      <div
+        role="radiogroup"
+        aria-label="Language"
+        style={{
+          display: "inline-flex",
+          gap: 6,
+          padding: 4,
+          background: "rgb(var(--surface-2))",
+          border: "1px solid rgb(var(--border))",
+          borderRadius: 999,
+        }}
+      >
+        {LOCALES.map((l) => {
+          const meta = LOCALE_LABELS[l];
+          const active = locale === l;
+          return (
+            <button
+              key={l}
+              type="button"
+              role="radio"
+              aria-checked={active}
+              onClick={() => setLocale(l)}
+              style={{
+                minHeight: 36,
+                padding: "0 14px",
+                borderRadius: 999,
+                background: active ? "rgb(var(--brand))" : "transparent",
+                color: active ? "white" : "rgb(var(--ink-muted))",
+                border: "none",
+                cursor: "pointer",
+                fontWeight: 600,
+                fontSize: 13,
+                letterSpacing: "0.02em",
+                fontFamily: "inherit",
+                transition: "background 160ms ease, color 160ms ease",
+              }}
+            >
+              {meta.short}
+            </button>
+          );
+        })}
+      </div>
+    );
+  }
 
   const isDark = variant === "dark";
 

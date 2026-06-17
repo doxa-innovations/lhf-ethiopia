@@ -194,7 +194,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Long Afaan Oromoo / multi-word labels should wrap rather than overflow. */
+/* Long Afaan Oromoo / Amharic multi-word labels should wrap rather than overflow. */
 .btn {
   white-space: normal;
   overflow-wrap: anywhere;
@@ -206,8 +206,11 @@ body {
 .text-h3 {
   overflow-wrap: anywhere;
   word-break: normal;
-  hyphens: auto;
+  hyphens: manual;
 }
+/* Badges and section-labels: allow wrap on small screens for am/om text. */
+.badge { max-width: 100%; white-space: normal; overflow-wrap: anywhere; }
+.section-label { overflow-wrap: anywhere; word-break: normal; max-width: 100%; }
 
 img, video {
   max-width: 100%;
@@ -255,9 +258,14 @@ button { cursor: pointer; font-family: inherit; }
 }
 
 /* When the active locale is Afaan Oromoo the words run longer; scale the
-   hero display down slightly so it doesn't break onto an awkward 4th line. */
-:root[lang="om"] .text-display { font-size: clamp(24px, 6.8vw, 46px); }
-:root[lang="om"] .text-h1 { font-size: clamp(21px, 5vw, 34px); }
+   hero display down slightly so it doesn't break onto an awkward 4th line.
+   Keep `.text-h1` close to the default scale — over-shrinking made the
+   "What we do" title visually disappear under its section label. */
+:root[lang="om"] .text-display { font-size: clamp(24px, 6.6vw, 46px); }
+:root[lang="om"] .text-h1 { font-size: clamp(22px, 5vw, 36px); }
+:root[lang="om"] .text-display em,
+:root[lang="om"] .text-h1 em,
+:root[lang="om"] .text-h2 em { white-space: normal; }
 
 .text-h1 {
   font-family: var(--font-display);
@@ -560,6 +568,33 @@ textarea.input {
 /* SECTIONS — flat backgrounds */
 .section-cream-deep { background: rgb(var(--surface-2)); }
 .section-soft { background: rgb(var(--bg-soft)); }
+
+/* Data / dashboard section — lively soft-navy tint with subtle dot grid.
+   Replaces the dead-feeling `.section-soft` background for the impact-charts
+   block on the home page. */
+.section-data {
+  position: relative;
+  background:
+    radial-gradient(60% 80% at 80% 0%, rgb(var(--teal) / 0.10), transparent 60%),
+    radial-gradient(50% 70% at 0% 100%, rgb(var(--brand) / 0.08), transparent 55%),
+    rgb(var(--navy-muted));
+  isolation: isolate;
+  overflow: hidden;
+}
+.section-data::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgb(var(--navy) / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--navy) / 0.07) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 35%, transparent 90%);
+  -webkit-mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 35%, transparent 90%);
+}
+.section-data > * { position: relative; z-index: 1; }
 .section-ink {
   background: rgb(var(--ink));
   color: white;
@@ -630,6 +665,16 @@ textarea.input {
   transform: scale(1.03);
 }
 
+/* Slow ken-burns drift for hero/feature photo wraps that opt in. */
+.photo-wrap.photo-kenburns img {
+  animation: kenburns 18s var(--ease-out) infinite alternate;
+}
+
+@keyframes kenburns {
+  0% { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.06) translate(-1%, -1%); }
+}
+
 .photo-tilt {
   transform: rotate(-1deg);
   transform-origin: center;
@@ -694,6 +739,34 @@ textarea.input {
 .apexcharts-tooltip.apexcharts-theme-light {
   background: rgb(var(--surface)) !important;
   color: rgb(var(--ink)) !important;
+}
+
+/* Hoverable card variant — stronger lift than the base `.card:hover`. */
+.card-lift { transition: transform 280ms var(--ease-out), box-shadow 280ms var(--ease-out); }
+.card-lift:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 38px rgba(18, 22, 32, 0.12);
+}
+
+/* Donation amount buttons + interactive chip focus ring. */
+.amount-btn:focus-visible {
+  outline: none;
+  border-color: rgb(var(--brand)) !important;
+  box-shadow: 0 0 0 3px rgb(var(--brand) / 0.18);
+}
+
+/* Reduced-motion: zero animations, transitions, scroll smoothing. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .photo-wrap.photo-kenburns img { animation: none !important; }
+  .marquee-track { animation: none !important; }
 }
 
 /* Utility helpers for inline grids that need a mobile-first stack */

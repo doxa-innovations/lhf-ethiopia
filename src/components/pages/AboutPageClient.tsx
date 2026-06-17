@@ -4,16 +4,21 @@ import {
   Button,
   Card,
   CardBody,
+  CountUp,
+  Parallax,
   Reveal,
   SafeImage,
   StaggerChildren,
   StaggerItem,
 } from "@/components/ui";
 import { useT } from "@/components/providers/LanguageProvider";
-import { PHOTOS, VALUES } from "@/lib/content";
+import { useContent } from "@/lib/i18n/useContent";
+import { PHOTOS } from "@/lib/content";
+import { ValuesAccordion } from "@/components/ui/ValuesAccordion";
 
 export function AboutPageClient() {
   const { t } = useT();
+  const { values } = useContent();
   return (
     <>
       <section className="subhero">
@@ -32,15 +37,17 @@ export function AboutPageClient() {
         <div className="container">
           <div className="grid-2" style={{ alignItems: "center", gap: 48 }}>
             <Reveal direction="right">
-              <div className="photo-wrap" style={{ aspectRatio: "4 / 5" }}>
-                <SafeImage
-                  src={PHOTOS.ethiopiaLandscape}
-                  alt="Ethiopian highlands"
-                  fill
-                  sizes="(max-width: 900px) 100vw, 500px"
-                  fallbackLabel="Ethiopia"
-                />
-              </div>
+              <Parallax speed={0.18}>
+                <div className="photo-wrap photo-kenburns" style={{ aspectRatio: "4 / 5" }}>
+                  <SafeImage
+                    src={PHOTOS.ethiopiaLandscape}
+                    alt="Ethiopian highlands"
+                    fill
+                    sizes="(max-width: 900px) 100vw, 500px"
+                    fallbackLabel="Ethiopia"
+                  />
+                </div>
+              </Parallax>
             </Reveal>
 
             <div>
@@ -76,11 +83,11 @@ export function AboutPageClient() {
             className="about-stats"
           >
             {[
-              { value: "42,300+", label: "Books distributed in Ethiopia" },
-              { value: "180", label: "Congregations supplied" },
-              { value: "12", label: "Active translation projects" },
-              { value: "6", label: "Heart languages published in" },
-              { value: "34", label: "Ethiopian reviewers trained" },
+              { value: 42300, suffix: "+", label: t("about.statBooksLabel") },
+              { value: 180, suffix: "", label: t("about.statCongregationsLabel") },
+              { value: 12, suffix: "", label: t("about.statProjectsLabel") },
+              { value: 6, suffix: "", label: t("about.statLangsLabel") },
+              { value: 34, suffix: "", label: t("about.statReviewersLabel") },
             ].map((s) => (
               <StaggerItem key={s.label}>
                 <Card className="card-flat" style={{ background: "white", height: "100%" }}>
@@ -94,7 +101,7 @@ export function AboutPageClient() {
                         letterSpacing: "-0.02em",
                       }}
                     >
-                      {s.value}
+                      <CountUp value={s.value} suffix={s.suffix} />
                     </div>
                     <div
                       style={{
@@ -119,43 +126,17 @@ export function AboutPageClient() {
         </div>
       </section>
 
-      <section className="section">
+      <section id="believe" className="section">
         <div className="container">
           <Reveal>
-            <div style={{ maxWidth: 680 }}>
+            <div style={{ maxWidth: 680, marginBottom: 28 }}>
               <span className="section-label">{t("about.convictionsLabel")}</span>
               <h2 className="text-h1">{t("about.convictionsTitle")}</h2>
             </div>
           </Reveal>
-          <StaggerChildren className="grid-2" style={{ marginTop: 36 }}>
-            {VALUES.map((value, i) => (
-              <StaggerItem key={value.title}>
-                <Card style={{ height: "100%" }}>
-                  <CardBody>
-                    <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
-                      <span
-                        style={{
-                          width: 32,
-                          height: 32,
-                          borderRadius: 8,
-                          background: "rgb(var(--brand-muted))",
-                          color: "rgb(var(--brand-strong))",
-                          fontWeight: 800,
-                          fontSize: 14,
-                          display: "grid",
-                          placeItems: "center",
-                        }}
-                      >
-                        {i + 1}
-                      </span>
-                      <h3 className="text-h3">{value.title}</h3>
-                    </div>
-                    <p className="text-body">{value.body}</p>
-                  </CardBody>
-                </Card>
-              </StaggerItem>
-            ))}
-          </StaggerChildren>
+          <Reveal delay={0.05}>
+            <ValuesAccordion values={values} defaultOpenSlug={values[0]?.slug} />
+          </Reveal>
         </div>
       </section>
 

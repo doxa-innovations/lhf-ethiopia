@@ -6,17 +6,23 @@ import {
   Button,
   Card,
   CardBody,
+  Parallax,
   Reveal,
   SafeImage,
 } from "@/components/ui";
 import { PodcastBrowser } from "@/components/podcast/PodcastBrowser";
 import { YouTubeEmbed } from "@/components/podcast/YouTubeEmbed";
 import { useT } from "@/components/providers/LanguageProvider";
+import { useContent } from "@/lib/i18n/useContent";
 import { PHOTOS, PODCAST, PODCAST_EPISODES } from "@/lib/content";
 
 export function PodcastPageClient() {
   const { t } = useT();
-  const latest = [...PODCAST_EPISODES].sort((a, b) => (a.date < b.date ? 1 : -1))[0];
+  const { podcastEpisodes } = useContent();
+  // Pair each localized episode with its base date, sort newest first.
+  const latest = [...podcastEpisodes]
+    .map((ep) => ({ ...ep, date: PODCAST_EPISODES.find((b) => b.slug === ep.slug)?.date ?? "" }))
+    .sort((a, b) => (a.date < b.date ? 1 : -1))[0];
   const featuredId = PODCAST.featuredYoutubeId;
 
   return (
@@ -32,18 +38,22 @@ export function PodcastPageClient() {
           isolation: "isolate",
         }}
       >
-        <div
-          aria-hidden
-          style={{
-            position: "absolute",
-            inset: 0,
-            zIndex: -2,
-            backgroundImage: `url("${PHOTOS.podcastStudio}")`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            opacity: 0.18,
-          }}
-        />
+        <Parallax
+          speed={0.35}
+          style={{ position: "absolute", inset: 0, zIndex: -2, pointerEvents: "none" }}
+        >
+          <div
+            aria-hidden
+            style={{
+              position: "absolute",
+              inset: "-15%",
+              backgroundImage: `url("${PHOTOS.podcastStudio}")`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              opacity: 0.18,
+            }}
+          />
+        </Parallax>
         <div aria-hidden style={{ position: "absolute", inset: 0, zIndex: -1, background: "rgba(8, 12, 22, 0.5)" }} />
 
         <div className="container-wide" style={{ position: "relative" }}>

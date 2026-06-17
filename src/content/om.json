@@ -1,0 +1,436 @@
+{
+  "languages": [
+    {
+      "code": "am",
+      "name": "Amaariffa",
+      "native": "አማርኛ",
+      "region": "Finfinnee, Amaaraa",
+      "speakers": "Miiliyoona 32",
+      "status": "Published",
+      "statusLabel": "Maxxansame",
+      "titles": 14
+    },
+    {
+      "code": "om",
+      "name": "Afaan Oromoo",
+      "native": "Afaan Oromoo",
+      "region": "Oromiyaa",
+      "speakers": "Miiliyoona 37",
+      "status": "Published",
+      "statusLabel": "Maxxansame",
+      "titles": 9
+    },
+    {
+      "code": "ti",
+      "name": "Tigriiffa",
+      "native": "ትግርኛ",
+      "region": "Tigraay",
+      "speakers": "Miiliyoona 9",
+      "status": "Published",
+      "statusLabel": "Maxxansame",
+      "titles": 6
+    },
+    {
+      "code": "so",
+      "name": "Soomaaliffa",
+      "native": "Soomaali",
+      "region": "Naannoo Soomaalee",
+      "speakers": "Miiliyoona 8",
+      "status": "In translation",
+      "statusLabel": "Hiikamaa jiraa",
+      "titles": 2
+    },
+    {
+      "code": "sid",
+      "name": "Sidaamu Afoo",
+      "native": "Sidaamu Afoo",
+      "region": "Sidaamaa",
+      "speakers": "Miiliyoona 4",
+      "status": "In translation",
+      "statusLabel": "Hiikamaa jiraa",
+      "titles": 1
+    },
+    {
+      "code": "wal",
+      "name": "Wolayttattuwaa",
+      "native": "Wolayttattuwaa",
+      "region": "Kibba Itoophiyaa",
+      "speakers": "Miiliyoona 2",
+      "status": "Requested",
+      "statusLabel": "Gaafatame",
+      "titles": 0
+    }
+  ],
+  "publications": [
+    {
+      "slug": "small-catechism-amharic",
+      "title": "Catechism Xiqqaa Luuter",
+      "language": "Amaariffa",
+      "native": "የሉተር ትንሹ ካቴኪዝም",
+      "audience": "Umurii hundaaf",
+      "pages": 112,
+      "status": "In print",
+      "statusLabel": "Maxxansame"
+    },
+    {
+      "slug": "good-news-jesus-oromoo",
+      "title": "Misiraachoo Yesuusiif",
+      "language": "Afaan Oromoo",
+      "native": "Misiraachoo Yesuusiif",
+      "audience": "Ijoolleef",
+      "pages": 64,
+      "status": "In print",
+      "statusLabel": "Maxxansame"
+    },
+    {
+      "slug": "garden-bible-stories-amharic",
+      "title": "Seenaa Macaafa Qulqulluu Ijoollee",
+      "language": "Amaariffa",
+      "native": "የልጆች የመጽሐፍ ቅዱስ ታሪኮች",
+      "audience": "Ijoolleef",
+      "pages": 96,
+      "status": "In print",
+      "statusLabel": "Maxxansame"
+    },
+    {
+      "slug": "small-catechism-tigrinya",
+      "title": "Catechism Xiqqaa Luuter",
+      "language": "Tigriiffa",
+      "native": "ናይ ሉተር ንእሽቶ ካቴኪዝም",
+      "audience": "Umurii hundaaf",
+      "pages": 108,
+      "status": "In print",
+      "statusLabel": "Maxxansame"
+    },
+    {
+      "slug": "augsburg-confession-amharic",
+      "title": "Beeksisa Amantii Aagusburg",
+      "language": "Amaariffa",
+      "native": "የአውግስቡርግ የእምነት መግለጫ",
+      "audience": "Pastoraa fi barsiisotaaf",
+      "pages": 86,
+      "status": "Reprint requested",
+      "statusLabel": "Deebi'ee maxxanfamuu gaafatame"
+    },
+    {
+      "slug": "small-catechism-somali",
+      "title": "Catechism Xiqqaa Luuter",
+      "language": "Soomaaliffa",
+      "native": "Catechism-ka yar ee Luther",
+      "audience": "Umurii hundaaf",
+      "pages": 110,
+      "status": "In translation",
+      "statusLabel": "Hiikamaa jiraa"
+    },
+    {
+      "slug": "daily-devotions-amharic",
+      "title": "Kadhannaa Maatii Guyyaa Guyyaa",
+      "language": "Amaariffa",
+      "native": "የቤተሰብ ዕለታዊ ጸሎቶች",
+      "audience": "Umurii hundaaf",
+      "pages": 144,
+      "status": "In print",
+      "statusLabel": "Maxxansame"
+    },
+    {
+      "slug": "lords-prayer-oromoo",
+      "title": "Kadhannaa Gooftaa Ibsame",
+      "language": "Afaan Oromoo",
+      "native": "Kadhannaa Gooftaa",
+      "audience": "Umurii hundaaf",
+      "pages": 48,
+      "status": "In print",
+      "statusLabel": "Maxxansame"
+    },
+    {
+      "slug": "reformation-hymns-amharic",
+      "title": "Faarfannaa Riformeshinii",
+      "language": "Amaariffa",
+      "native": "የሪፎርሜሽን መዝሙራት",
+      "audience": "Waldaalee",
+      "pages": 78,
+      "status": "In translation",
+      "statusLabel": "Hiikamaa jiraa"
+    }
+  ],
+  "projects": [
+    {
+      "slug": "sidaama-catechism-first-edition",
+      "title": "Catechism Sidaamaa — Maxxansa Jalqabaa",
+      "region": "Naannoo Sidaamaa",
+      "need": "Qorannoo hiikaa fi maxxansa jalqabaa garagalcha 2,000",
+      "raised": 4200,
+      "goal": 11500,
+      "impact": "Waldaalee baadiyyaa 40 catechism Luuteraanaa jalqabaa Sidaamu Afoon ni qaqqabsiisa."
+    },
+    {
+      "slug": "tigray-pastor-library-reprint",
+      "title": "Mana Kitaabaa Pastoraa — Deebii Maxxansaa Tigraay",
+      "region": "Tigraay",
+      "need": "Matadureewwan Amaariffa fi Tigriiffaa 8 deebi'anii maxxansuu, fooyya'iinsa walqixaa lola booda",
+      "raised": 9800,
+      "goal": 18000,
+      "impact": "Pastoroota 65f manneen kitaabaa lola bara 2020–2022 keessatti baduu bakka bu'a."
+    },
+    {
+      "slug": "oromia-childrens-bible-stories",
+      "title": "Seenaa Macaafa Qulqulluu Ijoollee — Tamsa Oromiyaa",
+      "region": "Oromiyaa",
+      "need": "Garagalcha A Child's Garden Afaan Oromootiin 10,000",
+      "raised": 6300,
+      "goal": 14000,
+      "impact": "Oromiyaa keessatti waldaalee 220f sirna barumsaa mana barumsaa Sanbataa."
+    },
+    {
+      "slug": "somali-translation-year-one",
+      "title": "Hiika Soomaaliffaa — Waggaa Jalqabaa",
+      "region": "Naannoo Soomaalee",
+      "need": "Deeggarsa miindaa qorattoota lamaa fi gorsaa amantii",
+      "raised": 2100,
+      "goal": 9000,
+      "impact": "Afaan onnee haaraa bana: barreeffamoota Luuteraanaa jalqabaa Soomaalitti."
+    },
+    {
+      "slug": "podcast-studio-phase-1",
+      "title": "Istuudiyoo Podkaastii — Sadarkaa Jalqabaa",
+      "region": "Finfinnee",
+      "need": "Qophii sagalee, maayikiroofoonii fi interface istuudiyoo haaraaf",
+      "raised": 3500,
+      "goal": 8400,
+      "impact": "Dandeettii waraabbii torbanii dachaa sadii ol kaasa akkasumas qulqullina sagalee kutaa lallabaa, muuziqaa fi barsiisaa ni fooyyessa."
+    }
+  ],
+  "news": [
+    {
+      "slug": "tigrinya-catechism-reprint",
+      "date": "2026-05-18",
+      "title": "Deebiin Maxxansaa Catechism Tigriiffaa Waldaa 65 Ga'eera",
+      "excerpt": "Waggoota lola booda, garagalchi bakka bu'aan Catechism Xiqqaa Luuter Tigriiffaan gara Maqaleefi naannoo sebkaa dhufaniiru.",
+      "tag": "Raabsa",
+      "image": "https://images.unsplash.com/photo-1592496431122-2349e0fbc666?w=1400&q=80&auto=format&fit=crop",
+      "body": "Garagalchi Catechism Xiqqaa Luuter Tigriiffaan kuma shan Maqaleetti ga'aniiru, kunis carraaqqii deebii maxxansaa waggaa lamaa lola naannoo isaa bara 2022 dhumee booda jalqabame xumura argisiisa.\n\nGaragalchi jalqabaa 1,800 torban darbe Pastora Tadasaa Baqqalaa fi garee barattoota Sammeenrii shanin Tigraay, Amaaraa fi naannoo Walloo waldaalee 65f harkaan raabsamaniiru. Waldaan tokkoon tokkoon isaanii pakeejii jalqabaa garagalcha 20 fudhataniiru — jaarsa hundaa fi barsiisaa mana barumsaa Sanbataa hundaaf ga'a.\n\n«Waggaa lamaaf catechism tokko liqaa fudhadhe handhuura keessa yaadannoo qaba ture lallabaan ture» jechuun Pastoraa Tadasaan dubbataniiru. «Jaarsa waldaa keenya keessa jiru hundaaf garagalcha kaa'uun dubbii Waaqayyo afaan ittiin kadhatan keessa deebisuu dha.»\n\nGaragalchii hafan dambaalewwan ji'aa sadii keessatti hanga Hagayyaatti ni raabsamu."
+    },
+    {
+      "slug": "afaan-oromoo-childrens-stories",
+      "date": "2026-04-02",
+      "title": "Seenaan Macaafa Qulqulluu Ijoollee Afaan Oromootti Maxxansa Sadaffaa Seenee",
+      "excerpt": "Oromiyaa keessatti manneen barumsaa Sanbataa irraa fedhiin guddachaa jira — maxxansi sadaffaa garagalcha 5,000 amma Finfinnee keessatti maxxansa irra jira.",
+      "tag": "Maxxansa",
+      "image": "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=1400&q=80&auto=format&fit=crop",
+      "body": "A Child's Garden of Bible Stories Afaan Oromootiin ji'a kana maxxansa sadaffaa seena, garagalcha haaraa 5,000 Addis Lutheran Press irratti maxxansa irra jira. Maxxansoota jalqabaa lamaan walumaagalatti, dhuma waggaattii garagalcha 16,000 ol Oromiyaa keessatti waldaalee ga'a.\n\nFedhiin guutummaatti manneen barumsaa Sanbataa irraa dhufeera. «Maxxansi jalqabaa waggaa lama akka turu yaadame» jechuun hiikaan ol'aanaa Abdii Lammaa dubbateera. «Ji'a kudha tokko keessatti tuullaa keenya hin qabnu turre.» Waldaan Baalee Luuteraanaa qofti yaa'ii catechism waggaa kanaaf garagalcha 320 gaafateera.\n\nMaxxansi haaraan sirreeffama yaadannoo bineensaa muraasa barsiisotaan dhiyaate of keessatti qabateera. Raabsi mana kuusaa Adaamaa irraa Caamsaa 18 jalqaba."
+    },
+    {
+      "slug": "sidaama-translation-launch",
+      "date": "2026-02-14",
+      "title": "Garee Hiika Sidaamaa Catechism Xiqqaa Irratti Hojii Eegale",
+      "excerpt": "Carraaqqiin hiikaa haaraan LHF Itoophiyaaf afaan onnee jahaffaa bana. Qorattoonni sadii sadarkaa gulaalaa kaa'uuf Hawaasaatti walgahan.",
+      "tag": "Hiika",
+      "image": "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1400&q=80&auto=format&fit=crop",
+      "body": "Qorattoonni sadii torban darbe Hawaasaa Lutheran Kolleejjitti walitti dhufanii hiika jalqabaa Catechism Xiqqaa Luuter Sidaamu Afoof eegalan, kunis LHF Itoophiyaaf afaan onnee jahaffaa banuun isaa ti.\n\nGareen Diyaakonissa Almaaz Waldee jalatti hogganamee, sagantaa hirmaattummaa LCMS irraa Pastora Maarqos Daanieliin to'annaa amantii argata. Wixinee jalqabaa Ajajawwan Kudhanii fi Beeksisa Amantii Ergamtootaa Fulbaana keessa eegama, barreeffamni xumuramaa bara 2027 jalqaba galma godhama.\n\n«Jireenya koo keessatti yeroo jalqabaaf, kitaaba Luuteraanaa Sidaamu Afoon qabadheera» jechuun Diyaakonissa Almaaz hojii kana faarfannaa 1996 isaa eegale yaadattanii dubbattan. «Catechism kun lammataa ta'a. Dhumaa hin ta'u.»"
+    },
+    {
+      "slug": "addis-warehouse-opens",
+      "date": "2026-01-09",
+      "title": "LHF Itoophiyaan Finfinneetti Mana Kuusaa Raabsaa Bane",
+      "excerpt": "Boolee keessatti waajjirri fi mana kuusaa adda baafame mootummaa gumurukaa salphisa akkasumas waldaalee biyya guutuutti geejjiba lafa keessaa salphisa.",
+      "tag": "Hojii",
+      "image": "https://images.unsplash.com/photo-1553413077-190dd305871c?w=1400&q=80&auto=format&fit=crop",
+      "body": "LHF Itoophiyaan ji'a kana mana kuusaa raabsaa jalqabaa adda baafame baneera — bal'ina 220 m² qabu, kutaa magaalaa Boolee keessa kan argamu giddugala geejjiba alaa, sirna gumurukaa fi ergituu waldaa-tokkoon-tokkoon gootaa baasaa tokko jala fida.\n\nMana kuusaan utuu hin banamiin dura, kontenarii kitaabota Luuteraanaa Ameerikaa ykn Awurooppaa irraa ergaman kamiyyuu karaa daldaltoota qajeelchaa adda addaa irratti qulqullaa'uu qabu, akkasumas karaalee buufata naannoo addaan baafamanitti waldaalee gara waldaalee gara dabarsuu qabu. Yeroon giddugala gumuruka-irraa-waldaatti gahuu 48 ji'a ture.\n\nMana kuusaan Boolee waldaalee naannoo Finfinneef gara guyyaa 14, naannoolee fageenya irratti immoo gara guyyaa 22 gabaabsa. Yeroon raabsaa kurmaanaa — kan jalqabaa Adoolessa 12 yaadame — amma istafaa irratti raawwatama."
+    }
+  ],
+  "values": [
+    {
+      "slug": "sola-scriptura",
+      "title": "Sola Scriptura — Caaffanni Qulqullaa'oon Qofa",
+      "body": "Macaafni Qulqulluun amantii fi jireenya qaata fi seera qofa. Caaffanni Qulqullaa'oon dubbii Waaqayyo barreeffame — geggeessaa Hafuuraan, dogoggora kan hin qabne, fi sirna kamiyyuu kan ittiin qoramu seera tokkichaa. Wantuma Caaffanni qulqullaa'oon barsiisu barsiifna, wantuma Caaffanni qulqullaa'oon dubbatu ni dubbanna."
+    },
+    {
+      "slug": "sola-gratia",
+      "title": "Sola Gratia — Ayyaana Qofa",
+      "body": "Fayyinni kennaa bilisaa ayyaana Waaqayyoo ti. Hojii goonen ykn goonu danda'amaan miti, garuu fooyya'aa baduu barbaaduuf fi fayyisuuf kan dhufe Kiristoos Yesusiin ayyaana Waaqayyo kan hin malle ittiin fayyifamne."
+    },
+    {
+      "slug": "sola-fide",
+      "title": "Sola Fide — Amantii Qofa",
+      "body": "Ni qajeelfamne — fuula Waaqayyoo duratti qajeeloo ni jenname — hojii seeraa irraa addaan baannee Kiristoos Yesusitti amanuu qofaan. Misiraachoon kun mata duree jiddugaleessa amantii Kiristaanaa fi onnee kitaaba LHF Itoophiyaan raabsu hundaa ti."
+    },
+    {
+      "slug": "solus-christus",
+      "title": "Solus Christus — Kiristoos Qofa",
+      "body": "Yesus Kiristoos, Waaqa dhugaa fi nama dhugaa, gidduu Waaqayyoo fi nama gidduu giddugaleessa qofa. Maqaan biraa kan ittiin fayyinu samii jalatti hin kennamne. Jireenyi isaa, du'ni isaa fi du'aa kaa'uun isaa fayyina keenya guutuumaatti raawwata."
+    },
+    {
+      "slug": "soli-deo-gloria",
+      "title": "Soli Deo Gloria — Ulfina Waaqayyoof Qofa",
+      "body": "Waldaan tajaajilame hundi, kitaabni maxxansame hundi, podkaastiin waraabame hundi ulfina Waaqayyoof qofa kennama. Maqaa isaatiin, ayyaana isaatiin, Itoophiyaa keessatti dubbiin isaa akka tamsa'utti hojjenna."
+    },
+    {
+      "slug": "word-and-sacrament",
+      "title": "Dubbii fi Surruusa Qulqulluu",
+      "body": "Kiristoos karaa ayyaana gara keenya dhufa: dubbii lallabamu wangeelaa, Cuuphaa Qulqulluu fi Itti-bulchi'i Gooftaa. Hojiin Kiristoos fayyisa gara jireenya saba Waaqayyo akka ga'utti karaalee kana akka manaan, amanamummaan itti fayyadaman waldaalee ni deeggarra."
+    },
+    {
+      "slug": "book-of-concord",
+      "title": "Kitaaba Wal Galtee",
+      "body": "Beeksisa Amantii Aagusburg hin jijjiiramne (1530), Catechism Xiqqaa fi Guddaa Luuter, akkasumas Beeksisa Amantii Luuteraanaa biroo Kitaaba Wal Galtee keessatti walitti qabaman — Caaffanni Qulqullaa'oon ibsa amanamoo waan ta'aniif — ni dubbanna. Barsiisni Luuteraanaa beeksisa amantii irratti hundaa'e matadure hiikamaa ni filannu hundaa boca."
+    },
+    {
+      "slug": "heart-language-free",
+      "title": "Afaan Onnee, Tola",
+      "body": "Namoonni Kiristoos baayyee gaarii kan argan afaan ittiin yaadanii fi itti kadhatani dha. LHF Itoophiyaan kitaabota Luuteraanaa Amaariffa, Afaan Oromoo, Tigriiffa, Soomaaliffaa, Sidaamu Afoo fi kanaa ol hiika, maxxansa, tola raabsa — gonkumaa hin gurguramu, yeroo hundaa ni kennama."
+    }
+  ],
+  "stories": [
+    {
+      "slug": "pastor-tadesse",
+      "name": "Pastora Tadasaa Baqqalaa",
+      "role": "Pastora",
+      "congregation": "Qulqulluu Maarqos Luuteraanaa · Maqalee",
+      "language": "Tigriiffa",
+      "quote": "Yeroon deebiin maxxansaa dhufan, booye. Waggaa lamaaf catechism tokko liqaa fudhadhe handhuura keessa yaadannoo qaba ture lallabaan ture. Amma jaarsi waldaa keenya keessa jiru hundi kan ofii qaba."
+    },
+    {
+      "slug": "selam-teacher",
+      "name": "Salaam Girmaa",
+      "role": "Barsiisaa Mana Barumsaa Sanbataa",
+      "congregation": "Boolee Luuteraanaa · Finfinnee",
+      "language": "Amaariffa",
+      "quote": "Seenaan Macaafa Qulqulluu Ijoollee Amaariffaan mana barumsaa Sanbataa keenya jijjiire. Ijoolleen mana keessatti maatii isaaniitiif sagalee guddaan dubbisu — yeroo tokko tokko maatiin baratoota ta'u."
+    },
+    {
+      "slug": "abdi-translator",
+      "name": "Abdii Lammaa",
+      "role": "Hiikkaa",
+      "congregation": "LHF Itoophiyaa · Deeskii Oromiyaa",
+      "language": "Afaan Oromoo",
+      "quote": "Luuterii gara Afaan Oromootti hiikuun jechaan-jechaan qofaa miti. Jechoota qonnaan Baalee dhugumatti dubbatu filanna, kanaaf catechism afaan kushinaa keessa jiraata malee afaan galma barumsaa miti."
+    },
+    {
+      "slug": "almaz-deaconess",
+      "name": "Almaaz Waldee",
+      "role": "Diyaakonissa",
+      "congregation": "Hawaasaa Luuteraanaa · Sidaamaa",
+      "language": "Sidaamu Afoo",
+      "quote": "Jireenya koo keessatti yeroo jalqabaaf, kitaaba Luuteraanaa Sidaamu Afoon qabadhee jira. Maxxansa jalqabaa xiqqaa tokko — fi waan hunduma."
+    },
+    {
+      "slug": "yohannes-printer",
+      "name": "Yohaannis Asfaaw",
+      "role": "Hirmaattuu Maxxansaa",
+      "congregation": "Mana Maxxansaa Finfinnee",
+      "language": "Afaanota baayyee",
+      "quote": "Hojiiwwan baayyeen mana maxxansaa keenya keessa darbu kitaabota barumsaa ykn unkaa mootummaa. LHF Itoophiyaan garaa adda: yeroo kitaabni sun gara qarqara baha, tola baha, manni maxxansaa keenya ni beeka."
+    }
+  ],
+  "events": [
+    {
+      "slug": "addis-distribution-day-jun",
+      "title": "Guyyaa Raabsaa Finfinnee",
+      "date": "2026-07-12",
+      "location": "Mana kuusaa Boolee, Finfinnee",
+      "audience": "Pastoraa fi bulchitoota waldaa",
+      "summary": "Geejjibni haaraan waldaalee naannoo Finfinneef kurmaana keessa kennamu. Xalayaa waldaa keessanii fidaa nuti ammoo gaarii keessan ni feenna.",
+      "status": "Upcoming",
+      "statusLabel": "Dhufaa jiru"
+    },
+    {
+      "slug": "mekelle-pastor-training-aug",
+      "title": "Dhumi Sanbataa Leenjii Pastoraa Maqalee",
+      "date": "2026-08-23",
+      "location": "Qulqulluu Maarqos Luuteraanaa, Maqalee",
+      "audience": "Pastoroota Tigraay fi Amaaraa",
+      "summary": "Leenjii guyyaa lamaa catechism Tigriiffaa jireenya waldaa keessatti fayyadamuu, sagantaa marii Pastora Tadasaan kan gaggeeffamu.",
+      "status": "Upcoming",
+      "statusLabel": "Dhufaa jiru"
+    },
+    {
+      "slug": "hawassa-sidaama-launch",
+      "title": "Eebbifama Maxxansa Jalqabaa Sidaamu Afoo",
+      "date": "2026-09-14",
+      "location": "Mana Sagadaa Yuniversiitii Hawaasaa",
+      "audience": "Uummataaf banaa",
+      "summary": "Eebbifama uummataa catechism Luuteraanaa jalqabaa Sidaamu Afoon. Tajaajila banaa, muuziqaa fi waldaalee bakka bu'aniif kennaa kitaabaa.",
+      "status": "Upcoming",
+      "statusLabel": "Dhufaa jiru"
+    },
+    {
+      "slug": "addis-podcast-live-may",
+      "title": "Waraabbii Podkaastii Kallattii — Muuziqaa Riformeshinii",
+      "date": "2026-05-04",
+      "location": "Istuudiyoo Boolee, Finfinnee",
+      "audience": "Uummata",
+      "summary": "Waraabbiin kallattii ilaala fudhachuu Dubbiin Hojiirra — Itoophiyaa, faarfattoota Qulqulluu Maarqos qabu.",
+      "status": "Past",
+      "statusLabel": "Darbe"
+    },
+    {
+      "slug": "oromia-distribution-mar",
+      "title": "Raabsa Birraa Oromiyaa",
+      "date": "2026-03-18",
+      "location": "Mana kuusaa Adaamaa, Oromiyaa",
+      "audience": "Pastoraa fi gaggeessitoota waldaa",
+      "summary": "Oromiyaa keessatti waldaalee 80f raabsa birraa seenaa macaafa qulqulluu ijoollee Afaan Oromootiin.",
+      "status": "Past",
+      "statusLabel": "Darbe"
+    }
+  ],
+  "podcastEpisodes": [
+    {
+      "slug": "ep-129-salvation-by-faith",
+      "title": "Fayyina Amantiin — Salvation by Faith",
+      "summary": "Fayyinni amantii qofaan moo, amantii fi hojii dabalataan? Deebii Luuteraanaa Caaffanni Qulqullaa'oon irratti hundaa'e Amaariffaa fi Afaan Ingiliffaan ibsame.",
+      "language": "Amaariffa / Afaan Ingiliffaa"
+    },
+    {
+      "slug": "ep-128-original-sin",
+      "title": "Cubbuu Dhalootaa — Original Sin",
+      "summary": "Caaffanni qulqullaa'oon waa'ee cubbuu dhalootaa maal barsiisa, akkamiin yaada wangeela dubbisnu boca? Kutaa 128, Amaariffaan ibsa Afaan Ingiliffaan qabu.",
+      "language": "Amaariffa / Afaan Ingiliffaa"
+    },
+    {
+      "slug": "ep-127-1-tim-1-our-hope",
+      "title": "1 Ximotewos 1፥1 — Abdiin Keenya, Yesus Kiristoos",
+      "summary": "Qo'annoo lakkoofsa-lakkoofsa 1 Ximotewos 1፥1. Maaliif Phaawulos abdii waliin bana, har'a Itoophiyaa fi bataskaanaaf maal jechuu dha.",
+      "language": "Amaariffa / Afaan Ingiliffaa"
+    },
+    {
+      "slug": "ep-126-small-catechism",
+      "title": "Catechism Xiqqaa Luuter — Small Catechism",
+      "summary": "Maaliif catechism xiqqaan waggaa 500 booda illee barbaachisaa ta'a — caasaa isaa fi jireenya waldaa Itoophiyaa keessa akkamitti akka boca'u.",
+      "language": "Amaariffa / Afaan Ingiliffaa"
+    },
+    {
+      "slug": "short-salvation-by-faith",
+      "title": "Fayyina Amantiin — gaggabaaboo",
+      "summary": "Daqiiqaa tokko gaggabaaboo kutaa Cubbuu Dhalootaa irraa — caaffanni qulqullaa'oon cubbuu dhaalamaa ilaalchisee maal jedha.",
+      "language": "Amaariffa"
+    },
+    {
+      "slug": "short-our-hope-jesus",
+      "title": "Abdiin Keenya, Yesus Kiristoos — gaggabaaboo",
+      "summary": "ተስፋችን እየሱስ ክርስቶስ — yaada gaggabaaboo tartiibaa 1 Ximotewos irraa.",
+      "language": "Amaariffa"
+    },
+    {
+      "slug": "short-small-catechism",
+      "title": "Catechism Xiqqaa — gaggabaaboo",
+      "summary": "Maaliif waldaan Luuteraanaa hundi catechism xiqqaa Luuter afaan onnee isaatiin qabaachuu qaba.",
+      "language": "Amaariffa"
+    },
+    {
+      "slug": "short-channel-trailer",
+      "title": "Beeksisa Channel — ቃሉ ብቻ ፖድካስት",
+      "summary": "Beeksisa gaggabaaboo sagantaaf — caaffanni qulqullaa'oon qofa, Amaariffaan, bataskaana Itoophiyaaf.",
+      "language": "Amaariffa"
+    }
+  ],
+  "impactSeriesNames": ["Amaariffa", "Afaan Oromoo", "Tigriiffa", "Afaanota onnee biroo"],
+  "titlesPerLanguage": [
+    { "language": "Amaariffa", "titles": 14 },
+    { "language": "Afaan Oromoo", "titles": 9 },
+    { "language": "Tigriiffa", "titles": 6 },
+    { "language": "Soomaaliffa", "titles": 2 },
+    { "language": "Sidaamu Afoo", "titles": 1 },
+    { "language": "Wolayttattuwaa", "titles": 0 }
+  ]
+}

@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, BookOpen, Youtube } from "lucide-react";
+import { ArrowRight, Youtube } from "lucide-react";
 import { motion } from "motion/react";
-import { Button } from "@/components/ui";
+import { Button, Parallax } from "@/components/ui";
 import { useT } from "@/components/providers/LanguageProvider";
 
 /* ============================================================
@@ -26,21 +26,30 @@ export function BentoHero() {
       }}
     >
       {/* Faint grid backdrop — drawn inline so it stays under the bento. */}
-      <div
-        aria-hidden
+      <Parallax
+        speed={0.22}
         style={{
           position: "absolute",
           inset: 0,
           zIndex: 0,
-          backgroundImage:
-            "linear-gradient(to right, rgb(var(--border) / 0.5) 1px, transparent 1px), linear-gradient(to bottom, rgb(var(--border) / 0.5) 1px, transparent 1px)",
-          backgroundSize: "44px 44px",
-          maskImage:
-            "radial-gradient(ellipse 80% 70% at 50% 35%, black 35%, transparent 80%)",
-          WebkitMaskImage:
-            "radial-gradient(ellipse 80% 70% at 50% 35%, black 35%, transparent 80%)",
+          pointerEvents: "none",
         }}
-      />
+      >
+        <div
+          aria-hidden
+          style={{
+            position: "absolute",
+            inset: "-10%",
+            backgroundImage:
+              "linear-gradient(to right, rgb(var(--border) / 0.5) 1px, transparent 1px), linear-gradient(to bottom, rgb(var(--border) / 0.5) 1px, transparent 1px)",
+            backgroundSize: "44px 44px",
+            maskImage:
+              "radial-gradient(ellipse 80% 70% at 50% 35%, black 35%, transparent 80%)",
+            WebkitMaskImage:
+              "radial-gradient(ellipse 80% 70% at 50% 35%, black 35%, transparent 80%)",
+          }}
+        />
+      </Parallax>
 
       <div className="container-wide" style={{ position: "relative", zIndex: 1 }}>
         {/* ===== HEADLINE BAND ===== */}
@@ -79,7 +88,7 @@ export function BentoHero() {
                 color: "rgb(var(--brand))",
                 fontStyle: "italic",
                 fontWeight: 500,
-                whiteSpace: "nowrap",
+                display: "inline",
               }}
             >
               {t("home.heroTitleEm")}
@@ -136,8 +145,9 @@ export function BentoHero() {
             rowSpan={2}
             background="rgb(var(--ink))"
             delay={0.34}
+            tile="rose"
           >
-            <RoseTile />
+            <RoseTile sealLabel={t("home.bentoSeal")} />
           </Tile>
 
           {/* TILE: bilingual quote card — crimson */}
@@ -148,11 +158,12 @@ export function BentoHero() {
             rowSpan={1}
             background="rgb(var(--brand))"
             delay={0.4}
+            tile="quote"
           >
             <QuoteTile
-              line1="One book."
-              line2="One language."
-              line3="One congregation."
+              line1={t("home.bentoLine1")}
+              line2={t("home.bentoLine2")}
+              line3={t("home.bentoLine3")}
               tone="light"
             />
           </Tile>
@@ -166,8 +177,9 @@ export function BentoHero() {
             background="rgb(var(--surface))"
             border
             delay={0.46}
+            tile="stat"
           >
-            <MiniStat value="42k+" label="Books" />
+            <MiniStat value="42k+" label={t("home.bentoBooksLabel")} />
           </Tile>
 
           {/* TILE: Sola Scriptura — navy */}
@@ -178,10 +190,11 @@ export function BentoHero() {
             rowSpan={1}
             background="rgb(var(--navy))"
             delay={0.5}
+            tile="sola"
           >
             <QuoteTile
-              line1="Sola"
-              line2="Scriptura"
+              line1={t("home.bentoSolaLine1")}
+              line2={t("home.bentoSolaLine2")}
               tone="light"
               serif
             />
@@ -195,8 +208,12 @@ export function BentoHero() {
             rowSpan={1}
             background="rgb(var(--teal-muted))"
             delay={0.56}
+            tile="ethiopia"
           >
-            <EthiopiaTile />
+            <EthiopiaTile
+              heartLangsLabel={t("home.bentoHeartLangsLabel")}
+              langList={t("home.bentoLangList")}
+            />
           </Tile>
         </div>
       </div>
@@ -207,12 +224,13 @@ export function BentoHero() {
           display: grid;
           grid-template-columns: 1fr 1fr;
           grid-auto-rows: minmax(120px, auto);
-          gap: 10px;
+          gap: 12px;
         }
         .bento-tile {
           border-radius: 18px;
           overflow: hidden;
           position: relative;
+          box-shadow: 0 12px 30px -14px rgba(18, 22, 32, 0.22);
         }
         .bento-tile-inner {
           position: relative;
@@ -231,10 +249,14 @@ export function BentoHero() {
         @media (min-width: 768px) {
           .bento-grid {
             grid-template-columns: repeat(5, minmax(0, 1fr));
-            grid-auto-rows: 130px;
-            gap: 12px;
+            grid-auto-rows: 140px;
+            gap: 18px;
+            align-items: stretch;
           }
-          .bento-tile { grid-column: var(--col-start) / span var(--col-span); grid-row: var(--row-start) / span var(--row-span); }
+          .bento-tile {
+            grid-column: var(--col-start) / span var(--col-span);
+            grid-row: var(--row-start) / span var(--row-span);
+          }
         }
       `}</style>
     </section>
@@ -249,6 +271,7 @@ function Tile({
   background,
   border,
   delay = 0,
+  tile,
   children,
 }: {
   colStart: number;
@@ -258,11 +281,13 @@ function Tile({
   background?: string;
   border?: boolean;
   delay?: number;
+  tile: string;
   children: React.ReactNode;
 }) {
   return (
     <motion.div
       className="bento-tile"
+      data-tile={tile}
       initial={{ opacity: 0, y: 16, scale: 0.98 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
       transition={{ duration: 0.55, delay, ease: [0.16, 1, 0.3, 1] }}
@@ -347,50 +372,64 @@ function MiniStat({ value, label }: { value: string; label: string }) {
   );
 }
 
-function RoseTile() {
+function RoseTile({ sealLabel }: { sealLabel: string }) {
   return (
     <div
       style={{
         position: "relative",
         width: "100%",
         height: "100%",
-        display: "grid",
-        placeItems: "center",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 14,
+        padding: "12px 14px 14px",
       }}
     >
-      {/* Single Luther's Rose at large scale; LhfMark backed by /lhflogo.png. */}
+      {/* Single Luther's Rose. The source PNG is a wide canvas with the rose
+          on the LEFT and a wordmark trailing to the right — clip the
+          background to the rose region by sizing it to the container square
+          and aligning to the left edge of the (taller) image. */}
       <span
+        aria-hidden
         style={{
-          width: "70%",
-          maxWidth: 180,
+          width: "min(48%, 110px)",
           aspectRatio: "1 / 1",
           backgroundImage: 'url("/lhflogo.png")',
           backgroundSize: "auto 100%",
-          backgroundPosition: "center",
+          backgroundPosition: "left center",
           backgroundRepeat: "no-repeat",
           filter: "invert(1) brightness(1.2)",
+          flexShrink: 0,
         }}
       />
       <span
         style={{
-          position: "absolute",
-          bottom: 14,
-          left: 18,
-          right: 18,
-          fontSize: 10.5,
+          fontSize: 10,
           fontWeight: 700,
           letterSpacing: "0.14em",
           textTransform: "uppercase",
           color: "rgba(255,255,255,0.65)",
+          overflowWrap: "anywhere",
+          textAlign: "center",
+          lineHeight: 1.4,
+          maxWidth: "100%",
         }}
       >
-        The Lutheran Seal · Ethiopia
+        {sealLabel}
       </span>
     </div>
   );
 }
 
-function EthiopiaTile() {
+function EthiopiaTile({
+  heartLangsLabel,
+  langList,
+}: {
+  heartLangsLabel: string;
+  langList: string;
+}) {
   return (
     <div
       style={{
@@ -398,40 +437,48 @@ function EthiopiaTile() {
         width: "100%",
         height: "100%",
         display: "grid",
-        gridTemplateColumns: "1fr auto",
+        gridTemplateColumns: "minmax(0, 1fr) auto",
         alignItems: "center",
+        gap: 12,
+        overflow: "hidden",
       }}
     >
-      <div>
+      <div style={{ minWidth: 0 }}>
         <div
           style={{
-            fontSize: 11,
+            fontSize: 10.5,
             fontWeight: 700,
             letterSpacing: "0.14em",
             textTransform: "uppercase",
             color: "rgb(var(--teal-strong))",
+            overflowWrap: "anywhere",
           }}
         >
-          Heart languages
+          {heartLangsLabel}
         </div>
         <div
           className="font-display"
           style={{
             marginTop: 6,
-            fontSize: "clamp(18px, 2.2vw, 24px)",
+            fontSize: "clamp(13px, 1.7vw, 17px)",
             fontWeight: 500,
             color: "rgb(var(--ink))",
-            lineHeight: 1.15,
+            lineHeight: 1.25,
             letterSpacing: "-0.01em",
+            overflowWrap: "anywhere",
+            display: "-webkit-box",
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: "vertical",
+            overflow: "hidden",
           }}
         >
-          Amharic · Afaan Oromoo · Tigrinya · …
+          {langList}
         </div>
       </div>
       <svg
         viewBox="0 0 200 200"
-        width="92"
-        height="92"
+        width="68"
+        height="68"
         aria-hidden
         style={{ flexShrink: 0 }}
       >

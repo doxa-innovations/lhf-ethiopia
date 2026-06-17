@@ -1,13 +1,19 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Headphones, Mic, Search, Youtube } from "lucide-react";
+import { Mic, Search, Youtube } from "lucide-react";
 import { motion } from "motion/react";
 import { Badge, Card, CardBody, Input } from "@/components/ui";
 import { PODCAST_EPISODES, PODCAST } from "@/lib/content";
 import { useT } from "@/components/providers/LanguageProvider";
+import { useContent } from "@/lib/i18n/useContent";
 
-type Episode = (typeof PODCAST_EPISODES)[number];
+type Episode = (typeof PODCAST_EPISODES)[number] & {
+  /* localized overlay */
+  localizedTitle: string;
+  localizedSummary: string;
+  localizedLanguage: string;
+};
 
 const TOPICS = [
   "All",
@@ -30,23 +36,37 @@ const isPlaceholder = (id: string) => id.startsWith("PLACEHOLDER");
 
 export function PodcastBrowser() {
   const { t } = useT();
+  const { podcastEpisodes } = useContent();
   const [query, setQuery] = useState("");
   const [topic, setTopic] = useState<Topic>("All");
 
+  // Merge stable base episode data with localized title/summary/language for current locale.
+  const merged: Episode[] = useMemo(() => {
+    return PODCAST_EPISODES.map((base) => {
+      const loc = podcastEpisodes.find((e) => e.slug === base.slug);
+      return {
+        ...base,
+        localizedTitle: loc?.title ?? base.title,
+        localizedSummary: loc?.summary ?? base.summary,
+        localizedLanguage: loc?.language ?? base.language,
+      };
+    });
+  }, [podcastEpisodes]);
+
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return PODCAST_EPISODES.filter((ep) => {
+    return merged.filter((ep) => {
       if (topic !== "All" && ep.topic !== topic) return false;
       if (!q) return true;
       return (
-        ep.title.toLowerCase().includes(q) ||
-        ep.summary.toLowerCase().includes(q) ||
+        ep.localizedTitle.toLowerCase().includes(q) ||
+        ep.localizedSummary.toLowerCase().includes(q) ||
         ep.guest.toLowerCase().includes(q) ||
-        ep.language.toLowerCase().includes(q) ||
+        ep.localizedLanguage.toLowerCase().includes(q) ||
         ep.topic.toLowerCase().includes(q)
       );
     });
-  }, [query, topic]);
+  }, [merged, query, topic]);
 
   return (
     <div>
@@ -146,7 +166,7 @@ export function PodcastBrowser() {
                 color: "rgb(var(--ink-faint))",
               }}
             >
-              No episodes match that search.
+              {t("podcast.noResults")}
             </div>
           </CardBody>
         </Card>
@@ -163,6 +183,7 @@ export function PodcastBrowser() {
 }
 
 function EpisodeCard({ ep }: { ep: Episode }) {
+  const { t } = useT();
   const placeholder = isPlaceholder(ep.youtubeId);
   const watchHref = placeholder
     ? PODCAST.channelUrl
@@ -210,7 +231,7 @@ function EpisodeCard({ ep }: { ep: Episode }) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`https://i.ytimg.com/vi/${ep.youtubeId}/hqdefault.jpg`}
-                alt={ep.title}
+                alt={ep.localizedTitle}
                 loading="lazy"
                 style={{
                   position: "absolute",
@@ -309,9 +330,9 @@ function EpisodeCard({ ep }: { ep: Episode }) {
             }}
           >
             <Badge tone="navy">
-              <Mic size={11} /> {ep.topic}
+              <Mic size={11} /> {t(TOPIC_LABEL_KEYS[ep.topic as Topic] as Parameters<typeof t>[0])}
             </Badge>
-            <Badge tone="cream">{ep.language}</Badge>
+            <Badge tone="cream">{ep.localizedLanguage}</Badge>
           </div>
           <h3
             className="font-display"
@@ -320,9 +341,10 @@ function EpisodeCard({ ep }: { ep: Episode }) {
               fontWeight: 500,
               color: "rgb(var(--ink))",
               lineHeight: 1.25,
+              overflowWrap: "anywhere",
             }}
           >
-            {ep.title}
+            {ep.localizedTitle}
           </h3>
           <p
             style={{
@@ -336,7 +358,7 @@ function EpisodeCard({ ep }: { ep: Episode }) {
               overflow: "hidden",
             }}
           >
-            {ep.summary}
+            {ep.localizedSummary}
           </p>
           <div
             style={{
@@ -370,7 +392,7 @@ function EpisodeCard({ ep }: { ep: Episode }) {
                 fontSize: 12.5,
               }}
             >
-              <Youtube size={13} /> Watch
+              <Youtube size={13} /> {t("common.watch")}
             </a>
           </div>
         </CardBody>

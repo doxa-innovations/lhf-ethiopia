@@ -1,27 +1,22 @@
 import type { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
-import { Inter, EB_Garamond } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { LanguageProvider } from "@/components/providers/LanguageProvider";
 import { LanguagePromptModal } from "@/components/providers/LanguagePromptModal";
+import { MotionProvider } from "@/components/providers/MotionProvider";
 import { SITE } from "@/lib/content";
 
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const garamond = EB_Garamond({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
-  variable: "--font-garamond",
-  display: "swap",
-});
+/*
+ * NOTE: `next/font/google` was producing
+ *   Module not found: Can't resolve '@vercel/turbopack-next/internal/font/google/font'
+ * under Next 16.2.6 + Turbopack, which crashed the dev worker pool with the
+ * misleading "Jest worker encountered 2 child process exceptions" overlay.
+ * Switched to a regular `<link>` to Google Fonts to bypass the broken font
+ * resolver. CSS variables `--font-inter` / `--font-garamond` are still
+ * defined so the existing token system in globals.css keeps working.
+ */
 
 const SITE_URL = "https://ethiopia.lhfmissions.org";
 
@@ -143,8 +138,24 @@ const WEBSITE_LD = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={`${inter.variable} ${garamond.variable}`}>
+    <html lang="en">
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
+        />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap"
+        />
+        <style>{`
+          :root {
+            --font-inter: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+            --font-garamond: "EB Garamond", "Cormorant", "Times New Roman", serif;
+          }
+        `}</style>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_LD) }}
@@ -156,10 +167,12 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <LanguageProvider>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
-          <LanguagePromptModal />
+          <MotionProvider>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <LanguagePromptModal />
+          </MotionProvider>
         </LanguageProvider>
       </body>
     </html>
