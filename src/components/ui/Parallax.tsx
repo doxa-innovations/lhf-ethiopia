@@ -1,16 +1,16 @@
 "use client";
 
 import {
+  useEffect,
   useRef,
   type CSSProperties,
   type ReactNode,
 } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, useGSAP);
+  gsap.registerPlugin(ScrollTrigger);
 }
 
 type Direction = "y" | "x";
@@ -30,37 +30,40 @@ export function Parallax({
 }) {
   const ref = useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
-      const el = ref.current;
-      if (!el) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-      const distance = (window.innerHeight || 800) * speed;
-      const fromVars: gsap.TweenVars = {};
-      const toVars: gsap.TweenVars = {
-        ease: "none",
-        scrollTrigger: {
-          trigger: el,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-          invalidateOnRefresh: true,
-        },
-      };
+    const distance = (window.innerHeight || 800) * speed;
+    const fromVars: gsap.TweenVars = {};
+    const toVars: gsap.TweenVars = {
+      ease: "none",
+      scrollTrigger: {
+        trigger: el,
+        start: "top bottom",
+        end: "bottom top",
+        scrub: true,
+        invalidateOnRefresh: true,
+      },
+    };
 
-      if (direction === "y") {
-        fromVars.y = -distance / 2;
-        toVars.y = distance / 2;
-      } else {
-        fromVars.x = -distance / 2;
-        toVars.x = distance / 2;
-      }
+    if (direction === "y") {
+      fromVars.y = -distance / 2;
+      toVars.y = distance / 2;
+    } else {
+      fromVars.x = -distance / 2;
+      toVars.x = distance / 2;
+    }
 
-      gsap.fromTo(el, fromVars, toVars);
-    },
-    { scope: ref, dependencies: [speed, direction] },
-  );
+    const tween = gsap.fromTo(el, fromVars, toVars);
+
+    return () => {
+      const trigger = tween.scrollTrigger;
+      if (trigger) trigger.kill();
+      tween.kill();
+    };
+  }, [speed, direction]);
 
   return (
     <div

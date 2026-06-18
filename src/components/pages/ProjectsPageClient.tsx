@@ -1,11 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { HandHeart, MapPin } from "lucide-react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 import {
   Badge,
   Button,
@@ -21,39 +20,47 @@ import { useContent } from "@/lib/i18n/useContent";
 import { PHOTOS, formatUsd } from "@/lib/content";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, useGSAP);
+  gsap.registerPlugin(ScrollTrigger);
 }
 
 function ProjectProgress({ pct, raisedLabel }: { pct: number; raisedLabel: string }) {
   const wrapRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(
-    () => {
-      const wrap = wrapRef.current;
-      if (!wrap) return;
-      const bar = wrap.querySelector<HTMLDivElement>(".pp-bar");
-      const label = wrap.querySelector<HTMLSpanElement>(".pp-label");
-      if (!bar || !label) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        bar.style.width = `${pct}%`;
-        label.textContent = `${pct}%`;
-        return;
-      }
-      const obj = { n: 0 };
-      gsap.to(obj, {
-        n: pct,
-        duration: 1.2,
-        ease: "power2.out",
-        scrollTrigger: { trigger: wrap, start: "top 88%", once: true },
-        onUpdate: () => {
-          const v = Math.round(obj.n);
-          bar.style.width = `${v}%`;
-          label.textContent = `${v}%`;
-        },
-      });
-    },
-    { scope: wrapRef, dependencies: [pct] },
-  );
+  useEffect(() => {
+    const wrap = wrapRef.current;
+    if (!wrap) return;
+    const bar = wrap.querySelector<HTMLDivElement>(".pp-bar");
+    const label = wrap.querySelector<HTMLSpanElement>(".pp-label");
+    if (!bar || !label) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      bar.style.width = `${pct}%`;
+      label.textContent = `${pct}%`;
+      return;
+    }
+    const obj = { n: 0 };
+    const tween = gsap.to(obj, {
+      n: pct,
+      duration: 1.2,
+      ease: "power2.out",
+      paused: true,
+      onUpdate: () => {
+        if (!wrap.isConnected) return;
+        const v = Math.round(obj.n);
+        bar.style.width = `${v}%`;
+        label.textContent = `${v}%`;
+      },
+    });
+    const trigger = ScrollTrigger.create({
+      trigger: wrap,
+      start: "top 88%",
+      once: true,
+      onEnter: () => tween.play(),
+    });
+    return () => {
+      trigger.kill();
+      tween.kill();
+    };
+  }, [pct]);
 
   return (
     <div ref={wrapRef}>

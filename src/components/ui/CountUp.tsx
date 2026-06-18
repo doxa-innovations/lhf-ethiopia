@@ -1,12 +1,11 @@
 "use client";
 
-import { useRef, type CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { useGSAP } from "@gsap/react";
 
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger, useGSAP);
+  gsap.registerPlugin(ScrollTrigger);
 }
 
 type Props = {
@@ -38,33 +37,40 @@ export function CountUp({
   const ref = useRef<HTMLSpanElement>(null);
   const finalText = `${prefix}${formatter ? formatter(value) : defaultFormatter(value, decimals)}${suffix}`;
 
-  useGSAP(
-    () => {
-      const el = ref.current;
-      if (!el) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-        el.textContent = finalText;
-        return;
-      }
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      el.textContent = finalText;
+      return;
+    }
 
-      const obj = { n: 0 };
-      gsap.to(obj, {
-        n: value,
-        duration,
-        ease: "power2.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 85%",
-          once: true,
-        },
-        onUpdate: () => {
-          const formatted = formatter ? formatter(obj.n) : defaultFormatter(obj.n, decimals);
-          el.textContent = `${prefix}${formatted}${suffix}`;
-        },
-      });
-    },
-    { scope: ref, dependencies: [value, prefix, suffix, duration, decimals] },
-  );
+    const obj = { n: 0 };
+    const tween = gsap.to(obj, {
+      n: value,
+      duration,
+      ease: "power2.out",
+      paused: true,
+      onUpdate: () => {
+        if (!el.isConnected) return;
+        const formatted = formatter ? formatter(obj.n) : defaultFormatter(obj.n, decimals);
+        el.textContent = `${prefix}${formatted}${suffix}`;
+      },
+    });
+
+    const trigger = ScrollTrigger.create({
+      trigger: el,
+      start: "top 85%",
+      once: true,
+      onEnter: () => tween.play(),
+    });
+
+    return () => {
+      trigger.kill();
+      tween.kill();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, prefix, suffix, duration, decimals]);
 
   return (
     <span ref={ref} className={className} style={style}>
