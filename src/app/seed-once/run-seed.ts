@@ -19,16 +19,16 @@ function textToLexical(text: string) {
   return {
     root: {
       type: "root",
-      format: "",
+      format: "" as const,
       indent: 0,
       version: 1,
-      direction: "ltr",
+      direction: "ltr" as const,
       children: paragraphs.map((p) => ({
         type: "paragraph",
-        format: "",
+        format: "" as const,
         indent: 0,
         version: 1,
-        direction: "ltr",
+        direction: "ltr" as const,
         textFormat: 0,
         textStyle: "",
         children: [

@@ -27,6 +27,13 @@ export default buildConfig({
     user: Users.slug,
     meta: {
       titleSuffix: " — LHF Ethiopia",
+      icons: [{ rel: "icon", type: "image/png", url: "/lhflogo.png" }],
+    },
+    components: {
+      graphics: {
+        Logo: "@/components/admin/Logo",
+        Icon: "@/components/admin/Icon",
+      },
     },
   },
   editor: lexicalEditor(),

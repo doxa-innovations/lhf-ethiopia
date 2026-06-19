@@ -3,7 +3,7 @@ import { isAdmin } from "@/access/isAdmin";
 import { isEditorOrAbove } from "@/access/isEditorOrAbove";
 import { revalidateRoutes } from "@/hooks/revalidate";
 
-const { afterChange } = revalidateRoutes(["/"]);
+const { globalAfterChange } = revalidateRoutes(["/"]);
 
 export const SiteSettings: GlobalConfig = {
   slug: "siteSettings",
@@ -15,7 +15,7 @@ export const SiteSettings: GlobalConfig = {
     read: () => true,
     update: isEditorOrAbove,
   },
-  hooks: { afterChange: [afterChange] },
+  hooks: { afterChange: [globalAfterChange] },
   fields: [
     { name: "email", type: "email", required: true },
     { name: "phone", type: "text", required: true },

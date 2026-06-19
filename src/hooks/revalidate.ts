@@ -1,4 +1,8 @@
-import type { CollectionAfterChangeHook, CollectionAfterDeleteHook } from "payload";
+import type {
+  CollectionAfterChangeHook,
+  CollectionAfterDeleteHook,
+  GlobalAfterChangeHook,
+} from "payload";
 import { revalidatePath } from "next/cache";
 
 /**
@@ -10,6 +14,7 @@ import { revalidatePath } from "next/cache";
 export function revalidateRoutes(routes: string[]): {
   afterChange: CollectionAfterChangeHook;
   afterDelete: CollectionAfterDeleteHook;
+  globalAfterChange: GlobalAfterChangeHook;
 } {
   const flush = (slug?: string | null) => {
     for (const route of routes) {
@@ -29,6 +34,10 @@ export function revalidateRoutes(routes: string[]): {
     },
     afterDelete: ({ doc }) => {
       flush((doc as { slug?: string }).slug);
+    },
+    globalAfterChange: ({ doc }) => {
+      flush(null);
+      return doc;
     },
   };
 }

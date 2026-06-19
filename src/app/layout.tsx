@@ -6,6 +6,8 @@ import { Footer } from "@/components/layout/Footer";
 import { LanguageProvider } from "@/components/providers/LanguageProvider";
 import { LanguagePromptModal } from "@/components/providers/LanguagePromptModal";
 import { MotionProvider } from "@/components/providers/MotionProvider";
+import { ContentProvider } from "@/components/providers/ContentProvider";
+import { getAllLocalesContent } from "@/lib/content/get-content";
 import { SITE } from "@/lib/content";
 
 /*
@@ -136,7 +138,8 @@ const WEBSITE_LD = {
   publisher: { "@type": "NGO", name: SITE.longName },
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const content = await getAllLocalesContent();
   return (
     <html lang="en">
       <head>
@@ -167,12 +170,14 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       </head>
       <body>
         <LanguageProvider>
-          <MotionProvider>
-            <Navbar />
-            <main>{children}</main>
-            <Footer />
-            <LanguagePromptModal />
-          </MotionProvider>
+          <ContentProvider value={content}>
+            <MotionProvider>
+              <Navbar />
+              <main>{children}</main>
+              <Footer />
+              <LanguagePromptModal />
+            </MotionProvider>
+          </ContentProvider>
         </LanguageProvider>
       </body>
     </html>
