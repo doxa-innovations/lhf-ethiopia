@@ -1,0 +1,64 @@
+# LHF Ethiopia production stack — app + Postgres + Caddy (auto-TLS).
+# Deploy by SSHing to the VPS, cloning the repo, copying .env.example to
+# .env.production with real values, then `docker compose up -d`.
+#
+# Backups: see scripts/backup-db.sh (runs nightly via cron on the host).
+
+services:
+  app:
+    build: .
+    image: lhf-ethiopia:latest
+    restart: unless-stopped
+    env_file: .env.production
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - internal
+    expose:
+      - "3000"
+    # Optional: persist any locally-uploaded media until R2 is set up.
+    volumes:
+      - media:/app/public/uploads
+
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-payload}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in .env.production}
+      POSTGRES_DB: ${POSTGRES_DB:-payload}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - internal
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-payload} -d ${POSTGRES_DB:-payload}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  caddy:
+    image: caddy:2-alpine
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on:
+      - app
+    networks:
+      - internal
+
+volumes:
+  pgdata:
+  media:
+  caddy_data:
+  caddy_config:
+
+networks:
+  internal:

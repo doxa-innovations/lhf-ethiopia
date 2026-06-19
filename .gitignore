@@ -4,7 +4,15 @@ out
 build
 .DS_Store
 *.log
+.env
+.env.production
 .env*.local
 next-env.d.ts
 tsconfig.tsbuildinfo
 .vercel
+
+# Payload local dev
+payload.db
+payload.db-*
+/public/uploads
+src/payload-types.ts

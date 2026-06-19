@@ -1,0 +1,30 @@
+/* Brand overrides for the Payload admin UI.
+ * Crimson primary, slightly warmer surface, EB Garamond on H1s.
+ * Kept minimal — Payload's defaults are good, this just signals it's ours. */
+
+:root {
+  --theme-success-500: #2f8259;
+  --theme-warning-500: #c49a38;
+  --theme-error-500: #9f1f2a;
+
+  --theme-elevation-50: #fdfbf7;
+  --theme-elevation-100: #f8f6f2;
+
+  --color-success-500: #2f8259;
+  --color-warning-500: #c49a38;
+  --color-error-500: #9f1f2a;
+}
+
+[data-theme="light"] {
+  --theme-bg: #ffffff;
+}
+
+.payload__brand,
+.payload-logo {
+  color: #9f1f2a;
+}
+
+h1.template-default__title {
+  font-family: "EB Garamond", "Cormorant", "Times New Roman", serif;
+  letter-spacing: -0.014em;
+}

@@ -1,0 +1,29 @@
+# Caddy auto-issues Let's Encrypt certs for the domain below.
+# Replace `ethiopia.lhfmissions.org` with whatever DNS A-record you pointed at
+# the VPS public IP. Email is used by Let's Encrypt for expiry notices.
+
+{
+    email it@lhfmissions.org
+    # auto_https disable_redirects  # uncomment if you don't want HTTP→HTTPS
+}
+
+ethiopia.lhfmissions.org {
+    encode zstd gzip
+
+    # Forward everything to the Next.js app container on the internal network.
+    reverse_proxy app:3000
+
+    # Reasonable security headers for a static-leaning marketing site.
+    header {
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Permissions-Policy "geolocation=(), microphone=(), camera=()"
+    }
+
+    log {
+        output stdout
+        format console
+    }
+}
