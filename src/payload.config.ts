@@ -25,6 +25,7 @@ export default buildConfig({
   secret: process.env.PAYLOAD_SECRET || "dev-only-secret-change-in-production",
   admin: {
     user: Users.slug,
+    theme: "light",
     meta: {
       titleSuffix: " — LHF Ethiopia",
       icons: [{ rel: "icon", type: "image/png", url: "/lhflogo.png" }],
@@ -34,6 +35,7 @@ export default buildConfig({
         Logo: "@/components/admin/Logo",
         Icon: "@/components/admin/Icon",
       },
+      beforeDashboard: ["@/components/admin/BeforeDashboard"],
     },
   },
   editor: lexicalEditor(),

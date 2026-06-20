@@ -1,30 +1,555 @@
-/* Brand overrides for the Payload admin UI.
- * Crimson primary, slightly warmer surface, EB Garamond on H1s.
- * Kept minimal — Payload's defaults are good, this just signals it's ours. */
+/* ============================================================
+   LHF Ethiopia — Payload admin theme
+   ------------------------------------------------------------
+   Replaces Payload's default chrome with a brand-aligned light
+   admin: warm white surfaces, crimson primary, navy text, EB
+   Garamond on dashboard titles. Matches the public site palette
+   so editors don't feel like they're entering a different app.
+   ============================================================ */
 
-:root {
-  --theme-success-500: #2f8259;
-  --theme-warning-500: #c49a38;
-  --theme-error-500: #9f1f2a;
+/* -------- Brand tokens -------- */
+:root,
+[data-theme="light"] {
+  /* Brand palette mirrored from public globals.css */
+  --brand: #9f1f2a;
+  --brand-strong: #7f1821;
+  --brand-soft: #c4565c;
+  --brand-muted: #f7e8e8;
+  --navy: #1e2a47;
+  --teal: #2e8e8e;
+  --gold: #c49a38;
+  --ink: #121620;
+  --ink-muted: #58606e;
+  --ink-faint: #8a919e;
+  --bg: #ffffff;
+  --bg-soft: #fbfaf6;
+  --bg-soft-2: #f4f0e8;
+  --border: #e8e3d8;
+  --border-strong: #d4cbb8;
 
-  --theme-elevation-50: #fdfbf7;
-  --theme-elevation-100: #f8f6f2;
+  /* Override Payload's theme tokens */
+  --color-base-0: var(--bg);
+  --color-base-50: var(--bg-soft);
+  --color-base-100: var(--bg-soft-2);
+  --color-base-150: var(--border);
+  --color-base-200: var(--border-strong);
+  --color-base-300: #b8b2a3;
+  --color-base-400: var(--ink-faint);
+  --color-base-500: var(--ink-muted);
+  --color-base-600: #3b414e;
+  --color-base-700: #2a303d;
+  --color-base-800: #1d2230;
+  --color-base-900: var(--ink);
+  --color-base-950: var(--ink);
 
   --color-success-500: #2f8259;
-  --color-warning-500: #c49a38;
-  --color-error-500: #9f1f2a;
+  --color-warning-500: var(--gold);
+  --color-error-500: var(--brand);
+
+  --theme-elevation-0: var(--bg);
+  --theme-elevation-50: var(--bg-soft);
+  --theme-elevation-100: var(--bg-soft);
+  --theme-elevation-150: var(--bg-soft-2);
+  --theme-elevation-200: var(--border);
+  --theme-elevation-250: var(--border-strong);
+  --theme-elevation-300: var(--ink-faint);
+  --theme-elevation-400: var(--ink-muted);
+  --theme-elevation-500: var(--ink-muted);
+  --theme-elevation-600: #3b414e;
+  --theme-elevation-700: #2a303d;
+  --theme-elevation-800: var(--ink);
+  --theme-elevation-900: var(--ink);
+  --theme-elevation-1000: var(--ink);
+
+  --theme-bg: var(--bg);
+  --theme-text: var(--ink);
+  --theme-input-bg: var(--bg);
+
+  --color-success: #2f8259;
+  --color-warning: var(--gold);
+  --color-error: var(--brand);
+
+  --color-success-150: #d6ead7;
+  --color-warning-150: #f6e8c4;
+  --color-error-150: var(--brand-muted);
+
+  /* Family + radii */
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  --style-radius-s: 6px;
+  --style-radius-m: 10px;
+  --style-radius-l: 14px;
 }
 
-[data-theme="light"] {
-  --theme-bg: #ffffff;
+/* Hard-force light: if user has OS in dark mode, Payload may add
+   data-theme="dark". We override its colors so the admin stays in our
+   brand light. */
+[data-theme="dark"] {
+  --theme-bg: var(--bg);
+  --theme-text: var(--ink);
+  --theme-elevation-0: var(--bg);
+  --theme-elevation-50: var(--bg-soft);
+  --theme-elevation-100: var(--bg-soft);
+  --theme-elevation-150: var(--bg-soft-2);
+  --theme-elevation-800: var(--ink);
+  --theme-elevation-900: var(--ink);
 }
 
-.payload__brand,
-.payload-logo {
-  color: #9f1f2a;
+/* -------- App shell -------- */
+html,
+body,
+#layout {
+  background: var(--bg) !important;
+  color: var(--ink);
+  font-family: "Inter", system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1.template-default__title {
-  font-family: "EB Garamond", "Cormorant", "Times New Roman", serif;
-  letter-spacing: -0.014em;
+/* -------- Sidebar -------- */
+.template-default__nav,
+.nav {
+  background: var(--bg) !important;
+  border-right: 1px solid var(--border);
+  padding-block: 18px;
+}
+
+.nav__wrap {
+  background: transparent;
+}
+
+/* Sidebar header / brand area */
+.nav__header,
+.nav__brand {
+  padding: 6px 16px 22px !important;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 18px;
+}
+
+/* Section headers ("Library", "Engage", etc.) — Image 7 style */
+.nav-group__toggle,
+.nav-group__label {
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--ink-faint) !important;
+  padding: 18px 16px 8px !important;
+  background: transparent !important;
+  border: none !important;
+}
+
+.nav-group {
+  margin: 0 !important;
+  padding: 0 4px !important;
+}
+
+.nav-group__content {
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+/* Sidebar nav links */
+.nav__link {
+  position: relative;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px !important;
+  margin: 2px 0 !important;
+  border-radius: var(--style-radius-m) !important;
+  font-size: 13.5px !important;
+  font-weight: 500 !important;
+  color: var(--ink-muted) !important;
+  background: transparent !important;
+  border: none !important;
+  transition: background 160ms ease, color 160ms ease;
+}
+
+.nav__link:hover {
+  background: var(--bg-soft) !important;
+  color: var(--ink) !important;
+}
+
+.nav__link.active,
+.nav__link--active,
+.nav__link[data-active="true"] {
+  background: var(--brand-muted) !important;
+  color: var(--brand-strong) !important;
+  font-weight: 600 !important;
+}
+
+.nav__link.active::before,
+.nav__link--active::before {
+  content: "";
+  position: absolute;
+  left: -4px;
+  top: 8px;
+  bottom: 8px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--brand);
+}
+
+/* Sidebar bottom — user/logout area */
+.nav__controls,
+.nav__account {
+  border-top: 1px solid var(--border);
+  padding: 14px 16px !important;
+  margin-top: auto;
+}
+
+/* -------- Top bar -------- */
+.app-header,
+.template-default__header,
+.collection-list__header {
+  background: var(--bg) !important;
+  border-bottom: 1px solid var(--border) !important;
+  padding: 16px 28px !important;
+}
+
+/* -------- Main content surface -------- */
+.template-default__wrap,
+.template-default__content,
+.collection-list__wrap,
+.document-fields {
+  background: var(--bg-soft) !important;
+  padding: 22px 28px !important;
+}
+
+/* Headings */
+h1,
+h1.collection-list__title,
+h1.dashboard__label,
+.collection-edit__upload h1,
+.template-default__title,
+.dashboard__group h2 {
+  font-family: "EB Garamond", "Cormorant", "Times New Roman", serif !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.014em !important;
+  color: var(--ink) !important;
+}
+
+h1 {
+  font-size: clamp(24px, 3vw, 32px) !important;
+  line-height: 1.16 !important;
+}
+
+h2 {
+  font-size: 20px !important;
+  font-weight: 500 !important;
+  letter-spacing: -0.01em !important;
+}
+
+h3,
+h4 {
+  font-weight: 600 !important;
+  color: var(--ink) !important;
+}
+
+/* -------- Dashboard cards (per-collection tiles) -------- */
+.dashboard__group {
+  margin-bottom: 32px;
+}
+
+.dashboard__group h2 {
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.14em !important;
+  text-transform: uppercase !important;
+  color: var(--ink-faint) !important;
+  font-family: "Inter", sans-serif !important;
+  margin-bottom: 12px !important;
+}
+
+.dashboard__group .card,
+.dashboard__group__nav .card-list__item,
+.card,
+.collection-list .card,
+.document-fields > .field-type__wrapper {
+  background: var(--bg) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--style-radius-l) !important;
+  box-shadow: 0 1px 2px rgba(18, 22, 32, 0.03),
+    0 4px 14px rgba(18, 22, 32, 0.04);
+  transition: transform 180ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 180ms ease, border-color 180ms ease;
+}
+
+.dashboard__group .card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-strong) !important;
+  box-shadow: 0 6px 22px rgba(18, 22, 32, 0.08);
+}
+
+.card__title {
+  font-family: "EB Garamond", serif !important;
+  font-weight: 500 !important;
+  color: var(--ink) !important;
+}
+
+.card__actions a,
+.card__actions button {
+  color: var(--brand) !important;
+  font-weight: 600 !important;
+}
+
+/* -------- Tables / list views -------- */
+.collection-list__sub-header,
+.collection-list__list {
+  background: var(--bg) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--style-radius-l) !important;
+  overflow: hidden;
+}
+
+.table {
+  background: var(--bg) !important;
+}
+
+.table thead th,
+.table th {
+  background: var(--bg-soft) !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  color: var(--ink-faint) !important;
+  padding: 12px 18px !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+.table tbody tr {
+  border-bottom: 1px solid var(--border) !important;
+  transition: background 140ms ease;
+}
+
+.table tbody tr:hover {
+  background: var(--bg-soft) !important;
+}
+
+.table tbody td {
+  padding: 14px 18px !important;
+  color: var(--ink) !important;
+  font-size: 13.5px !important;
+}
+
+/* Selected row */
+.row-selection__row--selected,
+tr[data-selected="true"] {
+  background: var(--brand-muted) !important;
+}
+
+/* -------- Buttons -------- */
+.btn {
+  border-radius: var(--style-radius-m) !important;
+  font-weight: 600 !important;
+  font-size: 13.5px !important;
+  padding: 8px 16px !important;
+  min-height: 38px !important;
+  border: 1.5px solid transparent !important;
+  transition: background 160ms ease, border-color 160ms ease,
+    transform 160ms ease !important;
+}
+
+.btn--style-primary {
+  background: var(--brand) !important;
+  color: white !important;
+  border-color: var(--brand) !important;
+}
+
+.btn--style-primary:hover {
+  background: var(--brand-strong) !important;
+  border-color: var(--brand-strong) !important;
+  transform: translateY(-1px);
+}
+
+.btn--style-secondary {
+  background: var(--bg) !important;
+  color: var(--ink) !important;
+  border-color: var(--border-strong) !important;
+}
+
+.btn--style-secondary:hover {
+  border-color: var(--brand) !important;
+  color: var(--brand) !important;
+}
+
+.btn--style-icon-label,
+.btn--icon-style-without-border {
+  color: var(--ink-muted) !important;
+}
+
+/* -------- Inputs -------- */
+.field-type input[type="text"],
+.field-type input[type="email"],
+.field-type input[type="number"],
+.field-type input[type="search"],
+.field-type input[type="password"],
+.field-type textarea,
+.field-type select,
+.search-filter__input,
+.text-input input {
+  background: var(--bg) !important;
+  border: 1.5px solid var(--border-strong) !important;
+  border-radius: var(--style-radius-m) !important;
+  color: var(--ink) !important;
+  font-size: 14px !important;
+  padding: 10px 14px !important;
+  transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.field-type input:focus,
+.field-type textarea:focus,
+.text-input input:focus {
+  border-color: var(--brand) !important;
+  box-shadow: 0 0 0 3px rgba(159, 31, 42, 0.14);
+  outline: none !important;
+}
+
+.field-type__label,
+.tabs-field__tab-button {
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  color: var(--ink-muted) !important;
+  letter-spacing: 0.04em !important;
+  text-transform: uppercase !important;
+}
+
+.field-description,
+.field-type__description {
+  font-size: 12.5px !important;
+  color: var(--ink-faint) !important;
+  line-height: 1.5 !important;
+  margin-top: 4px !important;
+}
+
+/* -------- Locale switcher pill (top of doc editor) -------- */
+.localizer__locale,
+.localizer button,
+[data-popup-trigger] {
+  background: var(--bg-soft-2) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--ink) !important;
+  border-radius: 999px !important;
+  padding: 6px 14px !important;
+  font-size: 12.5px !important;
+  font-weight: 600 !important;
+}
+
+/* -------- Pills / badges -------- */
+.pill {
+  background: var(--bg-soft-2) !important;
+  color: var(--ink) !important;
+  font-size: 11.5px !important;
+  border-radius: 999px !important;
+  padding: 3px 10px !important;
+}
+
+.pill--style-success {
+  background: rgba(47, 130, 89, 0.14) !important;
+  color: #1f5b3d !important;
+}
+.pill--style-warning {
+  background: rgba(196, 154, 56, 0.16) !important;
+  color: #7a5c1c !important;
+}
+.pill--style-error {
+  background: var(--brand-muted) !important;
+  color: var(--brand-strong) !important;
+}
+
+/* Pagination */
+.paginator__page,
+.paginator__step {
+  background: var(--bg) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--ink) !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+  font-size: 12.5px !important;
+  min-width: 32px !important;
+  height: 32px !important;
+}
+
+.paginator__page--is-current {
+  background: var(--ink) !important;
+  color: white !important;
+  border-color: var(--ink) !important;
+}
+
+/* -------- Tabs (inside doc editor) -------- */
+.tabs-field__tabs {
+  border-bottom: 1px solid var(--border) !important;
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.tabs-field__tab-button {
+  border-bottom: 2px solid transparent !important;
+  padding: 10px 14px !important;
+  color: var(--ink-faint) !important;
+  background: transparent !important;
+}
+
+.tabs-field__tab-button--active {
+  border-bottom-color: var(--brand) !important;
+  color: var(--brand) !important;
+}
+
+/* -------- Rich text Lexical editor -------- */
+.rich-text-lexical,
+.lexical-rich-text-editor {
+  background: var(--bg) !important;
+  border: 1.5px solid var(--border-strong) !important;
+  border-radius: var(--style-radius-m) !important;
+}
+
+.lexical-rich-text-editor__toolbar,
+.toolbar {
+  background: var(--bg-soft) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* -------- Step nav (breadcrumb) -------- */
+.step-nav {
+  color: var(--ink-faint) !important;
+  font-size: 12.5px !important;
+}
+
+.step-nav a {
+  color: var(--ink-muted) !important;
+}
+
+/* -------- Document drawer / preview -------- */
+.doc-controls {
+  background: var(--bg) !important;
+  border-bottom: 1px solid var(--border) !important;
+}
+
+/* -------- Notifications -------- */
+.toast,
+.toast-container__notification {
+  background: var(--ink) !important;
+  color: white !important;
+  border-radius: var(--style-radius-m) !important;
+}
+
+/* -------- Misc spacing -------- */
+.collection-list__sub-header {
+  margin-bottom: 16px;
+}
+
+/* Subtle scrollbar matching public site */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--ink-faint);
 }
