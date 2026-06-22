@@ -8,6 +8,8 @@ import { ContentProvider } from "@/components/providers/ContentProvider";
 import { getAllLocalesContent } from "@/lib/content/get-content";
 import { PublishedElementsProvider } from "@/components/cms/PublishedElementsProvider";
 import { getPublishedElements } from "@/lib/cms/get-published-elements";
+import { ToastProvider } from "@/components/cms/Toast";
+import { ConfirmDialogProvider } from "@/components/cms/ConfirmDialog";
 
 /*
  * Sibling root layout for /admin/edit/*. Mirrors the public (frontend) layout
@@ -49,9 +51,13 @@ export default async function AdminEditLayout({
           <PublishedElementsProvider value={published}>
             <ContentProvider value={content}>
               <MotionProvider>
-                <Navbar />
-                <main>{children}</main>
-                <Footer />
+                <ToastProvider>
+                  <ConfirmDialogProvider>
+                    <Navbar />
+                    <main>{children}</main>
+                    <Footer />
+                  </ConfirmDialogProvider>
+                </ToastProvider>
               </MotionProvider>
             </ContentProvider>
           </PublishedElementsProvider>

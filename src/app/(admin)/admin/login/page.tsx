@@ -16,19 +16,25 @@ export default async function LoginPage({
 
   async function login(formData: FormData) {
     "use server";
-    const email = String(formData.get("email") ?? "");
+    const email = String(formData.get("email") ?? "").trim();
     const password = String(formData.get("password") ?? "");
+    if (!email || !password) {
+      redirect(`/admin/login?error=missing&from=${encodeURIComponent(from)}`);
+    }
     try {
-      await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
+      await signIn("credentials", { email, password, redirect: false });
     } catch {
       redirect(`/admin/login?error=invalid&from=${encodeURIComponent(from)}`);
     }
     redirect(from);
   }
+
+  const errorMessage =
+    sp.error === "missing"
+      ? "Type your email and password to continue."
+      : sp.error === "invalid"
+        ? "Wrong email or password. Try again."
+        : null;
 
   return (
     <div
@@ -98,8 +104,9 @@ export default async function LoginPage({
         Editors only. Ask the IT manager if you need an account.
       </p>
 
-      {sp.error ? (
+      {errorMessage ? (
         <div
+          role="alert"
           style={{
             marginTop: 18,
             padding: "10px 14px",
@@ -110,7 +117,7 @@ export default async function LoginPage({
             fontWeight: 600,
           }}
         >
-          Wrong email or password. Try again.
+          {errorMessage}
         </div>
       ) : null}
 
@@ -161,6 +168,7 @@ export default async function LoginPage({
             type="password"
             autoComplete="current-password"
             required
+            minLength={8}
             style={{
               padding: "11px 14px",
               borderRadius: 10,

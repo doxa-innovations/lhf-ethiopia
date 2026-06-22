@@ -9,12 +9,9 @@
 import { drizzle as drizzlePg } from "drizzle-orm/node-postgres";
 import { Pool } from "pg";
 import * as schema from "../../drizzle/schema";
+import { env } from "./env";
 
-const url =
-  process.env.DATABASE_URL ??
-  (() => {
-    throw new Error("DATABASE_URL is not set");
-  })();
+const url = env.DATABASE_URL();
 
 declare global {
   // eslint-disable-next-line no-var

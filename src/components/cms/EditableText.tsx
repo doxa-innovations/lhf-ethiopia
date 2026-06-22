@@ -86,12 +86,16 @@ export function EditableText({
   } as CSSProperties;
 
   const focusRingStyle = `
+    html[data-editing="true"] .cms-edit-text {
+      box-shadow: inset 0 -1px 0 rgba(159, 31, 42, 0.16);
+    }
     .cms-edit-text:focus {
-      box-shadow: 0 0 0 2px rgba(159, 31, 42, 0.32);
+      box-shadow: 0 0 0 2px rgba(159, 31, 42, 0.32) !important;
       background: rgba(247, 232, 232, 0.45) !important;
     }
     .cms-edit-text:hover:not(:focus) {
-      box-shadow: 0 0 0 1px rgba(159, 31, 42, 0.18);
+      box-shadow: 0 0 0 1px rgba(159, 31, 42, 0.32) !important;
+      background: rgba(247, 232, 232, 0.22) !important;
     }
   `;
 

@@ -9,6 +9,8 @@ import "../(frontend)/globals.css";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { auth, signOut } from "@/lib/auth";
+import { ToastProvider } from "@/components/cms/Toast";
+import { ConfirmDialogProvider } from "@/components/cms/ConfirmDialog";
 
 export const metadata = {
   title: { default: "LHF Ethiopia · Admin", template: "%s · Admin · LHF Ethiopia" },
@@ -265,31 +267,49 @@ export default async function AdminLayout({ children }: { children: ReactNode })
                   {(session?.user as { role?: string } | undefined)?.role ?? ""}
                 </div>
               </div>
-              <form
-                action={async () => {
-                  "use server";
-                  await signOut({ redirectTo: "/admin/login" });
-                }}
-              >
-                <button
-                  type="submit"
+              <div style={{ display: "flex", flexDirection: "column", gap: 4, alignItems: "flex-end" }}>
+                <Link
+                  href="/admin/account"
                   style={{
-                    border: "none",
-                    background: "transparent",
-                    color: "rgb(var(--ink-faint, 138 145 158))",
-                    cursor: "pointer",
                     fontSize: 12,
                     fontWeight: 600,
+                    color: "rgb(var(--ink-faint, 138 145 158))",
+                    textDecoration: "none",
                   }}
                 >
-                  Sign out
-                </button>
-              </form>
+                  Account
+                </Link>
+                <form
+                  action={async () => {
+                    "use server";
+                    await signOut({ redirectTo: "/admin/login" });
+                  }}
+                >
+                  <button
+                    type="submit"
+                    style={{
+                      border: "none",
+                      background: "transparent",
+                      color: "rgb(var(--ink-faint, 138 145 158))",
+                      cursor: "pointer",
+                      fontSize: 12,
+                      fontWeight: 600,
+                      padding: 0,
+                    }}
+                  >
+                    Sign out
+                  </button>
+                </form>
+              </div>
             </div>
           </aside>
 
           {/* MAIN */}
-          <main style={{ minWidth: 0 }}>{children}</main>
+          <main style={{ minWidth: 0 }}>
+            <ToastProvider>
+              <ConfirmDialogProvider>{children}</ConfirmDialogProvider>
+            </ToastProvider>
+          </main>
         </div>
       </body>
     </html>

@@ -37,6 +37,8 @@ type EditorCtx = {
 
   /** Has the form been changed since the last save / since mount? */
   isDirty: boolean;
+  /** Per-locale dirty count so toolbars can hint where unsaved edits sit. */
+  dirtyByLocale: Record<Locale, number>;
   /** Returns the diff for submission: only elements that were touched. */
   getDirty: () => Record<string, ElementEdit & { locale: Locale }>;
   /** Clear dirty after a successful save. */
@@ -102,15 +104,17 @@ export function EditorProvider({
     [locale, bump],
   );
 
-  const isDirty = useMemo(() => {
-    return (
-      Object.keys(edits.current.en).length +
-        Object.keys(edits.current.am).length +
-        Object.keys(edits.current.om).length >
-      0
-    );
+  const dirtyByLocale = useMemo<Record<Locale, number>>(
+    () => ({
+      en: Object.keys(edits.current.en).length,
+      am: Object.keys(edits.current.am).length,
+      om: Object.keys(edits.current.om).length,
+    }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tick]);
+    [tick],
+  );
+  const isDirty =
+    dirtyByLocale.en + dirtyByLocale.am + dirtyByLocale.om > 0;
 
   const getDirty = useCallback(() => {
     const out: Record<string, ElementEdit & { locale: Locale }> = {};
@@ -126,15 +130,14 @@ export function EditorProvider({
     edits.current = { en: {}, am: {}, om: {} };
     bump();
   }, [bump]);
+  /**
+   * Reset all in-memory edits. Callers that need a confirmation prompt
+   * should call `useConfirm()` before invoking `discard()` — the prompt
+   * was lifted out so the provider stays free of UI dependencies.
+   */
   const discard = useCallback(() => {
-    if (
-      isDirty &&
-      !confirm("Discard all unsaved changes on this page?")
-    ) {
-      return;
-    }
     markClean();
-  }, [isDirty, markClean]);
+  }, [markClean]);
 
   // Warn before tab close if dirty.
   useEffect(() => {
@@ -147,6 +150,18 @@ export function EditorProvider({
     return () => window.removeEventListener("beforeunload", handler);
   }, [isDirty, mode]);
 
+  // Add data-editing on <html> so a global CSS rule can show a hover
+  // outline on every <EditableText> input — gives editors a visual hint
+  // of what's clickable without affecting the public site.
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+    if (mode === "off") return;
+    document.documentElement.setAttribute("data-editing", "true");
+    return () => {
+      document.documentElement.removeAttribute("data-editing");
+    };
+  }, [mode]);
+
   const value: EditorCtx = {
     mode,
     pageName,
@@ -158,6 +173,7 @@ export function EditorProvider({
     setValue,
     getImageUrl,
     isDirty,
+    dirtyByLocale,
     getDirty,
     markClean,
     discard,

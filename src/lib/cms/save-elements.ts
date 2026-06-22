@@ -4,10 +4,14 @@ import { revalidatePath } from "next/cache";
 import { and, eq } from "drizzle-orm";
 import { db, schema } from "@/lib/db";
 import { auth } from "@/lib/auth";
-import type { Locale } from "@/lib/i18n/dictionary";
+import { LOCALES, type Locale } from "@/lib/i18n/dictionary";
 
 type Edit = { content: string; imageUrl?: string; locale: Locale };
 type Payload = Record<string, Edit>;
+
+const VALID_LOCALES = new Set<string>(LOCALES);
+const VALID_PAGE = /^[a-z][a-z0-9-]{0,40}$/;
+const MAX_CONTENT_LENGTH = 8000;
 
 /**
  * Persists a batch of element edits to cms_elements. The key in the payload
@@ -17,20 +21,57 @@ type Payload = Record<string, Edit>;
  * draft sibling (if any) is cleared. With `publish: false`, the row is
  * written as a draft (is_draft=1, is_published=0) — the public site keeps
  * showing the previously published row.
+ *
+ * Validates auth, pageName, every locale, content length, and rejects edits
+ * with an empty content + no image. Errors before any DB write so a single
+ * bad field can't half-corrupt a multi-element save.
  */
 export async function saveCmsElements(
   payload: Payload,
   options: { publish: boolean; pageName: string },
-): Promise<{ ok: boolean; error?: string }> {
+): Promise<{ ok: boolean; error?: string; saved?: number }> {
   const session = await auth();
   if (!session?.user) return { ok: false, error: "Not signed in" };
   const userId = Number((session.user as { id?: string | number }).id);
   const validUserId = Number.isFinite(userId) ? userId : null;
 
+  if (!VALID_PAGE.test(options.pageName)) {
+    return { ok: false, error: `Invalid page name "${options.pageName}"` };
+  }
+
+  // Resolve keys to (elementId, edit) tuples and validate upfront.
+  const rows: Array<{ elementId: string; edit: Edit }> = [];
+  for (const [key, edit] of Object.entries(payload)) {
+    const sep = key.indexOf("::");
+    const elementId = sep >= 0 ? key.slice(sep + 2) : key;
+    if (!elementId) {
+      return { ok: false, error: `Missing element id in key "${key}"` };
+    }
+    if (!VALID_LOCALES.has(edit.locale)) {
+      return { ok: false, error: `Unknown locale "${edit.locale}"` };
+    }
+    if (
+      typeof edit.content !== "string" ||
+      edit.content.length > MAX_CONTENT_LENGTH
+    ) {
+      return {
+        ok: false,
+        error: `Content for "${elementId}" exceeds ${MAX_CONTENT_LENGTH} chars or is not a string`,
+      };
+    }
+    const hasContent = edit.content.trim().length > 0;
+    const hasImage = typeof edit.imageUrl === "string" && edit.imageUrl.length > 0;
+    if (!hasContent && !hasImage) {
+      return {
+        ok: false,
+        error: `"${elementId}" (${edit.locale}) would be saved empty — type some text or restore the original before saving.`,
+      };
+    }
+    rows.push({ elementId, edit });
+  }
+
   try {
-    for (const edit of Object.values(payload)) {
-      const elementId = parseElementId(edit, payload);
-      if (!elementId) continue;
+    for (const { elementId, edit } of rows) {
       await upsertElement({
         elementId,
         locale: edit.locale,
@@ -41,11 +82,11 @@ export async function saveCmsElements(
         userId: validUserId,
       });
     }
-    // Revalidate the public path so the next request rebuilds from DB.
     if (options.publish) {
+      // Bust the layout fetch so the next request rebuilds PublishedElements.
       revalidatePath("/", "layout");
     }
-    return { ok: true };
+    return { ok: true, saved: rows.length };
   } catch (err) {
     console.error("saveCmsElements failed", err);
     return {
@@ -53,18 +94,6 @@ export async function saveCmsElements(
       error: err instanceof Error ? err.message : "Unknown error",
     };
   }
-}
-
-/* The dirty-map key is `${locale}::${elementId}`. We just split on the first
- * "::" pair to recover the element id; the locale comes off the edit row. */
-function parseElementId(edit: Edit, payload: Payload): string | null {
-  for (const [key, e] of Object.entries(payload)) {
-    if (e === edit) {
-      const sep = key.indexOf("::");
-      return sep >= 0 ? key.slice(sep + 2) : key;
-    }
-  }
-  return null;
 }
 
 async function upsertElement(args: {
@@ -76,7 +105,8 @@ async function upsertElement(args: {
   publish: boolean;
   userId: number | null;
 }) {
-  const { elementId, locale, pageName, content, imageUrl, publish, userId } = args;
+  const { elementId, locale, pageName, content, imageUrl, publish, userId } =
+    args;
 
   if (publish) {
     // Clear any existing draft + previous published row, then write the new
