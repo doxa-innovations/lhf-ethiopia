@@ -49,7 +49,11 @@ export function EditableText({
   const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     editor.setValue(elementId, e.target.value);
 
-  const sharedStyle: CSSProperties = {
+  // Inline single-line inputs use `field-sizing: content` so they grow to fit
+  // their text — keeps headlines flowing inline instead of collapsing to a
+  // 100% block. Multiline textareas keep width:100% because TextareaAutosize
+  // already handles vertical sizing.
+  const baseStyle: CSSProperties = {
     background: "transparent",
     border: "none",
     outline: "none",
@@ -59,12 +63,23 @@ export function EditableText({
     color: "inherit",
     letterSpacing: "inherit",
     textAlign: "inherit",
-    width: "100%",
     boxSizing: "border-box",
     borderRadius: 4,
     transition: "box-shadow 140ms ease, background 140ms ease",
+  };
+  const textareaStyle: CSSProperties = {
+    ...baseStyle,
+    width: "100%",
+    display: "block",
     ...style,
   };
+  const inputStyle = {
+    ...baseStyle,
+    width: "auto",
+    display: "inline-block",
+    fieldSizing: "content",
+    ...style,
+  } as CSSProperties;
 
   const focusRingStyle = `
     .cms-edit-text:focus {
@@ -77,13 +92,15 @@ export function EditableText({
   `;
 
   if (multiline) {
+    // TextareaAutosize's Style type rejects unknown CSS keys (e.g. fieldSizing),
+    // so spread through `as Record<string, unknown>`.
     return (
       <>
         <style>{focusRingStyle}</style>
         <TextareaAutosize
           data-element-id={elementId}
           className={`cms-edit-text ${className ?? ""}`}
-          style={sharedStyle}
+          style={textareaStyle as never}
           value={value}
           onChange={onChange}
           placeholder={placeholder ?? defaultValue}
@@ -101,7 +118,7 @@ export function EditableText({
         type="text"
         data-element-id={elementId}
         className={`cms-edit-text ${className ?? ""}`}
-        style={sharedStyle}
+        style={inputStyle}
         value={value}
         onChange={onChange}
         placeholder={placeholder ?? defaultValue}

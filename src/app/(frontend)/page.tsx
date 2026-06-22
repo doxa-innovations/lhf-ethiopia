@@ -28,6 +28,7 @@ import { ImpactCharts } from "@/components/marketing/ImpactCharts";
 import { YouTubeEmbed } from "@/components/podcast/YouTubeEmbed";
 import { useT } from "@/components/providers/LanguageProvider";
 import { useContent } from "@/lib/i18n/useContent";
+import { EditableText } from "@/components/cms/EditableText";
 import {
   PHOTOS,
   PODCAST,
@@ -72,10 +73,24 @@ export default function HomePage() {
                 marginInline: "auto",
               }}
             >
-              <span className="section-label">{t("common.sectionWhatWeDo")}</span>
-              <h2 className="text-h1">{t("home.whatWeDoTitle")}</h2>
+              <span className="section-label">
+                <EditableText
+                  elementId="common.sectionWhatWeDo"
+                  defaultValue={t("common.sectionWhatWeDo")}
+                />
+              </span>
+              <h2 className="text-h1">
+                <EditableText
+                  elementId="home.whatWeDoTitle"
+                  defaultValue={t("home.whatWeDoTitle")}
+                />
+              </h2>
               <p className="text-body" style={{ marginTop: 12 }}>
-                {t("home.whatWeDoBody")}
+                <EditableText
+                  elementId="home.whatWeDoBody"
+                  defaultValue={t("home.whatWeDoBody")}
+                  multiline
+                />
               </p>
             </div>
           </Reveal>
@@ -84,24 +99,30 @@ export default function HomePage() {
             {[
               {
                 icon: <Globe2 size={18} />,
+                titleKey: "home.translation",
+                bodyKey: "home.translationBody",
                 title: t("home.translation"),
                 body: t("home.translationBody"),
                 photo: PHOTOS.translatorAtDesk,
               },
               {
                 icon: <BookOpen size={18} />,
+                titleKey: "home.printing",
+                bodyKey: "home.printingBody",
                 title: t("home.printing"),
                 body: t("home.printingBody"),
                 photo: PHOTOS.printPress,
               },
               {
                 icon: <HandHeart size={18} />,
+                titleKey: "home.distribution",
+                bodyKey: "home.distributionBody",
                 title: t("home.distribution"),
                 body: t("home.distributionBody"),
                 photo: PHOTOS.handsHolding,
               },
             ].map((step) => (
-              <StaggerItem key={step.title}>
+              <StaggerItem key={step.titleKey}>
                 <Card style={{ height: "100%" }} className="card-lift">
                   <div
                     className="photo-wrap photo-kenburns"
@@ -130,10 +151,17 @@ export default function HomePage() {
                       {step.icon}
                     </span>
                     <h3 className="text-h3" style={{ marginTop: 14 }}>
-                      {step.title}
+                      <EditableText
+                        elementId={step.titleKey}
+                        defaultValue={step.title}
+                      />
                     </h3>
                     <p className="text-body" style={{ marginTop: 6 }}>
-                      {step.body}
+                      <EditableText
+                        elementId={step.bodyKey}
+                        defaultValue={step.body}
+                        multiline
+                      />
                     </p>
                   </CardBody>
                 </Card>
@@ -162,7 +190,10 @@ export default function HomePage() {
                   style={{ padding: "5px 12px" }}
                 >
                   <Youtube size={11} />{" "}
-                  {t("common.sectionDigitalOutreach")}
+                  <EditableText
+                    elementId="common.sectionDigitalOutreach"
+                    defaultValue={t("common.sectionDigitalOutreach")}
+                  />
                 </span>
                 <h2
                   className="text-h1"
@@ -190,7 +221,12 @@ export default function HomePage() {
                     maxWidth: 460,
                   }}
                 >
-                  {t("home.podcastTagline")} {PODCAST.cadence}.
+                  <EditableText
+                    elementId="home.podcastTagline"
+                    defaultValue={t("home.podcastTagline")}
+                    multiline
+                  />{" "}
+                  {PODCAST.cadence}.
                 </p>
                 <div
                   style={{
@@ -211,7 +247,11 @@ export default function HomePage() {
                       borderColor: "#FF0000",
                     }}
                   >
-                    <Youtube size={14} /> {t("common.subscribe")}
+                    <Youtube size={14} />{" "}
+                    <EditableText
+                      elementId="common.subscribe"
+                      defaultValue={t("common.subscribe")}
+                    />
                   </a>
                   <Button
                     href="/podcast"
@@ -223,7 +263,11 @@ export default function HomePage() {
                       borderColor: "rgba(255,255,255,0.28)",
                     }}
                   >
-                    <Headphones size={13} /> {t("home.allEpisodes")}
+                    <Headphones size={13} />{" "}
+                    <EditableText
+                      elementId="home.allEpisodes"
+                      defaultValue={t("home.allEpisodes")}
+                    />
                   </Button>
                 </div>
 
@@ -245,7 +289,10 @@ export default function HomePage() {
                       color: "rgb(var(--teal-soft))",
                     }}
                   >
-                    {t("home.moreEpisodes")}
+                    <EditableText
+                      elementId="home.moreEpisodes"
+                      defaultValue={t("home.moreEpisodes")}
+                    />
                   </div>
                   {otherEpisodes.map((ep) => (
                     <Link
@@ -336,16 +383,32 @@ export default function HomePage() {
             <Reveal>
               <div style={{ maxWidth: 540 }}>
                 <span className="section-label">
-                  {t("common.sectionImpact")}
+                  <EditableText
+                    elementId="common.sectionImpact"
+                    defaultValue={t("common.sectionImpact")}
+                  />
                 </span>
-                <h2 className="text-h1">{t("home.impactTitle")}</h2>
+                <h2 className="text-h1">
+                  <EditableText
+                    elementId="home.impactTitle"
+                    defaultValue={t("home.impactTitle")}
+                  />
+                </h2>
                 <p className="text-body" style={{ marginTop: 10 }}>
-                  {t("home.impactBody")}
+                  <EditableText
+                    elementId="home.impactBody"
+                    defaultValue={t("home.impactBody")}
+                    multiline
+                  />
                 </p>
               </div>
             </Reveal>
             <Button href="/projects" variant="navy" size="md">
-              {t("common.adoptProject")} <ArrowRight size={14} />
+              <EditableText
+                elementId="common.adoptProject"
+                defaultValue={t("common.adoptProject")}
+              />{" "}
+              <ArrowRight size={14} />
             </Button>
           </div>
 
@@ -371,16 +434,32 @@ export default function HomePage() {
             <Reveal>
               <div style={{ maxWidth: 540 }}>
                 <span className="section-label">
-                  {t("common.sectionLanguages")}
+                  <EditableText
+                    elementId="common.sectionLanguages"
+                    defaultValue={t("common.sectionLanguages")}
+                  />
                 </span>
-                <h2 className="text-h1">{t("home.languagesTitle")}</h2>
+                <h2 className="text-h1">
+                  <EditableText
+                    elementId="home.languagesTitle"
+                    defaultValue={t("home.languagesTitle")}
+                  />
+                </h2>
                 <p className="text-body" style={{ marginTop: 10 }}>
-                  {t("home.languagesBody")}
+                  <EditableText
+                    elementId="home.languagesBody"
+                    defaultValue={t("home.languagesBody")}
+                    multiline
+                  />
                 </p>
               </div>
             </Reveal>
             <Button href="/publications" variant="primary" size="md">
-              {t("home.fullLibrary")} <ArrowRight size={14} />
+              <EditableText
+                elementId="home.fullLibrary"
+                defaultValue={t("home.fullLibrary")}
+              />{" "}
+              <ArrowRight size={14} />
             </Button>
           </div>
 
@@ -500,11 +579,23 @@ export default function HomePage() {
             <Reveal>
               <div>
                 <span className="section-label">
-                  {t("common.sectionUpcoming")}
+                  <EditableText
+                    elementId="common.sectionUpcoming"
+                    defaultValue={t("common.sectionUpcoming")}
+                  />
                 </span>
-                <h2 className="text-h1">{t("home.eventsTitle")}</h2>
+                <h2 className="text-h1">
+                  <EditableText
+                    elementId="home.eventsTitle"
+                    defaultValue={t("home.eventsTitle")}
+                  />
+                </h2>
                 <p className="text-body" style={{ marginTop: 8, maxWidth: 500 }}>
-                  {t("home.eventsBody")}
+                  <EditableText
+                    elementId="home.eventsBody"
+                    defaultValue={t("home.eventsBody")}
+                    multiline
+                  />
                 </p>
               </div>
             </Reveal>
@@ -512,7 +603,10 @@ export default function HomePage() {
               href="/events"
               style={{ color: "rgb(var(--brand))", fontWeight: 600 }}
             >
-              {t("home.allEvents")}
+              <EditableText
+                elementId="home.allEvents"
+                defaultValue={t("home.allEvents")}
+              />
             </Link>
           </div>
 
@@ -600,9 +694,17 @@ export default function HomePage() {
             <div>
               <Reveal>
                 <span className="section-label">
-                  {t("common.sectionWhatWeBelieve")}
+                  <EditableText
+                    elementId="common.sectionWhatWeBelieve"
+                    defaultValue={t("common.sectionWhatWeBelieve")}
+                  />
                 </span>
-                <h2 className="text-h1">{t("home.valuesTitle")}</h2>
+                <h2 className="text-h1">
+                  <EditableText
+                    elementId="home.valuesTitle"
+                    defaultValue={t("home.valuesTitle")}
+                  />
+                </h2>
               </Reveal>
               <div style={{ marginTop: 22 }}>
                 <ValuesAccordion values={values} defaultOpenSlug={values[0]?.slug} compact />
@@ -633,15 +735,28 @@ export default function HomePage() {
           >
             <Reveal>
               <div>
-                <span className="section-label">{t("common.sectionLatest")}</span>
-                <h2 className="text-h1">{t("common.tagWordAtWork")}</h2>
+                <span className="section-label">
+                  <EditableText
+                    elementId="common.sectionLatest"
+                    defaultValue={t("common.sectionLatest")}
+                  />
+                </span>
+                <h2 className="text-h1">
+                  <EditableText
+                    elementId="common.tagWordAtWork"
+                    defaultValue={t("common.tagWordAtWork")}
+                  />
+                </h2>
               </div>
             </Reveal>
             <Link
               href="/news"
               style={{ color: "rgb(var(--brand))", fontWeight: 600 }}
             >
-              {t("common.seeAllArrow")}
+              <EditableText
+                elementId="common.seeAllArrow"
+                defaultValue={t("common.seeAllArrow")}
+              />
             </Link>
           </div>
           <StaggerChildren className="grid-3">
@@ -732,17 +847,27 @@ export default function HomePage() {
                       color: "rgb(var(--teal-soft))",
                     }}
                   >
-                    {t("common.adoptProject")}
+                    <EditableText
+                      elementId="common.adoptProject"
+                      defaultValue={t("common.adoptProject")}
+                    />
                   </span>
                 </div>
                 <h2 className="text-h1" style={{ color: "white" }}>
-                  {t("home.ctaTitle")}
+                  <EditableText
+                    elementId="home.ctaTitle"
+                    defaultValue={t("home.ctaTitle")}
+                  />
                 </h2>
                 <p
                   className="text-body"
                   style={{ color: "rgba(255,255,255,0.78)", marginTop: 10 }}
                 >
-                  {t("home.ctaBody")}
+                  <EditableText
+                    elementId="home.ctaBody"
+                    defaultValue={t("home.ctaBody")}
+                    multiline
+                  />
                 </p>
               </div>
               <div
@@ -753,7 +878,10 @@ export default function HomePage() {
                 }}
               >
                 <Button href="/projects" variant="teal" size="md">
-                  {t("home.ctaPrimary")}
+                  <EditableText
+                    elementId="home.ctaPrimary"
+                    defaultValue={t("home.ctaPrimary")}
+                  />
                 </Button>
                 <Button
                   href="/donate"
@@ -765,7 +893,10 @@ export default function HomePage() {
                     borderColor: "rgba(255,255,255,0.28)",
                   }}
                 >
-                  {t("home.ctaSecondary")}
+                  <EditableText
+                    elementId="home.ctaSecondary"
+                    defaultValue={t("home.ctaSecondary")}
+                  />
                 </Button>
               </div>
             </div>

@@ -7,7 +7,10 @@
  * Uses NextAuth v5's `auth()` wrapped middleware so the session is read
  * from the JWT cookie without an extra round-trip.
  */
-import { auth } from "@/lib/auth";
+import NextAuth from "next-auth";
+import { authConfig } from "@/lib/auth.config";
+
+const { auth } = NextAuth(authConfig);
 
 export default auth((req) => {
   const { nextUrl } = req;

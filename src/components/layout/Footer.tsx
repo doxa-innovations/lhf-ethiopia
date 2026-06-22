@@ -14,6 +14,7 @@ import {
 import { SITE } from "@/lib/content";
 import { useT } from "@/components/providers/LanguageProvider";
 import { LhfMark } from "@/components/brand/LhfMark";
+import { EditableText } from "@/components/cms/EditableText";
 
 type LinkGroup = {
   labelKey: string;
@@ -122,7 +123,10 @@ export function Footer() {
                     marginTop: 3,
                   }}
                 >
-                  {t("nav.orgFullName")}
+                  <EditableText
+                    elementId="nav.orgFullName"
+                    defaultValue={t("nav.orgFullName")}
+                  />
                 </span>
               </span>
             </div>
@@ -148,7 +152,10 @@ export function Footer() {
                 color: "rgb(var(--teal-soft))",
               }}
             >
-              {tFb("footer.stayInTouch", "Stay in touch")}
+              <EditableText
+                elementId="footer.stayInTouch"
+                defaultValue={tFb("footer.stayInTouch", "Stay in touch")}
+              />
             </span>
             <p
               className="font-display"
@@ -161,10 +168,14 @@ export function Footer() {
                 maxWidth: 320,
               }}
             >
-              {tFb(
-                "footer.stayInTouchBody",
-                "Quarterly updates from the translation desk and the print floor.",
-              )}
+              <EditableText
+                elementId="footer.stayInTouchBody"
+                defaultValue={tFb(
+                  "footer.stayInTouchBody",
+                  "Quarterly updates from the translation desk and the print floor.",
+                )}
+                multiline
+              />
             </p>
             <form
               action={`mailto:${SITE.email}`}
@@ -210,7 +221,10 @@ export function Footer() {
                 }}
               >
                 <Send size={13} />
-                {tFb("footer.subscribe", "Subscribe")}
+                <EditableText
+                  elementId="footer.subscribe"
+                  defaultValue={tFb("footer.subscribe", "Subscribe")}
+                />
               </button>
             </form>
           </div>
@@ -220,7 +234,12 @@ export function Footer() {
         <div className="footer-grid">
           {LINK_GROUPS.map((group) => (
             <div key={group.labelKey}>
-              <h4 className="footer-h">{tFb(group.labelKey, group.fallback)}</h4>
+              <h4 className="footer-h">
+                <EditableText
+                  elementId={group.labelKey}
+                  defaultValue={tFb(group.labelKey, group.fallback)}
+                />
+              </h4>
               <ul
                 style={{
                   display: "flex",
@@ -236,7 +255,10 @@ export function Footer() {
                       className="footer-link"
                       style={{ fontSize: 13.5 }}
                     >
-                      {t(link.labelKey as Parameters<typeof t>[0])}
+                      <EditableText
+                        elementId={link.labelKey}
+                        defaultValue={t(link.labelKey as Parameters<typeof t>[0])}
+                      />
                     </Link>
                   </li>
                 ))}
@@ -245,7 +267,12 @@ export function Footer() {
           ))}
 
           <div>
-            <h4 className="footer-h">{t("footer.office")}</h4>
+            <h4 className="footer-h">
+              <EditableText
+                elementId="footer.office"
+                defaultValue={t("footer.office")}
+              />
+            </h4>
             <ul
               style={{
                 display: "flex",
@@ -281,7 +308,10 @@ export function Footer() {
                   color: "rgba(255,255,255,0.55)",
                 }}
               >
-                {t("footer.follow")}
+                <EditableText
+                  elementId="footer.follow"
+                  defaultValue={t("footer.follow")}
+                />
               </span>
               <div style={{ display: "flex", gap: 8, marginTop: 8 }}>
                 <a
@@ -313,10 +343,17 @@ export function Footer() {
         {/* BOTTOM */}
         <div className="footer-bottom">
           <span>
-            © {new Date().getFullYear()} {SITE.longName}. {t("footer.rights")}
+            © {new Date().getFullYear()} {SITE.longName}.{" "}
+            <EditableText
+              elementId="footer.rights"
+              defaultValue={t("footer.rights")}
+            />
           </span>
           <span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-            {t("common.free")}
+            <EditableText
+              elementId="common.free"
+              defaultValue={t("common.free")}
+            />
             <ArrowRight size={12} style={{ color: "rgb(var(--teal-soft))" }} />
           </span>
         </div>

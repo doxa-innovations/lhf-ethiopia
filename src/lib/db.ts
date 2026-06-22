@@ -1,23 +1,20 @@
 /**
- * Drizzle DB client.
- *  - Dev (DATABASE_URL = file:./lhf.db or pglite:./.pglite):
- *      → @electric-sql/pglite (Postgres-compatible, WASM, no native deps).
- *  - Prod (DATABASE_URL = postgres://…):
- *      → node-postgres driver.
+ * Drizzle DB client — node-postgres against the configured DATABASE_URL.
  *
- * Same Postgres dialect in both environments. Switch is fully transparent
- * to query code.
+ * One dialect (Postgres) for both dev and prod. The PGlite fallback was
+ * removed because it doesn't survive Node 24 + Next 16 Turbopack and
+ * because middleware.ts runs in the Edge runtime, which rejects
+ * `node:path` and `process.cwd()`.
  */
-import { drizzle as drizzlePglite } from "drizzle-orm/pglite";
 import { drizzle as drizzlePg } from "drizzle-orm/node-postgres";
-import { PGlite } from "@electric-sql/pglite";
 import { Pool } from "pg";
-import path from "node:path";
 import * as schema from "../../drizzle/schema";
 
-const url = process.env.DATABASE_URL ?? "file:./lhf.db";
-const isPostgresServer =
-  url.startsWith("postgres://") || url.startsWith("postgresql://");
+const url =
+  process.env.DATABASE_URL ??
+  (() => {
+    throw new Error("DATABASE_URL is not set");
+  })();
 
 declare global {
   // eslint-disable-next-line no-var
@@ -25,20 +22,8 @@ declare global {
 }
 
 function build() {
-  if (isPostgresServer) {
-    const pool = new Pool({ connectionString: url });
-    return drizzlePg(pool, { schema });
-  }
-  // In dev: PGlite (pure WASM Postgres, no native deps). 0.4.x — the 0.5
-  // line broke Node 24 + Turbopack with a URL/Buffer typeError in the FS.
-  const dataDir = path.resolve(
-    process.cwd(),
-    url.startsWith("file:")
-      ? url.slice("file:".length).replace(/\.db$/, "-pglite")
-      : "./lhf-pglite",
-  );
-  const client = new PGlite(dataDir);
-  return drizzlePglite(client, { schema });
+  const pool = new Pool({ connectionString: url });
+  return drizzlePg(pool, { schema });
 }
 
 export const db = globalThis.__lhfDb ?? build();

@@ -6,36 +6,20 @@
  *  - Role (`admin` | `editor`) is stuffed into the session for use by
  *    middleware and Server Actions.
  *
- * Export `auth()` for Server Components / actions, and the route
- * handlers `GET, POST` for `/api/auth/[...nextauth]/route.ts`.
+ * Splits into:
+ *   - `auth.config.ts` — Edge-safe shared config (loaded by middleware).
+ *   - this file       — full config with Credentials + Drizzle (loaded by
+ *                       Node-runtime entry points only).
  */
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
 import { db, schema } from "@/lib/db";
+import { authConfig } from "@/lib/auth.config";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  pages: { signIn: "/admin/login" },
-  trustHost: true,
-  session: { strategy: "jwt", maxAge: 60 * 60 * 24 * 7 }, // 7 days
-  callbacks: {
-    async jwt({ token, user }) {
-      if (user) {
-        token.id = (user as { id?: string }).id;
-        token.role = (user as { role?: string }).role;
-        token.name = user.name;
-      }
-      return token;
-    },
-    async session({ session, token }) {
-      if (token) {
-        (session.user as { id?: string }).id = token.id as string;
-        (session.user as { role?: string }).role = token.role as string;
-      }
-      return session;
-    },
-  },
+  ...authConfig,
   providers: [
     Credentials({
       name: "Email and password",
@@ -59,9 +43,9 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const ok = await bcrypt.compare(password, user.passwordHash);
         if (!ok) return null;
 
-        // Update last_login_at (fire-and-forget, don't gate sign-in on this)
+        // Fire-and-forget last_login_at bump — don't gate sign-in on it.
         db.update(schema.users)
-          .set({ lastLoginAt: new Date().toISOString() })
+          .set({ lastLoginAt: new Date() })
           .where(eq(schema.users.id, user.id))
           .catch(() => {});
 

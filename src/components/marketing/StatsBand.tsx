@@ -3,6 +3,7 @@
 import { BookOpen, Globe2, Headphones, Users } from "lucide-react";
 import { useT } from "@/components/providers/LanguageProvider";
 import { CountUp, Parallax } from "@/components/ui";
+import { EditableText } from "@/components/cms/EditableText";
 
 /* ============================================================
    StatsBand — horizontal navy panel with a subtle dot texture,
@@ -13,30 +14,35 @@ export function StatsBand() {
   const { t } = useT();
 
   const STATS: Array<{
+    elementId: string;
     icon: React.ReactNode;
     value: number;
     suffix: string;
     label: string;
   }> = [
     {
+      elementId: "home.statLanguages",
       icon: <Globe2 size={20} />,
       value: 6,
       suffix: "+",
       label: t("home.statLanguages"),
     },
     {
+      elementId: "home.statBooks",
       icon: <BookOpen size={20} />,
       value: 42300,
       suffix: "+",
       label: t("home.statBooks"),
     },
     {
+      elementId: "home.statCongregations",
       icon: <Users size={20} />,
       value: 180,
       suffix: "+",
       label: t("home.statCongregations"),
     },
     {
+      elementId: "home.statEpisodes",
       icon: <Headphones size={20} />,
       value: 14,
       suffix: "",
@@ -88,7 +94,7 @@ export function StatsBand() {
         <div className="stats-band-grid">
           {STATS.map((s, i) => (
             <div
-              key={s.label}
+              key={s.elementId}
               className="stats-band-cell"
               style={{
                 borderRight:
@@ -125,7 +131,10 @@ export function StatsBand() {
                       color: "rgba(255,255,255,0.75)",
                     }}
                   >
-                    {s.label}
+                    <EditableText
+                      elementId={s.elementId}
+                      defaultValue={s.label}
+                    />
                   </span>
                 </div>
               </div>

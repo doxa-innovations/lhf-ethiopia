@@ -38,7 +38,7 @@ type EditorCtx = {
   /** Has the form been changed since the last save / since mount? */
   isDirty: boolean;
   /** Returns the diff for submission: only elements that were touched. */
-  getDirty: () => Record<string, ElementEdit>;
+  getDirty: () => Record<string, ElementEdit & { locale: Locale }>;
   /** Clear dirty after a successful save. */
   markClean: () => void;
   /** Throw away in-memory changes. */

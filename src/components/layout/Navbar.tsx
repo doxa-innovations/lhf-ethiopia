@@ -11,6 +11,7 @@ import { useT } from "@/components/providers/LanguageProvider";
 import { LhfMark } from "@/components/brand/LhfMark";
 import { NavDropdown } from "@/components/layout/NavDropdown";
 import { NAV_GROUPS } from "@/lib/content";
+import { EditableText } from "@/components/cms/EditableText";
 
 type MobileEntry = {
   href: string;
@@ -121,7 +122,10 @@ export function Navbar() {
                 whiteSpace: "nowrap",
               }}
             >
-              {t("nav.orgFullName")}
+              <EditableText
+                elementId="nav.orgFullName"
+                defaultValue={t("nav.orgFullName")}
+              />
             </span>
           </span>
         </Link>
@@ -157,7 +161,10 @@ export function Navbar() {
                     whiteSpace: "nowrap",
                   }}
                 >
-                  {t(group.labelKey as Parameters<typeof t>[0])}
+                  <EditableText
+                    elementId={group.labelKey}
+                    defaultValue={t(group.labelKey as Parameters<typeof t>[0])}
+                  />
                   {active ? (
                     <span
                       style={{
@@ -200,7 +207,7 @@ export function Navbar() {
             className="btn btn-teal btn-sm"
             style={{ whiteSpace: "nowrap" }}
           >
-            {t("nav.donate")}
+            <EditableText elementId="nav.donate" defaultValue={t("nav.donate")} />
           </Link>
         </div>
 
@@ -281,7 +288,10 @@ export function Navbar() {
                         color: "rgb(var(--ink-faint))",
                       }}
                     >
-                      {t(entry.labelKey as Parameters<typeof t>[0])}
+                      <EditableText
+                        elementId={entry.labelKey}
+                        defaultValue={t(entry.labelKey as Parameters<typeof t>[0])}
+                      />
                     </div>
                   );
                 }
@@ -303,7 +313,10 @@ export function Navbar() {
                       borderBottom: "1px solid rgb(var(--border) / 0.6)",
                     }}
                   >
-                    {t(entry.labelKey as Parameters<typeof t>[0])}
+                    <EditableText
+                      elementId={entry.labelKey}
+                      defaultValue={t(entry.labelKey as Parameters<typeof t>[0])}
+                    />
                   </Link>
                 );
               })}
@@ -320,7 +333,10 @@ export function Navbar() {
               >
                 <LanguageSwitcher variant="chips" />
                 <Button href="/donate" variant="teal" size="sm">
-                  {t("nav.donate")}
+                  <EditableText
+                    elementId="nav.donateMobile"
+                    defaultValue={t("nav.donate")}
+                  />
                 </Button>
               </div>
             </nav>

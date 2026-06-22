@@ -5,6 +5,7 @@ import { ArrowRight, Youtube } from "lucide-react";
 import { motion } from "motion/react";
 import { Button, Parallax } from "@/components/ui";
 import { useT } from "@/components/providers/LanguageProvider";
+import { EditableText } from "@/components/cms/EditableText";
 
 /* ============================================================
    BentoHero — centered serif headline + bento grid of tiles.
@@ -67,7 +68,16 @@ export function BentoHero() {
               color: "rgb(var(--brand))",
             }}
           >
-            6+ {t("common.sectionLanguages")} · {t("common.tagWordAtWork")}
+            6+{" "}
+            <EditableText
+              elementId="common.sectionLanguages"
+              defaultValue={t("common.sectionLanguages")}
+            />{" "}
+            ·{" "}
+            <EditableText
+              elementId="common.tagWordAtWork"
+              defaultValue={t("common.tagWordAtWork")}
+            />
           </motion.span>
 
           <motion.h1
@@ -82,7 +92,10 @@ export function BentoHero() {
               letterSpacing: "-0.022em",
             }}
           >
-            {t("home.heroTitlePart1")}{" "}
+            <EditableText
+              elementId="home.heroTitlePart1"
+              defaultValue={t("home.heroTitlePart1")}
+            />{" "}
             <em
               style={{
                 color: "rgb(var(--brand))",
@@ -91,9 +104,15 @@ export function BentoHero() {
                 display: "inline",
               }}
             >
-              {t("home.heroTitleEm")}
+              <EditableText
+                elementId="home.heroTitleEm"
+                defaultValue={t("home.heroTitleEm")}
+              />
             </em>{" "}
-            {t("home.heroTitlePart2")}
+            <EditableText
+              elementId="home.heroTitlePart2"
+              defaultValue={t("home.heroTitlePart2")}
+            />
           </motion.h1>
 
           <motion.p
@@ -107,7 +126,11 @@ export function BentoHero() {
               marginInline: "auto",
             }}
           >
-            {t("home.whatWeDoBody")}
+            <EditableText
+              elementId="home.whatWeDoBody"
+              defaultValue={t("home.whatWeDoBody")}
+              multiline
+            />
           </motion.p>
 
           <motion.div
@@ -123,14 +146,22 @@ export function BentoHero() {
             }}
           >
             <Button href="/donate" variant="dark" size="lg">
-              {t("home.heroCtaPrimary")} <ArrowRight size={15} />
+              <EditableText
+                elementId="home.heroCtaPrimary"
+                defaultValue={t("home.heroCtaPrimary")}
+              />{" "}
+              <ArrowRight size={15} />
             </Button>
             <Link
               href="/podcast"
               className="btn btn-secondary btn-lg"
               style={{ borderColor: "rgb(var(--border-strong))" }}
             >
-              <Youtube size={15} /> {t("home.heroCtaSecondary")}
+              <Youtube size={15} />{" "}
+              <EditableText
+                elementId="home.heroCtaSecondary"
+                defaultValue={t("home.heroCtaSecondary")}
+              />
             </Link>
           </motion.div>
         </div>
@@ -147,7 +178,14 @@ export function BentoHero() {
             delay={0.34}
             tile="rose"
           >
-            <RoseTile sealLabel={t("home.bentoSeal")} />
+            <RoseTile
+              sealLabel={
+                <EditableText
+                  elementId="home.bentoSeal"
+                  defaultValue={t("home.bentoSeal")}
+                />
+              }
+            />
           </Tile>
 
           {/* TILE: bilingual quote card — crimson */}
@@ -161,9 +199,24 @@ export function BentoHero() {
             tile="quote"
           >
             <QuoteTile
-              line1={t("home.bentoLine1")}
-              line2={t("home.bentoLine2")}
-              line3={t("home.bentoLine3")}
+              line1={
+                <EditableText
+                  elementId="home.bentoLine1"
+                  defaultValue={t("home.bentoLine1")}
+                />
+              }
+              line2={
+                <EditableText
+                  elementId="home.bentoLine2"
+                  defaultValue={t("home.bentoLine2")}
+                />
+              }
+              line3={
+                <EditableText
+                  elementId="home.bentoLine3"
+                  defaultValue={t("home.bentoLine3")}
+                />
+              }
               tone="light"
             />
           </Tile>
@@ -179,7 +232,15 @@ export function BentoHero() {
             delay={0.46}
             tile="stat"
           >
-            <MiniStat value="42k+" label={t("home.bentoBooksLabel")} />
+            <MiniStat
+              value="42k+"
+              label={
+                <EditableText
+                  elementId="home.bentoBooksLabel"
+                  defaultValue={t("home.bentoBooksLabel")}
+                />
+              }
+            />
           </Tile>
 
           {/* TILE: Sola Scriptura — navy */}
@@ -193,8 +254,18 @@ export function BentoHero() {
             tile="sola"
           >
             <QuoteTile
-              line1={t("home.bentoSolaLine1")}
-              line2={t("home.bentoSolaLine2")}
+              line1={
+                <EditableText
+                  elementId="home.bentoSolaLine1"
+                  defaultValue={t("home.bentoSolaLine1")}
+                />
+              }
+              line2={
+                <EditableText
+                  elementId="home.bentoSolaLine2"
+                  defaultValue={t("home.bentoSolaLine2")}
+                />
+              }
               tone="light"
               serif
             />
@@ -211,8 +282,19 @@ export function BentoHero() {
             tile="ethiopia"
           >
             <EthiopiaTile
-              heartLangsLabel={t("home.bentoHeartLangsLabel")}
-              langList={t("home.bentoLangList")}
+              heartLangsLabel={
+                <EditableText
+                  elementId="home.bentoHeartLangsLabel"
+                  defaultValue={t("home.bentoHeartLangsLabel")}
+                />
+              }
+              langList={
+                <EditableText
+                  elementId="home.bentoLangList"
+                  defaultValue={t("home.bentoLangList")}
+                  multiline
+                />
+              }
             />
           </Tile>
         </div>
@@ -318,9 +400,9 @@ function QuoteTile({
   tone = "light",
   serif = false,
 }: {
-  line1: string;
-  line2?: string;
-  line3?: string;
+  line1: React.ReactNode;
+  line2?: React.ReactNode;
+  line3?: React.ReactNode;
   tone?: "light" | "dark";
   serif?: boolean;
 }) {
@@ -342,7 +424,7 @@ function QuoteTile({
   );
 }
 
-function MiniStat({ value, label }: { value: string; label: string }) {
+function MiniStat({ value, label }: { value: string; label: React.ReactNode }) {
   return (
     <>
       <div
@@ -372,7 +454,7 @@ function MiniStat({ value, label }: { value: string; label: string }) {
   );
 }
 
-function RoseTile({ sealLabel }: { sealLabel: string }) {
+function RoseTile({ sealLabel }: { sealLabel: React.ReactNode }) {
   return (
     <div
       style={{
@@ -427,8 +509,8 @@ function EthiopiaTile({
   heartLangsLabel,
   langList,
 }: {
-  heartLangsLabel: string;
-  langList: string;
+  heartLangsLabel: React.ReactNode;
+  langList: React.ReactNode;
 }) {
   return (
     <div
