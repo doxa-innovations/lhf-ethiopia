@@ -4,21 +4,27 @@
  */
 import Link from "next/link";
 import { db, schema } from "@/lib/db";
+import { withDbRetry } from "@/lib/db-retry";
 import { sql } from "drizzle-orm";
 
 async function getCounts() {
   const t = schema;
-  const [n, p, e, pubs, vals, ss, ep, langs, cms] = await Promise.all([
-    db.select({ c: sql<number>`count(*)` }).from(t.news),
-    db.select({ c: sql<number>`count(*)` }).from(t.projects),
-    db.select({ c: sql<number>`count(*)` }).from(t.events),
-    db.select({ c: sql<number>`count(*)` }).from(t.publications),
-    db.select({ c: sql<number>`count(*)` }).from(t.values),
-    db.select({ c: sql<number>`count(*)` }).from(t.stories),
-    db.select({ c: sql<number>`count(*)` }).from(t.podcastEpisodes),
-    db.select({ c: sql<number>`count(*)` }).from(t.languages),
-    db.select({ c: sql<number>`count(*)` }).from(t.cmsElements),
-  ]);
+  // Wrapped in withDbRetry so a stale pooled connection (Neon idle
+  // timeout, network blip) gets one transparent retry before bubbling
+  // an error up to the user.
+  const [n, p, e, pubs, vals, ss, ep, langs, cms] = await withDbRetry(() =>
+    Promise.all([
+      db.select({ c: sql<number>`count(*)` }).from(t.news),
+      db.select({ c: sql<number>`count(*)` }).from(t.projects),
+      db.select({ c: sql<number>`count(*)` }).from(t.events),
+      db.select({ c: sql<number>`count(*)` }).from(t.publications),
+      db.select({ c: sql<number>`count(*)` }).from(t.values),
+      db.select({ c: sql<number>`count(*)` }).from(t.stories),
+      db.select({ c: sql<number>`count(*)` }).from(t.podcastEpisodes),
+      db.select({ c: sql<number>`count(*)` }).from(t.languages),
+      db.select({ c: sql<number>`count(*)` }).from(t.cmsElements),
+    ]),
+  );
   return {
     news: Number(n[0]?.c ?? 0),
     projects: Number(p[0]?.c ?? 0),

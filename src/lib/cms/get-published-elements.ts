@@ -1,6 +1,7 @@
 import "server-only";
 import { eq } from "drizzle-orm";
 import { db, schema } from "@/lib/db";
+import { withDbRetry } from "@/lib/db-retry";
 import type { Locale } from "@/lib/i18n/dictionary";
 
 export type PublishedElements = Record<Locale, Record<string, string>>;
@@ -12,14 +13,16 @@ export type PublishedElements = Record<Locale, Record<string, string>>;
  * round-trip.
  */
 export async function getPublishedElements(): Promise<PublishedElements> {
-  const rows = await db
-    .select({
-      elementId: schema.cmsElements.elementId,
-      locale: schema.cmsElements.locale,
-      content: schema.cmsElements.content,
-    })
-    .from(schema.cmsElements)
-    .where(eq(schema.cmsElements.isPublished, 1));
+  const rows = await withDbRetry(() =>
+    db
+      .select({
+        elementId: schema.cmsElements.elementId,
+        locale: schema.cmsElements.locale,
+        content: schema.cmsElements.content,
+      })
+      .from(schema.cmsElements)
+      .where(eq(schema.cmsElements.isPublished, 1)),
+  );
 
   const out: PublishedElements = { en: {}, am: {}, om: {} };
   for (const r of rows) {

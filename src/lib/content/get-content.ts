@@ -1,6 +1,7 @@
 import "server-only";
 import { and, eq } from "drizzle-orm";
 import { db, schema } from "@/lib/db";
+import { withDbRetry } from "@/lib/db-retry";
 import type { Locale } from "@/lib/i18n/dictionary";
 import type { LocalizedContent } from "@/lib/i18n/content-types";
 
@@ -21,7 +22,7 @@ async function fetchLocale(locale: Locale): Promise<LocalizedContent> {
     storyRows,
     eventRows,
     episodeRows,
-  ] = await Promise.all([
+  ] = await withDbRetry(() => Promise.all([
     db
       .select({
         code: schema.languages.code,
@@ -171,7 +172,7 @@ async function fetchLocale(locale: Locale): Promise<LocalizedContent> {
         ),
       )
       .where(eq(schema.podcastEpisodes.isPublished, 1)),
-  ]);
+  ]));
 
   return {
     languages: langRows
