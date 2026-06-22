@@ -8,6 +8,8 @@ import { LanguagePromptModal } from "@/components/providers/LanguagePromptModal"
 import { MotionProvider } from "@/components/providers/MotionProvider";
 import { ContentProvider } from "@/components/providers/ContentProvider";
 import { getAllLocalesContent } from "@/lib/content/get-content";
+import { PublishedElementsProvider } from "@/components/cms/PublishedElementsProvider";
+import { getPublishedElements } from "@/lib/cms/get-published-elements";
 import { SITE } from "@/lib/content";
 
 /*
@@ -139,7 +141,10 @@ const WEBSITE_LD = {
 };
 
 export default async function RootLayout({ children }: { children: ReactNode }) {
-  const content = await getAllLocalesContent();
+  const [content, published] = await Promise.all([
+    getAllLocalesContent(),
+    getPublishedElements(),
+  ]);
   return (
     <html lang="en">
       <head>
@@ -170,14 +175,16 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
       </head>
       <body>
         <LanguageProvider>
-          <ContentProvider value={content}>
-            <MotionProvider>
-              <Navbar />
-              <main>{children}</main>
-              <Footer />
-              <LanguagePromptModal />
-            </MotionProvider>
-          </ContentProvider>
+          <PublishedElementsProvider value={published}>
+            <ContentProvider value={content}>
+              <MotionProvider>
+                <Navbar />
+                <main>{children}</main>
+                <Footer />
+                <LanguagePromptModal />
+              </MotionProvider>
+            </ContentProvider>
+          </PublishedElementsProvider>
         </LanguageProvider>
       </body>
     </html>

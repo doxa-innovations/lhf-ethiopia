@@ -6,6 +6,8 @@ import { LanguageProvider } from "@/components/providers/LanguageProvider";
 import { MotionProvider } from "@/components/providers/MotionProvider";
 import { ContentProvider } from "@/components/providers/ContentProvider";
 import { getAllLocalesContent } from "@/lib/content/get-content";
+import { PublishedElementsProvider } from "@/components/cms/PublishedElementsProvider";
+import { getPublishedElements } from "@/lib/cms/get-published-elements";
 
 /*
  * Sibling root layout for /admin/edit/*. Mirrors the public (frontend) layout
@@ -18,7 +20,10 @@ export default async function AdminEditLayout({
 }: {
   children: ReactNode;
 }) {
-  const content = await getAllLocalesContent();
+  const [content, published] = await Promise.all([
+    getAllLocalesContent(),
+    getPublishedElements(),
+  ]);
   return (
     <html lang="en">
       <head>
@@ -41,13 +46,15 @@ export default async function AdminEditLayout({
       </head>
       <body>
         <LanguageProvider>
-          <ContentProvider value={content}>
-            <MotionProvider>
-              <Navbar />
-              <main>{children}</main>
-              <Footer />
-            </MotionProvider>
-          </ContentProvider>
+          <PublishedElementsProvider value={published}>
+            <ContentProvider value={content}>
+              <MotionProvider>
+                <Navbar />
+                <main>{children}</main>
+                <Footer />
+              </MotionProvider>
+            </ContentProvider>
+          </PublishedElementsProvider>
         </LanguageProvider>
       </body>
     </html>

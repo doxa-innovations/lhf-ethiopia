@@ -3,6 +3,8 @@
 import type { CSSProperties } from "react";
 import TextareaAutosize from "react-textarea-autosize";
 import { useEditor } from "./EditorProvider";
+import { usePublishedElement } from "./PublishedElementsProvider";
+import { useT } from "@/components/providers/LanguageProvider";
 
 type Props = {
   elementId: string;
@@ -36,16 +38,18 @@ export function EditableText({
   maxLength,
 }: Props) {
   const editor = useEditor();
+  const { locale } = useT();
+  const published = usePublishedElement(elementId, locale);
 
   if (!editor || editor.mode === "off") {
     return (
       <As className={className} style={style}>
-        {defaultValue}
+        {published ?? defaultValue}
       </As>
     );
   }
 
-  const value = editor.getValue(elementId, defaultValue);
+  const value = editor.getValue(elementId, published ?? defaultValue);
   const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
     editor.setValue(elementId, e.target.value);
 
