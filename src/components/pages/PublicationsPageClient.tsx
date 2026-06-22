@@ -14,6 +14,7 @@ import {
 } from "@/components/ui";
 import { useT } from "@/components/providers/LanguageProvider";
 import { useContent } from "@/lib/i18n/useContent";
+import { EditableText } from "@/components/cms/EditableText";
 import { PHOTOS } from "@/lib/content";
 
 export function PublicationsPageClient() {
@@ -25,10 +26,24 @@ export function PublicationsPageClient() {
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <div className="grid-2" style={{ gap: 48, alignItems: "center" }}>
             <Reveal>
-              <span className="section-label">{t("publications.label")}</span>
-              <h1 className="text-display">{t("publications.title")}</h1>
+              <span className="section-label">
+                <EditableText
+                  elementId="publications.label"
+                  defaultValue={t("publications.label")}
+                />
+              </span>
+              <h1 className="text-display">
+                <EditableText
+                  elementId="publications.title"
+                  defaultValue={t("publications.title")}
+                />
+              </h1>
               <p className="text-body-lg" style={{ marginTop: 16, maxWidth: 560 }}>
-                {t("publications.intro")}
+                <EditableText
+                  elementId="publications.intro"
+                  defaultValue={t("publications.intro")}
+                  multiline
+                />
               </p>
             </Reveal>
             <Reveal direction="left">
@@ -51,8 +66,18 @@ export function PublicationsPageClient() {
       <section className="section">
         <div className="container">
           <Reveal>
-            <span className="section-label">{t("common.sectionLanguages")}</span>
-            <h2 className="text-h1">{t("publications.heartLanguagesTitle")}</h2>
+            <span className="section-label">
+              <EditableText
+                elementId="common.sectionLanguages"
+                defaultValue={t("common.sectionLanguages")}
+              />
+            </span>
+            <h2 className="text-h1">
+              <EditableText
+                elementId="publications.heartLanguagesTitle"
+                defaultValue={t("publications.heartLanguagesTitle")}
+              />
+            </h2>
           </Reveal>
           <StaggerChildren className="grid-3" style={{ marginTop: 32 }}>
             {languages.map((lang) => (
@@ -111,8 +136,18 @@ export function PublicationsPageClient() {
       <section className="section section-soft">
         <div className="container">
           <Reveal>
-            <span className="section-label">{t("publications.catalogLabel")}</span>
-            <h2 className="text-h1">{t("publications.catalogTitle")}</h2>
+            <span className="section-label">
+              <EditableText
+                elementId="publications.catalogLabel"
+                defaultValue={t("publications.catalogLabel")}
+              />
+            </span>
+            <h2 className="text-h1">
+              <EditableText
+                elementId="publications.catalogTitle"
+                defaultValue={t("publications.catalogTitle")}
+              />
+            </h2>
           </Reveal>
 
           <Reveal delay={0.1}>
@@ -140,10 +175,30 @@ export function PublicationsPageClient() {
                 }}
                 className="pub-row pub-header"
               >
-                <span>{t("publications.colTitle")}</span>
-                <span>{t("publications.colLanguage")}</span>
-                <span>{t("publications.colAudience")}</span>
-                <span style={{ textAlign: "right" }}>{t("publications.colStatus")}</span>
+                <span>
+                  <EditableText
+                    elementId="publications.colTitle"
+                    defaultValue={t("publications.colTitle")}
+                  />
+                </span>
+                <span>
+                  <EditableText
+                    elementId="publications.colLanguage"
+                    defaultValue={t("publications.colLanguage")}
+                  />
+                </span>
+                <span>
+                  <EditableText
+                    elementId="publications.colAudience"
+                    defaultValue={t("publications.colAudience")}
+                  />
+                </span>
+                <span style={{ textAlign: "right" }}>
+                  <EditableText
+                    elementId="publications.colStatus"
+                    defaultValue={t("publications.colStatus")}
+                  />
+                </span>
               </div>
 
               {publications.map((pub) => (
@@ -177,7 +232,11 @@ export function PublicationsPageClient() {
                     <div style={{ minWidth: 0 }}>
                       <div style={{ fontWeight: 600, color: "rgb(var(--ink))", overflowWrap: "anywhere" }}>{pub.title}</div>
                       <div style={{ fontSize: 12.5, color: "rgb(var(--ink-faint))", marginTop: 2, overflowWrap: "anywhere" }}>
-                        {pub.native} · {pub.pages} {t("publications.pagesLabel")}
+                        {pub.native} · {pub.pages}{" "}
+                        <EditableText
+                          elementId="publications.pagesLabel"
+                          defaultValue={t("publications.pagesLabel")}
+                        />
                       </div>
                     </div>
                   </div>
@@ -202,7 +261,11 @@ export function PublicationsPageClient() {
           </Reveal>
 
           <p style={{ marginTop: 16, fontSize: 12.5, color: "rgb(var(--ink-faint))" }}>
-            {t("publications.noteFree")}
+            <EditableText
+              elementId="publications.noteFree"
+              defaultValue={t("publications.noteFree")}
+              multiline
+            />
           </p>
         </div>
 
@@ -217,19 +280,36 @@ export function PublicationsPageClient() {
       <section className="section section-navy-deep">
         <div className="container" style={{ textAlign: "center" }}>
           <Reveal>
-            <h2 className="text-h1">{t("publications.missingLanguageTitle")}</h2>
+            <h2 className="text-h1">
+              <EditableText
+                elementId="publications.missingLanguageTitle"
+                defaultValue={t("publications.missingLanguageTitle")}
+              />
+            </h2>
             <p className="text-body-lg" style={{ marginTop: 12, maxWidth: 560, marginInline: "auto" }}>
-              {t("publications.missingLanguageBody")}
+              <EditableText
+                elementId="publications.missingLanguageBody"
+                defaultValue={t("publications.missingLanguageBody")}
+                multiline
+              />
             </p>
           </Reveal>
           <div style={{ marginTop: 28, display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
-            <Button href="/contact" variant="primary">{t("common.requestLanguage")}</Button>
+            <Button href="/contact" variant="primary">
+              <EditableText
+                elementId="common.requestLanguage"
+                defaultValue={t("common.requestLanguage")}
+              />
+            </Button>
             <Button
               href="/projects"
               variant="secondary"
               style={{ background: "transparent", color: "white", borderColor: "rgba(255,255,255,0.32)" }}
             >
-              {t("common.adoptTranslation")}
+              <EditableText
+                elementId="common.adoptTranslation"
+                defaultValue={t("common.adoptTranslation")}
+              />
             </Button>
           </div>
         </div>

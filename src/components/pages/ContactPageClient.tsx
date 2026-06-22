@@ -12,6 +12,7 @@ import {
 } from "@/components/ui";
 import { useT } from "@/components/providers/LanguageProvider";
 import { SITE } from "@/lib/content";
+import { EditableText } from "@/components/cms/EditableText";
 
 export function ContactPageClient() {
   const { t } = useT();
@@ -20,10 +21,14 @@ export function ContactPageClient() {
       <section className="subhero">
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <Reveal>
-            <span className="section-label">{t("contact.label")}</span>
-            <h1 className="text-display">{t("contact.title")}</h1>
+            <span className="section-label">
+              <EditableText elementId="contact.label" defaultValue={t("contact.label")} />
+            </span>
+            <h1 className="text-display">
+              <EditableText elementId="contact.title" defaultValue={t("contact.title")} />
+            </h1>
             <p className="text-body-lg" style={{ marginTop: 16, maxWidth: 680 }}>
-              {t("contact.intro")}
+              <EditableText elementId="contact.intro" defaultValue={t("contact.intro")} multiline />
             </p>
           </Reveal>
         </div>
@@ -35,7 +40,9 @@ export function ContactPageClient() {
             <Reveal>
               <Card>
                 <CardBody>
-                  <h2 className="text-h2">{t("contact.formTitle")}</h2>
+                  <h2 className="text-h2">
+                    <EditableText elementId="contact.formTitle" defaultValue={t("contact.formTitle")} />
+                  </h2>
                   <form style={{ marginTop: 18, display: "grid", gap: 14 }}>
                     <div className="form-row" style={{ display: "grid", gridTemplateColumns: "1fr", gap: 12 }}>
                       <Field label={t("contact.nameLabel")} htmlFor="name">
@@ -62,7 +69,9 @@ export function ContactPageClient() {
                     <Field label={t("contact.messageLabel")} htmlFor="message">
                       <Textarea id="message" name="message" rows={5} placeholder="Tell us about your parish, what books you need, and how many." required />
                     </Field>
-                    <Button variant="primary" size="lg" type="submit">{t("contact.submitCta")}</Button>
+                    <Button variant="primary" size="lg" type="submit">
+                      <EditableText elementId="contact.submitCta" defaultValue={t("contact.submitCta")} />
+                    </Button>
                   </form>
                 </CardBody>
               </Card>
@@ -72,7 +81,9 @@ export function ContactPageClient() {
               <Reveal delay={0.1}>
                 <Card>
                   <CardBody>
-                    <h3 className="text-h3">{t("contact.officeTitle")}</h3>
+                    <h3 className="text-h3">
+                      <EditableText elementId="contact.officeTitle" defaultValue={t("contact.officeTitle")} />
+                    </h3>
                     <ul style={{ marginTop: 14, listStyle: "none", display: "grid", gap: 12 }}>
                       <Item icon={<MapPin size={16} />}>{SITE.address}</Item>
                       <Item icon={<Phone size={16} />}>
@@ -89,9 +100,11 @@ export function ContactPageClient() {
               <Reveal delay={0.15}>
                 <Card>
                   <CardBody>
-                    <h3 className="text-h3">{t("contact.hoursTitle")}</h3>
+                    <h3 className="text-h3">
+                      <EditableText elementId="contact.hoursTitle" defaultValue={t("contact.hoursTitle")} />
+                    </h3>
                     <div style={{ marginTop: 12, fontSize: 13.5, color: "rgb(var(--ink-muted))", lineHeight: 1.7, whiteSpace: "pre-line" }}>
-                      {t("contact.hours")}
+                      <EditableText elementId="contact.hours" defaultValue={t("contact.hours")} multiline />
                     </div>
                   </CardBody>
                 </Card>
@@ -100,7 +113,9 @@ export function ContactPageClient() {
               <Reveal delay={0.2}>
                 <Card>
                   <CardBody>
-                    <h3 className="text-h3">{t("contact.parentTitle")}</h3>
+                    <h3 className="text-h3">
+                      <EditableText elementId="contact.parentTitle" defaultValue={t("contact.parentTitle")} />
+                    </h3>
                     <p style={{ marginTop: 10, fontSize: 13.5, color: "rgb(var(--ink-muted))", lineHeight: 1.6 }}>
                       Lutheran Heritage Foundation · 51474 Romeo Plank, Macomb, MI 48042, USA ·{" "}
                       <a href="https://lhfmissions.org" style={{ color: "rgb(var(--brand))", fontWeight: 600 }}>lhfmissions.org</a>

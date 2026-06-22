@@ -17,6 +17,7 @@ import {
 } from "@/components/ui";
 import { useT } from "@/components/providers/LanguageProvider";
 import { useContent } from "@/lib/i18n/useContent";
+import { EditableText } from "@/components/cms/EditableText";
 import { PHOTOS, formatUsd } from "@/lib/content";
 
 if (typeof window !== "undefined") {
@@ -86,14 +87,38 @@ export function ProjectsPageClient() {
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <div className="grid-2" style={{ gap: 48, alignItems: "center" }}>
             <Reveal>
-              <span className="section-label">{t("projects.label")}</span>
-              <h1 className="text-display">{t("projects.title")}</h1>
+              <span className="section-label">
+                <EditableText
+                  elementId="projects.label"
+                  defaultValue={t("projects.label")}
+                />
+              </span>
+              <h1 className="text-display">
+                <EditableText
+                  elementId="projects.title"
+                  defaultValue={t("projects.title")}
+                />
+              </h1>
               <p className="text-body-lg" style={{ marginTop: 16, maxWidth: 560 }}>
-                {t("projects.intro")}
+                <EditableText
+                  elementId="projects.intro"
+                  defaultValue={t("projects.intro")}
+                  multiline
+                />
               </p>
               <div style={{ marginTop: 24, display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <Button href="/donate" variant="primary">{t("projects.giveCta")}</Button>
-                <Button href="/contact" variant="secondary">{t("projects.sponsorFullCta")}</Button>
+                <Button href="/donate" variant="primary">
+                  <EditableText
+                    elementId="projects.giveCta"
+                    defaultValue={t("projects.giveCta")}
+                  />
+                </Button>
+                <Button href="/contact" variant="secondary">
+                  <EditableText
+                    elementId="projects.sponsorFullCta"
+                    defaultValue={t("projects.sponsorFullCta")}
+                  />
+                </Button>
               </div>
             </Reveal>
             <Reveal direction="left">
@@ -123,17 +148,34 @@ export function ProjectsPageClient() {
                       <div className="project-row" style={{ display: "grid", gridTemplateColumns: "1fr", gap: 20 }}>
                         <div>
                           <div style={{ display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
-                            <Badge>{t("common.open")}</Badge>
+                            <Badge>
+                              <EditableText
+                                elementId="common.open"
+                                defaultValue={t("common.open")}
+                              />
+                            </Badge>
                             <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 13, color: "rgb(var(--ink-faint))" }}>
                               <MapPin size={14} /> {p.region}
                             </span>
                           </div>
                           <h3 className="text-h2" style={{ marginTop: 14 }}>{p.title}</h3>
                           <p className="text-body" style={{ marginTop: 12 }}>
-                            <strong style={{ color: "rgb(var(--ink))" }}>{t("projects.need")}</strong> {p.need}
+                            <strong style={{ color: "rgb(var(--ink))" }}>
+                              <EditableText
+                                elementId="projects.need"
+                                defaultValue={t("projects.need")}
+                              />
+                            </strong>{" "}
+                            {p.need}
                           </p>
                           <p className="text-body" style={{ marginTop: 8 }}>
-                            <strong style={{ color: "rgb(var(--ink))" }}>{t("projects.impact")}</strong> {p.impact}
+                            <strong style={{ color: "rgb(var(--ink))" }}>
+                              <EditableText
+                                elementId="projects.impact"
+                                defaultValue={t("projects.impact")}
+                              />
+                            </strong>{" "}
+                            {p.impact}
                           </p>
                         </div>
 
@@ -148,7 +190,11 @@ export function ProjectsPageClient() {
                             </div>
                           </div>
                           <Link href="/donate" className="btn btn-primary" style={{ width: "100%" }}>
-                            <HandHeart size={16} /> {t("common.sponsorProject")}
+                            <HandHeart size={16} />{" "}
+                            <EditableText
+                              elementId="common.sponsorProject"
+                              defaultValue={t("common.sponsorProject")}
+                            />
                           </Link>
                         </div>
                       </div>

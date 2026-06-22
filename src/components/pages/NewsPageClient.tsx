@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Badge, Reveal, SafeImage } from "@/components/ui";
 import { useT } from "@/components/providers/LanguageProvider";
 import { useContent, type LocalizedContent } from "@/lib/i18n/useContent";
+import { EditableText } from "@/components/cms/EditableText";
 
 type Article = LocalizedContent["news"][number];
 
@@ -23,10 +24,24 @@ export function NewsPageClient() {
       <section className="subhero">
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <Reveal>
-            <span className="section-label">{t("news.label")}</span>
-            <h1 className="text-display">{t("news.title")}</h1>
+            <span className="section-label">
+              <EditableText
+                elementId="news.label"
+                defaultValue={t("news.label")}
+              />
+            </span>
+            <h1 className="text-display">
+              <EditableText
+                elementId="news.title"
+                defaultValue={t("news.title")}
+              />
+            </h1>
             <p className="text-body-lg" style={{ marginTop: 16, maxWidth: 680 }}>
-              {t("news.intro")}
+              <EditableText
+                elementId="news.intro"
+                defaultValue={t("news.intro")}
+                multiline
+              />
             </p>
           </Reveal>
         </div>

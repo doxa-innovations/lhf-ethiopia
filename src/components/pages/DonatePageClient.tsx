@@ -14,14 +14,15 @@ import {
 import { AllocationDonut } from "@/components/marketing/AllocationDonut";
 import { useT } from "@/components/providers/LanguageProvider";
 import { SITE } from "@/lib/content";
+import { EditableText } from "@/components/cms/EditableText";
 
 export function DonatePageClient() {
   const { t } = useT();
   const AMOUNTS = [
-    { value: 7, label: "$7", caption: t("donate.amountLabel1") },
-    { value: 35, label: "$35", caption: t("donate.amountLabel2") },
-    { value: 120, label: "$120", caption: t("donate.amountLabel3") },
-    { value: 500, label: "$500", caption: t("donate.amountLabel4") },
+    { value: 7, label: "$7", captionKey: "donate.amountLabel1", caption: t("donate.amountLabel1") },
+    { value: 35, label: "$35", captionKey: "donate.amountLabel2", caption: t("donate.amountLabel2") },
+    { value: 120, label: "$120", captionKey: "donate.amountLabel3", caption: t("donate.amountLabel3") },
+    { value: 500, label: "$500", captionKey: "donate.amountLabel4", caption: t("donate.amountLabel4") },
   ];
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   return (
@@ -29,10 +30,14 @@ export function DonatePageClient() {
       <section className="subhero">
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <Reveal>
-            <span className="section-label">{t("donate.label")}</span>
-            <h1 className="text-display">{t("donate.title")}</h1>
+            <span className="section-label">
+              <EditableText elementId="donate.label" defaultValue={t("donate.label")} />
+            </span>
+            <h1 className="text-display">
+              <EditableText elementId="donate.title" defaultValue={t("donate.title")} />
+            </h1>
             <p className="text-body-lg" style={{ marginTop: 16, maxWidth: 700 }}>
-              {t("donate.intro")}
+              <EditableText elementId="donate.intro" defaultValue={t("donate.intro")} multiline />
             </p>
           </Reveal>
         </div>
@@ -44,8 +49,12 @@ export function DonatePageClient() {
             <Reveal>
               <Card>
                 <CardBody>
-                  <h2 className="text-h2">{t("donate.makeGiftTitle")}</h2>
-                  <p className="text-body" style={{ marginTop: 8 }}>{t("donate.makeGiftBody")}</p>
+                  <h2 className="text-h2">
+                    <EditableText elementId="donate.makeGiftTitle" defaultValue={t("donate.makeGiftTitle")} />
+                  </h2>
+                  <p className="text-body" style={{ marginTop: 8 }}>
+                    <EditableText elementId="donate.makeGiftBody" defaultValue={t("donate.makeGiftBody")} multiline />
+                  </p>
 
                   <div className="amount-grid" style={{ marginTop: 22, display: "grid", gridTemplateColumns: "repeat(2, 1fr)", gap: 10 }}>
                     {AMOUNTS.map((a) => {
@@ -68,7 +77,9 @@ export function DonatePageClient() {
                           }}
                         >
                           <div className="font-display" style={{ fontSize: 22, fontWeight: 500, color: "rgb(var(--brand))", letterSpacing: "-0.02em" }}>{a.label}</div>
-                          <div style={{ fontSize: 12, color: "rgb(var(--ink-faint))", marginTop: 4 }}>{a.caption}</div>
+                          <div style={{ fontSize: 12, color: "rgb(var(--ink-faint))", marginTop: 4 }}>
+                            <EditableText elementId={a.captionKey} defaultValue={a.caption} />
+                          </div>
                         </button>
                       );
                     })}
@@ -92,8 +103,12 @@ export function DonatePageClient() {
                     <Field label={t("donate.noteLabel")} htmlFor="note">
                       <Textarea id="note" name="note" rows={3} placeholder="Anything we should know?" />
                     </Field>
-                    <Button variant="primary" size="lg" type="submit">{t("donate.submitCta")}</Button>
-                    <p style={{ fontSize: 12, color: "rgb(var(--ink-faint))", textAlign: "center" }}>{t("donate.taxNote")}</p>
+                    <Button variant="primary" size="lg" type="submit">
+                      <EditableText elementId="donate.submitCta" defaultValue={t("donate.submitCta")} />
+                    </Button>
+                    <p style={{ fontSize: 12, color: "rgb(var(--ink-faint))", textAlign: "center" }}>
+                      <EditableText elementId="donate.taxNote" defaultValue={t("donate.taxNote")} multiline />
+                    </p>
                   </form>
                 </CardBody>
               </Card>
@@ -103,16 +118,40 @@ export function DonatePageClient() {
               <Reveal delay={0.1}>
                 <Card>
                   <CardBody>
-                    <h3 className="text-h3">{t("donate.allocationTitle")}</h3>
-                    <p className="text-caption" style={{ marginTop: 4 }}>{t("donate.allocationCaption")}</p>
+                    <h3 className="text-h3">
+                      <EditableText elementId="donate.allocationTitle" defaultValue={t("donate.allocationTitle")} />
+                    </h3>
+                    <p className="text-caption" style={{ marginTop: 4 }}>
+                      <EditableText elementId="donate.allocationCaption" defaultValue={t("donate.allocationCaption")} multiline />
+                    </p>
                     <div style={{ marginTop: 8 }}>
                       <AllocationDonut height={280} />
                     </div>
                     <ul style={{ marginTop: 6, display: "grid", gap: 10, listStyle: "none", fontSize: 13 }}>
-                      <Legend icon={<Truck size={14} />} label={t("donate.allocPrinting")} pct={42} color="rgb(var(--brand))" />
-                      <Legend icon={<BookOpen size={14} />} label={t("donate.allocTranslation")} pct={28} color="rgb(var(--ink))" />
-                      <Legend icon={<Globe2 size={14} />} label={t("donate.allocDistribution")} pct={22} color="rgb(var(--teal))" />
-                      <Legend icon={<ShieldCheck size={14} />} label={t("donate.allocOps")} pct={8} color="rgb(var(--ink-faint))" />
+                      <Legend
+                        icon={<Truck size={14} />}
+                        label={<EditableText elementId="donate.allocPrinting" defaultValue={t("donate.allocPrinting")} />}
+                        pct={42}
+                        color="rgb(var(--brand))"
+                      />
+                      <Legend
+                        icon={<BookOpen size={14} />}
+                        label={<EditableText elementId="donate.allocTranslation" defaultValue={t("donate.allocTranslation")} />}
+                        pct={28}
+                        color="rgb(var(--ink))"
+                      />
+                      <Legend
+                        icon={<Globe2 size={14} />}
+                        label={<EditableText elementId="donate.allocDistribution" defaultValue={t("donate.allocDistribution")} />}
+                        pct={22}
+                        color="rgb(var(--teal))"
+                      />
+                      <Legend
+                        icon={<ShieldCheck size={14} />}
+                        label={<EditableText elementId="donate.allocOps" defaultValue={t("donate.allocOps")} />}
+                        pct={8}
+                        color="rgb(var(--ink-faint))"
+                      />
                     </ul>
                   </CardBody>
                 </Card>
@@ -121,13 +160,17 @@ export function DonatePageClient() {
               <Reveal delay={0.15}>
                 <Card>
                   <CardBody>
-                    <h3 className="text-h3">{t("donate.otherWaysTitle")}</h3>
+                    <h3 className="text-h3">
+                      <EditableText elementId="donate.otherWaysTitle" defaultValue={t("donate.otherWaysTitle")} />
+                    </h3>
                     <div style={{ marginTop: 12, fontSize: 13.5, lineHeight: 1.65, color: "rgb(var(--ink-muted))" }}>
-                      <p>{t("donate.otherWaysMail")}</p>
+                      <p>
+                        <EditableText elementId="donate.otherWaysMail" defaultValue={t("donate.otherWaysMail")} multiline />
+                      </p>
                       <p style={{ marginTop: 10 }}>
-                        {t("donate.otherWaysLocal")}{" "}
+                        <EditableText elementId="donate.otherWaysLocal" defaultValue={t("donate.otherWaysLocal")} />{" "}
                         <a href={`mailto:${SITE.email}`} style={{ color: "rgb(var(--brand))", fontWeight: 600 }}>{SITE.email}</a>{" "}
-                        {t("donate.otherWaysLocalSuffix")}
+                        <EditableText elementId="donate.otherWaysLocalSuffix" defaultValue={t("donate.otherWaysLocalSuffix")} />
                       </p>
                     </div>
                   </CardBody>
@@ -151,7 +194,7 @@ export function DonatePageClient() {
   );
 }
 
-function Legend({ icon, label, pct, color }: { icon: React.ReactNode; label: string; pct: number; color: string }) {
+function Legend({ icon, label, pct, color }: { icon: React.ReactNode; label: React.ReactNode; pct: number; color: string }) {
   return (
     <li style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <span style={{ display: "inline-flex", gap: 10, alignItems: "center", color: "rgb(var(--ink))" }}>

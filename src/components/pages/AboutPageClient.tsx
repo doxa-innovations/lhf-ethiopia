@@ -15,19 +15,31 @@ import { useT } from "@/components/providers/LanguageProvider";
 import { useContent } from "@/lib/i18n/useContent";
 import { PHOTOS } from "@/lib/content";
 import { ValuesAccordion } from "@/components/ui/ValuesAccordion";
+import { EditableText } from "@/components/cms/EditableText";
 
 export function AboutPageClient() {
   const { t } = useT();
   const { values } = useContent();
+  const STATS = [
+    { labelKey: "about.statBooksLabel", value: 42300, suffix: "+", label: t("about.statBooksLabel") },
+    { labelKey: "about.statCongregationsLabel", value: 180, suffix: "", label: t("about.statCongregationsLabel") },
+    { labelKey: "about.statProjectsLabel", value: 12, suffix: "", label: t("about.statProjectsLabel") },
+    { labelKey: "about.statLangsLabel", value: 6, suffix: "", label: t("about.statLangsLabel") },
+    { labelKey: "about.statReviewersLabel", value: 34, suffix: "", label: t("about.statReviewersLabel") },
+  ];
   return (
     <>
       <section className="subhero">
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <Reveal>
-            <span className="section-label">{t("about.label")}</span>
-            <h1 className="text-display">{t("about.title")}</h1>
+            <span className="section-label">
+              <EditableText elementId="about.label" defaultValue={t("about.label")} />
+            </span>
+            <h1 className="text-display">
+              <EditableText elementId="about.title" defaultValue={t("about.title")} />
+            </h1>
             <p className="text-body-lg" style={{ marginTop: 18, maxWidth: 760 }}>
-              {t("about.intro")}
+              <EditableText elementId="about.intro" defaultValue={t("about.intro")} multiline />
             </p>
           </Reveal>
         </div>
@@ -52,11 +64,19 @@ export function AboutPageClient() {
 
             <div>
               <Reveal>
-                <span className="section-label">{t("about.storyLabel")}</span>
-                <h2 className="text-h1">{t("about.storyTitle")}</h2>
+                <span className="section-label">
+                  <EditableText elementId="about.storyLabel" defaultValue={t("about.storyLabel")} />
+                </span>
+                <h2 className="text-h1">
+                  <EditableText elementId="about.storyTitle" defaultValue={t("about.storyTitle")} />
+                </h2>
                 <div style={{ display: "grid", gap: 14, marginTop: 16 }} className="text-body-lg">
-                  <p>{t("about.storyP1")}</p>
-                  <p>{t("about.storyP2")}</p>
+                  <p>
+                    <EditableText elementId="about.storyP1" defaultValue={t("about.storyP1")} multiline />
+                  </p>
+                  <p>
+                    <EditableText elementId="about.storyP2" defaultValue={t("about.storyP2")} multiline />
+                  </p>
                 </div>
               </Reveal>
             </div>
@@ -68,8 +88,12 @@ export function AboutPageClient() {
         <div className="container">
           <Reveal>
             <div style={{ textAlign: "center", maxWidth: 680, marginInline: "auto" }}>
-              <span className="section-label">{t("about.numbersLabel")}</span>
-              <h2 className="text-h1">{t("about.numbersTitle")}</h2>
+              <span className="section-label">
+                <EditableText elementId="about.numbersLabel" defaultValue={t("about.numbersLabel")} />
+              </span>
+              <h2 className="text-h1">
+                <EditableText elementId="about.numbersTitle" defaultValue={t("about.numbersTitle")} />
+              </h2>
             </div>
           </Reveal>
 
@@ -82,14 +106,8 @@ export function AboutPageClient() {
             }}
             className="about-stats"
           >
-            {[
-              { value: 42300, suffix: "+", label: t("about.statBooksLabel") },
-              { value: 180, suffix: "", label: t("about.statCongregationsLabel") },
-              { value: 12, suffix: "", label: t("about.statProjectsLabel") },
-              { value: 6, suffix: "", label: t("about.statLangsLabel") },
-              { value: 34, suffix: "", label: t("about.statReviewersLabel") },
-            ].map((s) => (
-              <StaggerItem key={s.label}>
+            {STATS.map((s) => (
+              <StaggerItem key={s.labelKey}>
                 <Card className="card-flat" style={{ background: "white", height: "100%" }}>
                   <CardBody>
                     <div
@@ -111,7 +129,7 @@ export function AboutPageClient() {
                         lineHeight: 1.4,
                       }}
                     >
-                      {s.label}
+                      <EditableText elementId={s.labelKey} defaultValue={s.label} />
                     </div>
                   </CardBody>
                 </Card>
@@ -130,8 +148,12 @@ export function AboutPageClient() {
         <div className="container">
           <Reveal>
             <div style={{ maxWidth: 680, marginBottom: 28 }}>
-              <span className="section-label">{t("about.convictionsLabel")}</span>
-              <h2 className="text-h1">{t("about.convictionsTitle")}</h2>
+              <span className="section-label">
+                <EditableText elementId="about.convictionsLabel" defaultValue={t("about.convictionsLabel")} />
+              </span>
+              <h2 className="text-h1">
+                <EditableText elementId="about.convictionsTitle" defaultValue={t("about.convictionsTitle")} />
+              </h2>
             </div>
           </Reveal>
           <Reveal delay={0.05}>
@@ -145,17 +167,19 @@ export function AboutPageClient() {
           <Reveal>
             <div className="grid-2" style={{ alignItems: "center" }}>
               <div>
-                <span className="section-label">{t("about.parentLabel")}</span>
+                <span className="section-label">
+                  <EditableText elementId="about.parentLabel" defaultValue={t("about.parentLabel")} />
+                </span>
                 <h2 className="text-h2" style={{ color: "white" }}>
-                  {t("about.parentTitle")}
+                  <EditableText elementId="about.parentTitle" defaultValue={t("about.parentTitle")} />
                 </h2>
                 <p className="text-body" style={{ marginTop: 12, color: "rgba(255,255,255,0.74)" }}>
-                  {t("about.parentBody")}
+                  <EditableText elementId="about.parentBody" defaultValue={t("about.parentBody")} multiline />
                 </p>
               </div>
               <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
                 <Button href="https://lhfmissions.org" variant="primary">
-                  {t("about.visitLhf")}
+                  <EditableText elementId="about.visitLhf" defaultValue={t("about.visitLhf")} />
                 </Button>
                 <Button
                   href="/contact"
@@ -166,7 +190,7 @@ export function AboutPageClient() {
                     borderColor: "rgba(255,255,255,0.32)",
                   }}
                 >
-                  {t("about.getInTouch")}
+                  <EditableText elementId="about.getInTouch" defaultValue={t("about.getInTouch")} />
                 </Button>
               </div>
             </div>

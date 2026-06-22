@@ -15,6 +15,7 @@ import { YouTubeEmbed } from "@/components/podcast/YouTubeEmbed";
 import { useT } from "@/components/providers/LanguageProvider";
 import { useContent } from "@/lib/i18n/useContent";
 import { PHOTOS, PODCAST, PODCAST_EPISODES } from "@/lib/content";
+import { EditableText } from "@/components/cms/EditableText";
 
 export function PodcastPageClient() {
   const { t } = useT();
@@ -61,7 +62,8 @@ export function PodcastPageClient() {
             <div>
               <Reveal>
                 <span className="badge badge-glass" style={{ padding: "5px 12px" }}>
-                  <Youtube size={11} /> {t("podcast.label")}
+                  <Youtube size={11} />{" "}
+                  <EditableText elementId="podcast.label" defaultValue={t("podcast.label")} />
                 </span>
                 <h1 className="text-display" style={{ color: "white", marginTop: 14 }}>
                   {PODCAST.title}
@@ -80,7 +82,8 @@ export function PodcastPageClient() {
                     className="btn btn-sm"
                     style={{ background: "#FF0000", color: "white", borderColor: "#FF0000" }}
                   >
-                    <Youtube size={14} /> {t("common.subscribe")}
+                    <Youtube size={14} />{" "}
+                    <EditableText elementId="common.subscribe" defaultValue={t("common.subscribe")} />
                   </a>
                   {PODCAST.platforms.slice(1).map((p) => (
                     <a
@@ -100,7 +103,7 @@ export function PodcastPageClient() {
                   </div>
                   <div style={{ minWidth: 0 }}>
                     <div style={{ fontSize: 11, fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "rgb(var(--teal-soft))" }}>
-                      {t("podcast.hostedBy")}
+                      <EditableText elementId="podcast.hostedBy" defaultValue={t("podcast.hostedBy")} />
                     </div>
                     <div className="font-display" style={{ fontSize: 16, fontWeight: 500, color: "white", marginTop: 2, lineHeight: 1.2 }}>
                       {PODCAST.host}
@@ -124,10 +127,16 @@ export function PodcastPageClient() {
           <Reveal>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 16, flexWrap: "wrap", marginBottom: 18 }}>
               <div>
-                <span className="section-label">{t("podcast.browseLabel")}</span>
-                <h2 className="text-h1">{t("podcast.browseTitle")}</h2>
+                <span className="section-label">
+                  <EditableText elementId="podcast.browseLabel" defaultValue={t("podcast.browseLabel")} />
+                </span>
+                <h2 className="text-h1">
+                  <EditableText elementId="podcast.browseTitle" defaultValue={t("podcast.browseTitle")} />
+                </h2>
               </div>
-              <Button href="/donate" variant="teal" size="sm">{t("common.sponsorShow")}</Button>
+              <Button href="/donate" variant="teal" size="sm">
+                <EditableText elementId="common.sponsorShow" defaultValue={t("common.sponsorShow")} />
+              </Button>
             </div>
           </Reveal>
 
@@ -142,7 +151,9 @@ export function PodcastPageClient() {
               <Card>
                 <CardBody>
                   <div style={{ display: "flex", gap: 12, marginBottom: 12 }}>
-                    <Badge tone="navy"><Mic size={11} /> {t("podcast.hostBlockTitle")}</Badge>
+                    <Badge tone="navy"><Mic size={11} />{" "}
+                      <EditableText elementId="podcast.hostBlockTitle" defaultValue={t("podcast.hostBlockTitle")} />
+                    </Badge>
                     <Badge tone="cream">{PODCAST.cadence}</Badge>
                   </div>
                   <h3 className="text-h2">{PODCAST.host}</h3>
