@@ -73,14 +73,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_ET",
     alternateLocale: ["am_ET", "om_ET"],
-    images: [
-      {
-        url: "/icon",
-        width: 64,
-        height: 64,
-        alt: "LHF Ethiopia — Luther's Rose",
-      },
-    ],
+    // images intentionally omitted — opengraph-image.tsx (file convention)
+    // emits a 1200x630 social card and is preferred over a small explicit
+    // entry.
   },
   twitter: {
     card: "summary_large_image",

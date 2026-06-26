@@ -37,10 +37,12 @@ Content lives in `src/lib/content.ts` — edit there to update copy, languages, 
 
 ## Brand
 
-- **Primary blue** `#1B3A6B` — LHF heritage, used for buttons and headings on dark sections
-- **Gold** `#E6A817` — Ethiopian-flag-derived accent for CTAs and emphasis (used sparingly)
-- **Green** `#0F8A4C` — confirmation states only
-- **Cream** `#FAF6EE` — page background
-- **Charcoal** `#0E1525` — text
+Tokens defined as R/G/B triplets in `src/app/(frontend)/globals.css` and composed via `rgb(var(--…))` so every value supports alpha at the call site.
 
-A tri-color stripe (Ethiopian flag) appears only in the footer as a decorative accent.
+- **Brand crimson** `#9F1F2A` — chrome, primary CTAs, theme color
+- **Navy** `#1E2A47` — secondary chrome on dark sections, headings
+- **Teal** `#2E8E8E` — accent, confirmation states
+- **Cream** `#F8F6F2` — page background
+- **Charcoal** `#121620` — body text
+
+EB Garamond for headings, Inter for body. A tri-color stripe (Ethiopian flag) appears only in the footer as a decorative accent.
