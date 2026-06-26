@@ -1,142 +1,159 @@
-# LHF Ethiopia — VPS deployment runbook
+# LHF Ethiopia — deploy runbook
 
-The full stack (Next.js + Payload admin + Postgres + Caddy) runs as one
-Docker Compose project on a single Linux VPS.
+Two modes:
 
-## 1. Provision the VPS
+- **Frontend-only** *(current ship target)* — `ENABLE_ADMIN` unset. The
+  public marketing site renders the baked-in `defaultValue` for every
+  `<EditableText>`. No Postgres, no auth, no admin UI. This is what you
+  deploy to Yegara today while the CMS work continues locally.
+- **Full** — `ENABLE_ADMIN=true` plus `DATABASE_URL` + `AUTH_SECRET`.
+  Adds `/admin` and `/admin/edit/*`, NextAuth, edit-in-place CMS,
+  publish workflow.
 
-- Provider: **Hetzner CX22** (€4/mo) in **Frankfurt** for best latency to
-  Ethiopia. DigitalOcean / Linode equivalents work too — 1 GB RAM minimum.
-- Image: **Ubuntu 24.04 LTS**.
-- Add your SSH public key during creation. Open inbound ports **22, 80,
-  443**; close everything else (`ufw allow OpenSSH; ufw allow 80,443/tcp;
-  ufw enable`).
+You can flip from one to the other by changing env vars — no code
+changes needed.
+
+---
+
+## Frontend-only on Yegara
+
+### 1. Provision
+
+- One small Linux VM on Yegara (≥ 1 GB RAM, ≥ 1 vCPU is fine for a
+  marketing site).
+- Ubuntu 22.04 or 24.04 LTS.
+- Open inbound: `22, 80, 443`.
+- A-record: `ethiopia.lhfmissions.org → <vm-ip>` (or interim subdomain
+  while the parent LHF org confirms).
+
+### 2. Install runtime
 
 ```bash
-ssh root@<vps-ip>
-apt update && apt upgrade -y
-curl -fsSL https://get.docker.com | sh
-apt install -y docker-compose-plugin git ufw rclone
-ufw allow OpenSSH && ufw allow 80,443/tcp && ufw --force enable
+ssh ubuntu@<vm-ip>
+sudo apt update && sudo apt -y upgrade
+
+# Node 20 LTS (matches engines in package.json — Node 22/24 also OK)
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt -y install nodejs git nginx
+
+# pm2 to keep `next start` alive across reboots and crashes
+sudo npm i -g pm2
 ```
 
-## 2. DNS
-
-Point an A-record at the VPS public IP:
-- `ethiopia.lhfmissions.org → <vps-ip>` (production)
-- Until that's confirmed with the parent LHF org, use a temporary
-  hostname like `lhf-ethiopia.your-domain.example`.
-
-Caddy auto-issues TLS once the A-record resolves to the VPS IP.
-
-## 3. Clone repo + configure
+### 3. Clone + build
 
 ```bash
-mkdir -p /opt && cd /opt
+sudo mkdir -p /srv && sudo chown ubuntu:ubuntu /srv
+cd /srv
 git clone https://github.com/doxa-innovations/lhf-ethiopia.git
 cd lhf-ethiopia
+npm ci
 
-cp .env.example .env.production
-```
-
-Fill `.env.production` with real values:
-
-```env
+# Frontend-only env — no DB, no auth.
+cat > .env.production <<'EOF'
+NODE_ENV=production
+# Leave ENABLE_ADMIN unset — admin routes will 404.
+# NEXT_PUBLIC_SERVER_URL only matters if you generate canonical links.
 NEXT_PUBLIC_SERVER_URL=https://ethiopia.lhfmissions.org
+EOF
 
-# 32-byte random — generate with `openssl rand -base64 32`
-PAYLOAD_SECRET=...
-
-# Container-local Postgres (recommended); the compose db service uses these.
-DATABASE_URI=postgres://payload:CHANGE_ME@db:5432/payload
-POSTGRES_USER=payload
-POSTGRES_PASSWORD=CHANGE_ME            # match the DATABASE_URI
-POSTGRES_DB=payload
-
-# Cloudflare R2 (required for production media uploads)
-R2_BUCKET=lhf-ethiopia-media
-R2_ENDPOINT=https://<account-id>.r2.cloudflarestorage.com
-R2_REGION=auto
-R2_ACCESS_KEY_ID=...
-R2_SECRET_ACCESS_KEY=...
-R2_PUBLIC_URL=https://media.lhfethiopia.org   # or the direct R2 URL
+npm run build
 ```
 
-## 4. Edit the Caddyfile
-
-Replace the domain in `Caddyfile` with your actual hostname.
-
-## 5. First run
+### 4. Run
 
 ```bash
-docker compose up -d --build
-docker compose logs -f app          # watch the first boot
+pm2 start "npm run start -- --port 3000" --name lhf-ethiopia
+pm2 save
+pm2 startup systemd            # follow the printed command to enable on boot
 ```
 
-The `app` container will:
-1. Connect to `db` (waits for `pg_isready` healthcheck).
-2. Run Payload schema push on first boot — collections + locales + globals
-   get created automatically.
-3. Serve `/` (public site) and `/admin` (Payload admin).
+### 5. Reverse proxy + TLS
 
-## 6. Seed the database
+```nginx
+# /etc/nginx/sites-available/lhf-ethiopia
+server {
+  listen 80;
+  server_name ethiopia.lhfmissions.org;
 
-```bash
-docker compose exec app npm run seed
+  location / {
+    proxy_pass http://127.0.0.1:3000;
+    proxy_http_version 1.1;
+    proxy_set_header Host $host;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+  }
+}
 ```
 
-This populates Languages, Publications, Projects, Events, News, Values,
-Stories, Podcast Episodes, and the SiteSettings global with the content
-from `src/content/{en,am,om}.json` — all three locales in one go.
-
-## 7. Create the first admin user
-
-Visit `https://<your-domain>/admin` — Payload will show the
-"Create First User" form. Fill in name + email + password. After that
-user is created, set their `role` to `admin` (only admins can create
-more users from the UI).
-
-## 8. Smoke test
-
-- Log in to `/admin`, edit a News doc.
-- Toggle the locale dropdown (top of the form) — confirm the Amharic
-  `body` field has the Amharic text from the seed.
-- Visit the public page for that doc, switch the site language to
-  Afaan Oromoo, confirm content updates.
-
-## 9. Nightly backups
-
 ```bash
-crontab -e
-# Add:
-0 2 * * * /opt/lhf-ethiopia/scripts/backup-db.sh >> /var/log/lhf-backup.log 2>&1
+sudo ln -s /etc/nginx/sites-available/lhf-ethiopia /etc/nginx/sites-enabled/
+sudo nginx -t && sudo systemctl reload nginx
+
+# TLS
+sudo apt -y install certbot python3-certbot-nginx
+sudo certbot --nginx -d ethiopia.lhfmissions.org
 ```
 
-R2 lifecycle rule: delete objects older than 30 days. Test restores
-quarterly:
+### 6. Smoke test
+
 ```bash
-docker compose exec -T db psql -U payload payload < <(gunzip < latest.sql.gz)
+curl -I https://ethiopia.lhfmissions.org/             # 200
+curl -I https://ethiopia.lhfmissions.org/about        # 200
+curl -I https://ethiopia.lhfmissions.org/podcast      # 200
+curl -I https://ethiopia.lhfmissions.org/admin        # 404 ← gated
+curl -I https://ethiopia.lhfmissions.org/admin/login  # 404 ← gated
+curl -I https://ethiopia.lhfmissions.org/api/auth/csrf # 404 ← gated
 ```
 
-## 10. Deploying new code
+### 7. Updating
 
 ```bash
-ssh root@<vps-ip>
-cd /opt/lhf-ethiopia
+cd /srv/lhf-ethiopia
 git pull
-docker compose up -d --build app    # rebuild + restart only `app`
+npm ci
+npm run build
+pm2 restart lhf-ethiopia
 ```
 
-Schema changes auto-apply on `app` startup. Content (collections/docs) is
-preserved across rebuilds because it's in the `db` volume.
+---
 
-## Common runbook
+## Flipping on the admin later
 
-| Task | Command |
-|---|---|
-| Tail app logs | `docker compose logs -f app` |
-| Restart everything | `docker compose restart` |
-| Wipe the DB (destructive) | `docker compose exec app npm run migrate:fresh` then `npm run seed` |
-| Add a user | Log in as admin → Site → Users → Create |
-| Rotate `PAYLOAD_SECRET` | Update `.env.production`, restart `app` — all existing admin sessions invalidate |
-| Recover from a bad deploy | `git reset --hard HEAD~1 && docker compose up -d --build app` |
+When the CMS work is ready:
+
+1. Provision Postgres (on the same VM, on the Doxa Postgres host, or
+   keep using Neon temporarily).
+2. Generate a real auth secret: `openssl rand -base64 32`.
+3. Append to `.env.production`:
+   ```env
+   ENABLE_ADMIN=true
+   DATABASE_URL=postgres://user:pass@host:5432/lhf
+   AUTH_SECRET=<the openssl-generated value>
+   NEXTAUTH_URL=https://ethiopia.lhfmissions.org
+   ```
+4. `npm run db:push` (creates `users`, `cms_elements`, `media` tables).
+5. `npm run seed` (creates the admin user + ~750 microcopy rows).
+6. **Rotate the seeded admin password immediately** — log in at
+   `/admin/login` with `admin@lhfethiopia.org / ChangeMe!2026`, then
+   change it at `/admin/account`.
+7. `npm run build && pm2 restart lhf-ethiopia`.
+
+---
+
+## Local development with admin on
+
+```bash
+# .env.local
+DATABASE_URL=postgres://...   # Neon or local Postgres
+AUTH_SECRET=dev-only-auth-secret-replace-in-prod-please-32-chars-min
+ENABLE_ADMIN=true
+```
+
+Then `npm run dev`. `/admin` and `/admin/edit/<page>` light up.
+
+Without `ENABLE_ADMIN=true`, the dev server behaves like the
+frontend-only deploy and admin routes 404 locally too — useful for
+double-checking the prod shape.
