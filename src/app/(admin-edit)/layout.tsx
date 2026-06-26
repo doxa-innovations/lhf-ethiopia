@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { notFound } from "next/navigation";
 import "../(frontend)/globals.css";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -10,6 +11,7 @@ import { PublishedElementsProvider } from "@/components/cms/PublishedElementsPro
 import { getPublishedElements } from "@/lib/cms/get-published-elements";
 import { ToastProvider } from "@/components/cms/Toast";
 import { ConfirmDialogProvider } from "@/components/cms/ConfirmDialog";
+import { adminEnabled } from "@/lib/admin-flag";
 
 /*
  * Sibling root layout for /admin/edit/*. Mirrors the public (frontend) layout
@@ -22,6 +24,7 @@ export default async function AdminEditLayout({
 }: {
   children: ReactNode;
 }) {
+  if (!adminEnabled) notFound();
   const [content, published] = await Promise.all([
     getAllLocalesContent(),
     getPublishedElements(),

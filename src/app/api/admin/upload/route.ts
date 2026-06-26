@@ -19,6 +19,7 @@ import path from "node:path";
 import { randomBytes } from "node:crypto";
 import { auth } from "@/lib/auth";
 import { db, schema } from "@/lib/db";
+import { adminEnabled } from "@/lib/admin-flag";
 
 export const runtime = "nodejs";
 
@@ -26,6 +27,9 @@ const MAX_BYTES = 8 * 1024 * 1024;
 const ALLOWED_PREFIX = "image/";
 
 export async function POST(req: Request) {
+  if (!adminEnabled) {
+    return NextResponse.json({ error: "Not found" }, { status: 404 });
+  }
   const session = await auth();
   if (!session?.user) {
     return NextResponse.json({ error: "Not signed in" }, { status: 401 });

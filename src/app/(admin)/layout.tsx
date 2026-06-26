@@ -7,10 +7,12 @@
  */
 import "../(frontend)/globals.css";
 import type { ReactNode } from "react";
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import { auth, signOut } from "@/lib/auth";
 import { ToastProvider } from "@/components/cms/Toast";
 import { ConfirmDialogProvider } from "@/components/cms/ConfirmDialog";
+import { adminEnabled } from "@/lib/admin-flag";
 
 export const metadata = {
   title: { default: "LHF Ethiopia · Admin", template: "%s · Admin · LHF Ethiopia" },
@@ -55,6 +57,7 @@ const NAV_GROUPS = [
 ];
 
 export default async function AdminLayout({ children }: { children: ReactNode }) {
+  if (!adminEnabled) notFound();
   const session = await auth();
   const signedIn = Boolean(session?.user);
 

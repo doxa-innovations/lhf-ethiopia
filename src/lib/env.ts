@@ -3,12 +3,17 @@
  * `src/lib/auth.ts` so a misconfigured deploy fails loudly the first
  * time anything touches the DB or auth — instead of silently 500ing
  * on every request.
+ *
+ * Frontend-only deploys (ENABLE_ADMIN unset) don't need DATABASE_URL or
+ * AUTH_SECRET — the public site renders defaultValue strings and the
+ * /admin layouts 404. We only enforce those vars when admin is on.
  */
+import { adminEnabled } from "./admin-flag";
 
 type Required = "DATABASE_URL" | "AUTH_SECRET";
 type Optional = "NEXTAUTH_URL" | "UPLOAD_DIR";
 
-const REQUIRED: Required[] = ["DATABASE_URL", "AUTH_SECRET"];
+const REQUIRED_FOR_ADMIN: Required[] = ["DATABASE_URL", "AUTH_SECRET"];
 
 function readEnv(name: Required | Optional): string | undefined {
   const v = process.env[name];
@@ -26,8 +31,13 @@ export function validateEnvOnce(): void {
   // actually matter, and missing vars there will surface immediately.
   const isBuild = process.env.NEXT_PHASE === "phase-production-build";
 
+  // Without the admin gate, DATABASE_URL / AUTH_SECRET are optional.
+  // Anything that actually needs them (admin route, NextAuth handler)
+  // is gated behind adminEnabled and won't run.
+  if (!adminEnabled) return;
+
   const missing: string[] = [];
-  for (const key of REQUIRED) {
+  for (const key of REQUIRED_FOR_ADMIN) {
     if (!readEnv(key)) missing.push(key);
   }
   if (missing.length && !isBuild) {
@@ -36,7 +46,7 @@ export function validateEnvOnce(): void {
         ? `${missing[0]} is not set.`
         : `Required env vars are not set: ${missing.join(", ")}.`;
     throw new Error(
-      `[lhf-ethiopia] ${help} Set them in .env (dev) or your deploy platform (prod).`,
+      `[lhf-ethiopia] ${help} Set them in .env (dev) or your deploy platform (prod), or unset ENABLE_ADMIN for a frontend-only deploy.`,
     );
   }
   if (
@@ -63,10 +73,10 @@ export function validateEnvOnce(): void {
 export const env = {
   DATABASE_URL: () => {
     validateEnvOnce();
-    return process.env.DATABASE_URL!;
+    return process.env.DATABASE_URL ?? "";
   },
   AUTH_SECRET: () => {
     validateEnvOnce();
-    return process.env.AUTH_SECRET!;
+    return process.env.AUTH_SECRET ?? "";
   },
 };
