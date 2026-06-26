@@ -23,8 +23,9 @@ changes needed.
   marketing site).
 - Ubuntu 22.04 or 24.04 LTS.
 - Open inbound: `22, 80, 443`.
-- A-record: `ethiopia.lhfmissions.org → <vm-ip>` (or interim subdomain
-  while the parent LHF org confirms).
+- A-record: `lhfethiopia.org → <vm-ip>` (root) **and**
+  `www.lhfethiopia.org → <vm-ip>` (so both resolve). The nginx config
+  below redirects www → apex.
 
 ### 2. Install runtime
 
@@ -54,7 +55,7 @@ cat > .env.production <<'EOF'
 NODE_ENV=production
 # Leave ENABLE_ADMIN unset — admin routes will 404.
 # NEXT_PUBLIC_SERVER_URL only matters if you generate canonical links.
-NEXT_PUBLIC_SERVER_URL=https://ethiopia.lhfmissions.org
+NEXT_PUBLIC_SERVER_URL=https://lhfethiopia.org
 EOF
 
 npm run build
@@ -74,7 +75,13 @@ pm2 startup systemd            # follow the printed command to enable on boot
 # /etc/nginx/sites-available/lhf-ethiopia
 server {
   listen 80;
-  server_name ethiopia.lhfmissions.org;
+  server_name www.lhfethiopia.org;
+  return 301 https://lhfethiopia.org$request_uri;
+}
+
+server {
+  listen 80;
+  server_name lhfethiopia.org;
 
   location / {
     proxy_pass http://127.0.0.1:3000;
@@ -92,20 +99,20 @@ server {
 sudo ln -s /etc/nginx/sites-available/lhf-ethiopia /etc/nginx/sites-enabled/
 sudo nginx -t && sudo systemctl reload nginx
 
-# TLS
+# TLS — both names so the www→apex redirect can run over HTTPS too
 sudo apt -y install certbot python3-certbot-nginx
-sudo certbot --nginx -d ethiopia.lhfmissions.org
+sudo certbot --nginx -d lhfethiopia.org -d www.lhfethiopia.org
 ```
 
 ### 6. Smoke test
 
 ```bash
-curl -I https://ethiopia.lhfmissions.org/             # 200
-curl -I https://ethiopia.lhfmissions.org/about        # 200
-curl -I https://ethiopia.lhfmissions.org/podcast      # 200
-curl -I https://ethiopia.lhfmissions.org/admin        # 404 ← gated
-curl -I https://ethiopia.lhfmissions.org/admin/login  # 404 ← gated
-curl -I https://ethiopia.lhfmissions.org/api/auth/csrf # 404 ← gated
+curl -I https://lhfethiopia.org/             # 200
+curl -I https://lhfethiopia.org/about        # 200
+curl -I https://lhfethiopia.org/podcast      # 200
+curl -I https://lhfethiopia.org/admin        # 404 ← gated
+curl -I https://lhfethiopia.org/admin/login  # 404 ← gated
+curl -I https://lhfethiopia.org/api/auth/csrf # 404 ← gated
 ```
 
 ### 7. Updating
@@ -132,7 +139,7 @@ When the CMS work is ready:
    ENABLE_ADMIN=true
    DATABASE_URL=postgres://user:pass@host:5432/lhf
    AUTH_SECRET=<the openssl-generated value>
-   NEXTAUTH_URL=https://ethiopia.lhfmissions.org
+   NEXTAUTH_URL=https://lhfethiopia.org
    ```
 4. `npm run db:push` (creates `users`, `cms_elements`, `media` tables).
 5. `npm run seed` (creates the admin user + ~750 microcopy rows).

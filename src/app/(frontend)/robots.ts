@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ["/api/", "/_next/"],
       },
     ],
-    sitemap: "https://ethiopia.lhfmissions.org/sitemap.xml",
-    host: "https://ethiopia.lhfmissions.org",
+    sitemap: "https://lhfethiopia.org/sitemap.xml",
+    host: "https://lhfethiopia.org",
   };
 }

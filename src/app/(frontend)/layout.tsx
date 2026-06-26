@@ -22,7 +22,7 @@ import { SITE } from "@/lib/content";
  * defined so the existing token system in globals.css keeps working.
  */
 
-const SITE_URL = "https://ethiopia.lhfmissions.org";
+const SITE_URL = "https://lhfethiopia.org";
 
 export const viewport: Viewport = {
   width: "device-width",
