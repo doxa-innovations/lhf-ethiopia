@@ -422,3 +422,63 @@ git remote set-url origin https://github.com/doxa-innovations/lhf-ethiopia.git
   `/news/reformation-day-2026-book-giveaway`. Dev server up on :3000,
   smoke-tested / /podcast /events /news /about /publications /projects
   /contact /donate → all 200; local assets served fine.
+
+## 2026-07-04 — Vercel deploy fix + real socials + functional forms
+
+Two shipping sessions on the 4th.
+
+### Session 1 — c2c1855 → ceebebb (Vercel-ready)
+- `src/lib/content/get-content.ts`: added an env-check short-circuit
+  so when `DATABASE_URL` is unset (Vercel frontend-only deploy),
+  `getContent()` and `getAllLocalesContent()` return the checked-in
+  `src/content/{en,am,om}.json` directly without ever touching pg.
+  The JSON shape already matches `LocalizedContent`, so it's a
+  passthrough — no adapter code. Root cause of the Vercel error was
+  that with no connection string, `pg.Pool()` defaulted to
+  `127.0.0.1:5432` and every prerender query hit `ECONNREFUSED`.
+- `src/app/(admin)/admin/page.tsx`: the dashboard's `getCounts()` ran
+  before the `(admin)` layout's `notFound()` guard fired during
+  prerender, so it also hit the DB and crashed the frontend-only
+  build. Added an early `if (!adminEnabled) notFound()` at the top of
+  the page function.
+- Local Vercel simulation: `mv .env .env.bak && env -u DATABASE_URL
+  -u AUTH_SECRET -u ENABLE_ADMIN npm run build` — 40+ static pages
+  compiled clean. That's what Vercel does.
+- Real Addis office phone in `SITE.phone`: **+251 912 712 176**
+  (replaced `+251 911 000 000` dummy).
+- `SITE.social.x` wired to `https://x.com/lhfethiopia`. Footer
+  renders an X icon next to Facebook/Instagram/YouTube;
+  `(frontend)/layout.tsx` Organization schema `sameAs[]` includes it.
+
+### Session 2 — a91ca4c → cbe0a94
+- **Renamed "heart language" → "mother tongue" across all copy and
+  locales** (`content.ts`, `dictionary.ts`, `get-content.ts`,
+  `donate/page.tsx`, `opengraph-image.tsx`, all three `content/*.json`).
+  - Amharic idiom: `የልብ ቋንቋ` → `የአፍ መፍቻ ቋንቋ`
+  - Afaan Oromoo idiom: `afaan onnee` → `afaan haadhaa`
+  - **Preserved** DB keys: value slug `heart-language-free` and CMS
+    elementIds `bentoHeartLangsLabel` / `heartLanguagesTitle` (renaming
+    would orphan already-published CMS edits).
+- **Contact form + newsletter subscribe are now functional.** Both
+  were dead (contact had no `action`/`onSubmit`; newsletter used
+  `action="mailto:…"`). Both now POST JSON to
+  `https://formsubmit.co/ajax/Info@lhfethiopia.org` with a hidden
+  `_honey` honeypot and distinct `_subject` fields so they sort in
+  the inbox. Contact page renders a success card in place of the
+  form; error banner if endpoint isn't activated. Footer swaps the
+  input line for a success line on subscribe.
+- **Formsubmit activation reminder for Cherinet:** the very first
+  submission from either form triggers an activation email to
+  `Info@lhfethiopia.org` — click "Activate Form Endpoint" once and
+  submissions land silently thereafter. Until activated, real
+  submissions hit the error banner.
+
+### Where things stand
+- `main @ cbe0a94` pushed to `github.com/Cherireal7/lhf-ethiopia`
+  (auto-redirects to `doxa-innovations/lhf-ethiopia`). Vercel builds
+  from that redirect.
+- Deploy is expected to succeed once cbe0a94 lands on Vercel — the
+  `.env`-less build passed locally.
+- Reformation Day 2026 event + news post already live in the DB
+  (from 2026-07-03) and in the JSON fallback so both DB-backed and
+  frontend-only modes render them.
