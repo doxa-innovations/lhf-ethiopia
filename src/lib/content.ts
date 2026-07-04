@@ -5,7 +5,7 @@
 export const SITE = {
   name: "LHF Ethiopia",
   longName: "Lutheran Heritage Foundation — Ethiopia",
-  tagline: "The Gospel, in every heart language of Ethiopia.",
+  tagline: "The Gospel, in every mother tongue of Ethiopia.",
   description:
     "LHF Ethiopia translates, prints, and distributes Bible-based, Christ-centered Lutheran books in Amharic, Afaan Oromoo, Tigrinya, Somali, Sidaamu Afoo, and Wolayttattuwaa — free of charge — and reaches new audiences through podcasting, events, and digital outreach.",
   parent:
@@ -90,7 +90,7 @@ export const NAV_GROUPS = [
 ] as const;
 
 export const STATS = [
-  { value: "6", suffix: "+", label: "Heart languages served" },
+  { value: "6", suffix: "+", label: "Mother tongues served" },
   { value: "42", suffix: "k", label: "Books printed for Ethiopia" },
   { value: "180", suffix: "+", label: "Congregations supplied" },
   { value: "12", suffix: "", label: "Translation projects active" },
@@ -263,7 +263,7 @@ export const PROJECTS = [
     raised: 2100,
     goal: 9000,
     impact:
-      "Opens a new heart language: first Lutheran texts ever in Soomaali.",
+      "Opens a new mother tongue: first Lutheran texts ever in Soomaali.",
   },
   {
     title: "Podcast Studio — Phase 1",
@@ -306,7 +306,7 @@ export const NEWS = [
     date: "2026-02-14",
     title: "Sidaama translation team begins work on the Small Catechism",
     excerpt:
-      "A new translation effort opens a sixth heart language for LHF Ethiopia. Three reviewers met in Hawassa to set the editorial standard.",
+      "A new translation effort opens a sixth mother tongue for LHF Ethiopia. Three reviewers met in Hawassa to set the editorial standard.",
     tag: "Translation",
   },
   {
@@ -359,7 +359,7 @@ export const VALUES = [
       "We confess the unaltered Augsburg Confession (1530), Luther's Small and Large Catechisms, and the other Lutheran Confessions gathered in the Book of Concord — because they are a faithful exposition of Holy Scripture. Confessional Lutheran teaching shapes every title we choose to translate.",
   },
   {
-    title: "Heart language, free of charge",
+    title: "Mother tongue, free of charge",
     body:
       "People meet Christ best in the language they think and pray in. LHF Ethiopia translates, prints, and freely distributes Lutheran books in Amharic, Afaan Oromoo, Tigrinya, Somali, Sidaamu Afoo, and beyond — never sold, always given.",
   },
@@ -551,7 +551,7 @@ export const PODCAST_EPISODES = [
     durationMin: 1,
     date: "2025-09-13",
     summary:
-      "Why every Lutheran congregation needs a copy of Luther's Small Catechism in its heart language.",
+      "Why every Lutheran congregation needs a copy of Luther's Small Catechism in its mother tongue.",
     language: "Amharic",
     topic: "Catechism",
     youtubeId: "uw8hL9rfe2U",
@@ -708,7 +708,7 @@ export const IMPACT_TIMESERIES = {
     { name: "Amharic", data: [1200, 2400, 3600, 5200, 7800, 11200, 14200] },
     { name: "Afaan Oromoo", data: [400, 900, 1600, 2800, 4400, 6500, 9100] },
     { name: "Tigrinya", data: [200, 600, 1100, 1700, 1900, 4200, 6300] },
-    { name: "Other heart languages", data: [0, 0, 200, 600, 1400, 2800, 4500] },
+    { name: "Other mother tongues", data: [0, 0, 200, 600, 1400, 2800, 4500] },
   ],
 } as const;
 

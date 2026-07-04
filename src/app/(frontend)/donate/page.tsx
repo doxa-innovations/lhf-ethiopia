@@ -4,7 +4,7 @@ import { DonatePageClient } from "@/components/pages/DonatePageClient";
 export const metadata: Metadata = {
   title: "Donate",
   description:
-    "Give to LHF Ethiopia. Every dollar goes toward translating, printing, and freely distributing Lutheran books in heart languages across Ethiopia.",
+    "Give to LHF Ethiopia. Every dollar goes toward translating, printing, and freely distributing Lutheran books in mother tongues across Ethiopia.",
 };
 
 export default function DonatePage() {

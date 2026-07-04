@@ -3,7 +3,7 @@ import { ImageResponse } from "next/og";
 export const runtime = "edge";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
-export const alt = "LHF Ethiopia — The Gospel, in every heart language of Ethiopia.";
+export const alt = "LHF Ethiopia — The Gospel, in every mother tongue of Ethiopia.";
 
 export default function OG() {
   return new ImageResponse(
@@ -68,7 +68,7 @@ export default function OG() {
               maxWidth: 980,
             }}
           >
-            The Gospel, in every heart language of Ethiopia.
+            The Gospel, in every mother tongue of Ethiopia.
           </div>
           <div
             style={{

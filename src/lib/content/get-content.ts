@@ -264,7 +264,7 @@ async function fetchLocale(locale: Locale): Promise<LocalizedContent> {
       summary: r.summary ?? "",
       language: r.languageDisplay ?? "",
     })),
-    impactSeriesNames: ["Amharic", "Afaan Oromoo", "Tigrinya", "Other heart languages"],
+    impactSeriesNames: ["Amharic", "Afaan Oromoo", "Tigrinya", "Other mother tongues"],
     titlesPerLanguage: [],
   };
 }
