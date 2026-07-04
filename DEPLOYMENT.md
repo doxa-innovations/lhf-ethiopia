@@ -4,8 +4,8 @@ Two modes:
 
 - **Frontend-only** *(current ship target)* — `ENABLE_ADMIN` unset. The
   public marketing site renders the baked-in `defaultValue` for every
-  `<EditableText>`. No Postgres, no auth, no admin UI. This is what you
-  deploy to Yegara today while the CMS work continues locally.
+  `<EditableText>`. No Postgres, no auth, no admin UI. This is what
+  ships on Vercel today while the CMS work continues locally.
 - **Full** — `ENABLE_ADMIN=true` plus `DATABASE_URL` + `AUTH_SECRET`.
   Adds `/admin` and `/admin/edit/*`, NextAuth, edit-in-place CMS,
   publish workflow.
@@ -15,96 +15,92 @@ changes needed.
 
 ---
 
-## Frontend-only on Yegara
+## Full mode on Dokploy (database detached from the app)
 
-### 1. Provision
+Two **separate native Dokploy services** — no docker-compose, no
+Dockerfile. The repo intentionally ships neither: this is a standard
+Next.js app, so Dokploy's builders (Nixpacks / Railpack) build it from
+`package.json` alone. Postgres is a standalone service with its own
+volume and lifecycle — redeploy, rebuild, or delete the app without
+touching the data. The only link between the two is the `DATABASE_URL`
+env var.
 
-- One small Linux VM on Yegara (≥ 1 GB RAM, ≥ 1 vCPU is fine for a
-  marketing site).
-- Ubuntu 22.04 or 24.04 LTS.
-- Open inbound: `22, 80, 443`.
-- A-record: `lhfethiopia.org → <vm-ip>` (root) **and**
-  `www.lhfethiopia.org → <vm-ip>` (so both resolve). The nginx config
-  below redirects www → apex.
+### 1. Database service
 
-### 2. Install runtime
+In your project: *Create Service → Database → PostgreSQL* (16.x).
+Set database/user to `lhf`, generate a strong password. Dokploy manages
+the volume and shows an **Internal Connection URL** — copy it for
+step 2.
 
-```bash
-ssh ubuntu@<vm-ip>
-sudo apt update && sudo apt -y upgrade
+Leave the database internal-only (no External Port) — the app reaches
+Postgres over Dokploy's internal Docker network. For remote
+psql/pgAdmin, use an SSH tunnel, or temporarily enable an External Port
+with IP allowlisting.
 
-# Node 20 LTS (matches engines in package.json — Node 22/24 also OK)
-curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
-sudo apt -y install nodejs git nginx
+### 2. Application service (builder, not Dockerfile)
 
-# pm2 to keep `next start` alive across reboots and crashes
-sudo npm i -g pm2
-```
+*Create Service → Application*, source = this Git repo, branch `main`.
+Build type: **Nixpacks** (Dokploy's default; Railpack works the same
+way). The builder auto-detects Next.js and respects
+`"engines": { "node": ">=20.9.0" }` from `package.json`:
 
-### 3. Clone + build
+- Install: `npm ci`
+- Build: `npm run build`
+- Start: `npm run start`
 
-```bash
-sudo mkdir -p /srv && sudo chown ubuntu:ubuntu /srv
-cd /srv
-git clone https://github.com/doxa-innovations/lhf-ethiopia.git
-cd lhf-ethiopia
-npm ci
+Environment tab — set these **before the first build** (Next.js inlines
+`NEXT_PUBLIC_*` at build time, so changing it later needs a rebuild):
 
-# Frontend-only env — no DB, no auth.
-cat > .env.production <<'EOF'
+```env
 NODE_ENV=production
-# Leave ENABLE_ADMIN unset — admin routes will 404.
-# NEXT_PUBLIC_SERVER_URL only matters if you generate canonical links.
 NEXT_PUBLIC_SERVER_URL=https://lhfethiopia.org
-EOF
-
-npm run build
+ENABLE_ADMIN=true
+DATABASE_URL=<Internal Connection URL from step 1>
+AUTH_SECRET=<openssl rand -base64 32>
+NEXTAUTH_URL=https://lhfethiopia.org
 ```
 
-### 4. Run
+Domains tab: add `lhfethiopia.org` (container port 3000, HTTPS on).
+Dokploy's Traefik terminates TLS — no Caddy or nginx needed.
+
+**Uploads volume**: admin image uploads are written to
+`public/uploads/cms/` at runtime. Add a volume mount in the app's
+*Advanced → Volumes*: volume name `lhf-uploads`, mount path
+`/app/public/uploads`. Without it, uploaded media disappears on every
+redeploy. (Nothing in the repo ships inside `public/uploads/`, so the
+mount shadows nothing.)
+
+### 3. Schema + seed (first deploy only)
+
+From a machine that can reach the DB (SSH tunnel or temporary External
+Port):
 
 ```bash
-pm2 start "npm run start -- --port 3000" --name lhf-ethiopia
-pm2 save
-pm2 startup systemd            # follow the printed command to enable on boot
+DATABASE_URL=postgres://lhf:<password>@<host>:5432/lhf npm run db:push
+DATABASE_URL=postgres://lhf:<password>@<host>:5432/lhf npm run seed
 ```
 
-### 5. Reverse proxy + TLS
+Then rotate the seeded admin password immediately (see step 6 in
+"Flipping on the admin later" below).
 
-```nginx
-# /etc/nginx/sites-available/lhf-ethiopia
-server {
-  listen 80;
-  server_name www.lhfethiopia.org;
-  return 301 https://lhfethiopia.org$request_uri;
-}
+### 4. Backups
 
-server {
-  listen 80;
-  server_name lhfethiopia.org;
+Use Dokploy's scheduled database backups (*Database → Backups*, S3
+destination — works with Cloudflare R2). `scripts/backup-db.sh` remains
+as a cron fallback for a plain Docker host: it dumps any standalone
+Postgres container by name (`DB_CONTAINER=<name>`) and uploads to R2
+via rclone.
 
-  location / {
-    proxy_pass http://127.0.0.1:3000;
-    proxy_http_version 1.1;
-    proxy_set_header Host $host;
-    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-    proxy_set_header X-Forwarded-Proto $scheme;
-    proxy_set_header Upgrade $http_upgrade;
-    proxy_set_header Connection "upgrade";
-  }
-}
-```
+---
 
-```bash
-sudo ln -s /etc/nginx/sites-available/lhf-ethiopia /etc/nginx/sites-enabled/
-sudo nginx -t && sudo systemctl reload nginx
+## Frontend-only on Dokploy (or Vercel)
 
-# TLS — both names so the www→apex redirect can run over HTTPS too
-sudo apt -y install certbot python3-certbot-nginx
-sudo certbot --nginx -d lhfethiopia.org -d www.lhfethiopia.org
-```
+Same application service as "Full mode" step 2, minus the database:
+leave `ENABLE_ADMIN`, `DATABASE_URL`, and `AUTH_SECRET` unset. Admin
+routes 404 and the site renders the checked-in content. Vercel works
+identically — import the repo, set `NEXT_PUBLIC_SERVER_URL`, deploy.
 
-### 6. Smoke test
+Smoke test either way:
 
 ```bash
 curl -I https://lhfethiopia.org/             # 200
@@ -115,29 +111,20 @@ curl -I https://lhfethiopia.org/admin/login  # 404 ← gated
 curl -I https://lhfethiopia.org/api/auth/csrf # 404 ← gated
 ```
 
-### 7. Updating
-
-```bash
-cd /srv/lhf-ethiopia
-git pull
-npm ci
-npm run build
-pm2 restart lhf-ethiopia
-```
-
 ---
 
 ## Flipping on the admin later
 
 When the CMS work is ready:
 
-1. Provision Postgres (on the same VM, on the Doxa Postgres host, or
-   keep using Neon temporarily).
+1. Create the standalone Postgres database service in Dokploy
+   (see "Full mode on Dokploy" step 1), or keep using Neon
+   temporarily.
 2. Generate a real auth secret: `openssl rand -base64 32`.
-3. Append to `.env.production`:
+3. Add to the app's Environment tab:
    ```env
    ENABLE_ADMIN=true
-   DATABASE_URL=postgres://user:pass@host:5432/lhf
+   DATABASE_URL=<Internal Connection URL from the database service>
    AUTH_SECRET=<the openssl-generated value>
    NEXTAUTH_URL=https://lhfethiopia.org
    ```
@@ -146,7 +133,8 @@ When the CMS work is ready:
 6. **Rotate the seeded admin password immediately** — log in at
    `/admin/login` with `admin@lhfethiopia.org / ChangeMe!2026`, then
    change it at `/admin/account`.
-7. `npm run build && pm2 restart lhf-ethiopia`.
+7. Redeploy the application in Dokploy (env changes need a rebuild
+   so Next.js picks them up).
 
 ---
 

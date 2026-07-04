@@ -482,3 +482,36 @@ Two shipping sessions on the 4th.
 - Reformation Day 2026 event + news post already live in the DB
   (from 2026-07-03) and in the JSON fallback so both DB-backed and
   frontend-only modes render them.
+
+## 2026-07-04 — Session 3: Dokploy-native deploy, Docker files removed
+
+Deployment strategy switched to **Dokploy native services** — a
+standalone PostgreSQL database service plus an Application service
+built with Nixpacks/Railpack. Database fully detached from the app;
+the only link is `DATABASE_URL`.
+
+- **Deleted `docker-compose.yml`, `Dockerfile`, `Caddyfile`.** The
+  compose file was stale Payload-era config (`DATABASE_URI`,
+  `payload` user — the app reads `DATABASE_URL` via Drizzle) and
+  bundled app + Postgres + Caddy in one stack. The Dockerfile was
+  broken anyway: it ran `npm run generate:types`, a script that no
+  longer exists in `package.json`. Nothing here needs a custom
+  image — standard Next.js, `sharp` installs prebuilt binaries under
+  builders, uploads persistence is a Dokploy volume mount
+  (`/app/public/uploads`). Caddyfile belonged to the abandoned
+  manual-VPS path; Dokploy's Traefik terminates TLS.
+- **`DEPLOYMENT.md` rewritten around Dokploy:** full-mode runbook
+  (native Postgres service → Internal Connection URL → app env),
+  frontend-only mode (Dokploy or Vercel, no DB vars), admin flip
+  steps now Dokploy-based. Yegara nginx/pm2 runbook removed.
+- **`.env.example` fixed** — stale `PAYLOAD_SECRET`/`DATABASE_URI`/
+  R2 media vars replaced with the vars the code actually reads
+  (`DATABASE_URL`, `AUTH_SECRET`, `ENABLE_ADMIN`, `NEXTAUTH_URL`,
+  `NEXT_PUBLIC_SERVER_URL`).
+- **`scripts/backup-db.sh`** now dumps any standalone Postgres
+  container by name (`DB_CONTAINER=<name>`); on Dokploy prefer the
+  built-in scheduled backups to S3/R2.
+- Dokploy gotchas documented: set env vars **before** first build
+  (`NEXT_PUBLIC_*` is inlined at build time), mount a volume at
+  `/app/public/uploads` or uploaded media vanishes on redeploy, keep
+  the DB internal-only (no External Port).
