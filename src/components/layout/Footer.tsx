@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import {
   Facebook,
@@ -16,6 +17,8 @@ import { SITE } from "@/lib/content";
 import { useT } from "@/components/providers/LanguageProvider";
 import { LhfMark } from "@/components/brand/LhfMark";
 import { EditableText } from "@/components/cms/EditableText";
+
+const FORMSUBMIT_ENDPOINT = "https://formsubmit.co/ajax/Info@lhfethiopia.org";
 
 type LinkGroup = {
   labelKey: string;
@@ -58,12 +61,50 @@ const LINK_GROUPS: LinkGroup[] = [
 
 export function Footer() {
   const { t } = useT();
+  const [subStatus, setSubStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
   // Safe t() that falls back to a literal when the key isn't in the dict yet
   const tFb = (key: string, fb: string) => {
     const v = t(key as Parameters<typeof t>[0]);
     return v === key ? fb : v;
   };
+
+  async function handleSubscribe(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if ((form.elements.namedItem("_honey") as HTMLInputElement)?.value) return;
+    const email = (form.elements.namedItem("email") as HTMLInputElement)?.value?.trim();
+    if (!email) return;
+
+    setSubStatus("sending");
+    try {
+      const res = await fetch(FORMSUBMIT_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          _subject: "LHF Ethiopia — newsletter signup",
+          _template: "table",
+          _captcha: "false",
+          source: "lhfethiopia.org/footer",
+          signup_type: "Newsletter signup",
+        }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const json = (await res.json()) as { success?: string | boolean };
+      if (json.success === "true" || json.success === true) {
+        setSubStatus("success");
+        form.reset();
+      } else {
+        throw new Error("Endpoint not activated yet");
+      }
+    } catch {
+      setSubStatus("error");
+    }
+  }
 
   return (
     <footer
@@ -178,56 +219,105 @@ export function Footer() {
                 multiline
               />
             </p>
-            <form
-              action={`mailto:${SITE.email}`}
-              method="post"
-              encType="text/plain"
-              style={{
-                marginTop: 12,
-                display: "flex",
-                gap: 6,
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.12)",
-                borderRadius: 10,
-                padding: 4,
-                maxWidth: 360,
-              }}
-            >
-              <input
-                type="email"
-                name="email"
-                required
-                placeholder={tFb("footer.emailPlaceholder", "you@example.com")}
+            {subStatus === "success" ? (
+              <div
+                role="status"
+                aria-label="Subscribed"
                 style={{
-                  flex: 1,
-                  background: "transparent",
-                  border: "none",
-                  outline: "none",
+                  marginTop: 12,
+                  padding: "10px 14px",
+                  borderRadius: 10,
+                  background: "rgba(46, 142, 142, 0.16)",
+                  border: "1px solid rgba(46, 142, 142, 0.5)",
                   color: "white",
-                  padding: "8px 10px",
-                  fontSize: 14,
-                  fontFamily: "inherit",
-                  minWidth: 0,
-                }}
-              />
-              <button
-                type="submit"
-                className="btn btn-sm"
-                style={{
-                  background: "rgb(var(--teal))",
-                  color: "white",
-                  borderColor: "rgb(var(--teal))",
-                  padding: "6px 12px",
-                  flexShrink: 0,
+                  fontSize: 13.5,
+                  maxWidth: 360,
                 }}
               >
-                <Send size={13} />
-                <EditableText
-                  elementId="footer.subscribe"
-                  defaultValue={tFb("footer.subscribe", "Subscribe")}
+                {tFb("footer.subscribeSuccess", "Thank you — you're on the list. We'll email once a quarter, no more.")}
+              </div>
+            ) : (
+              <form
+                onSubmit={handleSubscribe}
+                style={{
+                  marginTop: 12,
+                  display: "flex",
+                  gap: 6,
+                  background: "rgba(255,255,255,0.06)",
+                  border: "1px solid rgba(255,255,255,0.12)",
+                  borderRadius: 10,
+                  padding: 4,
+                  maxWidth: 360,
+                }}
+              >
+                {/* Honeypot */}
+                <input
+                  type="text"
+                  name="_honey"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  style={{ position: "absolute", left: "-9999px", width: 1, height: 1 }}
                 />
-              </button>
-            </form>
+                <input
+                  type="email"
+                  name="email"
+                  required
+                  aria-label={tFb("footer.emailAriaLabel", "Email address")}
+                  placeholder={tFb("footer.emailPlaceholder", "you@example.com")}
+                  style={{
+                    flex: 1,
+                    background: "transparent",
+                    border: "none",
+                    outline: "none",
+                    color: "white",
+                    padding: "8px 10px",
+                    fontSize: 14,
+                    fontFamily: "inherit",
+                    minWidth: 0,
+                  }}
+                />
+                <button
+                  type="submit"
+                  disabled={subStatus === "sending"}
+                  className="btn btn-sm"
+                  style={{
+                    background: "rgb(var(--teal))",
+                    color: "white",
+                    borderColor: "rgb(var(--teal))",
+                    padding: "6px 12px",
+                    flexShrink: 0,
+                    opacity: subStatus === "sending" ? 0.75 : 1,
+                  }}
+                >
+                  <Send size={13} />
+                  {subStatus === "sending" ? (
+                    tFb("footer.subscribing", "Sending…")
+                  ) : (
+                    <EditableText
+                      elementId="footer.subscribe"
+                      defaultValue={tFb("footer.subscribe", "Subscribe")}
+                    />
+                  )}
+                </button>
+              </form>
+            )}
+            {subStatus === "error" ? (
+              <div
+                role="alert"
+                style={{
+                  marginTop: 8,
+                  fontSize: 12.5,
+                  color: "rgb(var(--brand))",
+                  maxWidth: 360,
+                }}
+              >
+                {tFb(
+                  "footer.subscribeError",
+                  "Couldn't subscribe just now. Please email us at " + SITE.email + " instead.",
+                )}
+              </div>
+            ) : null}
           </div>
         </div>
 
