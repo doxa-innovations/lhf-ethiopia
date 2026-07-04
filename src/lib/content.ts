@@ -277,6 +277,14 @@ export const PROJECTS = [
 
 export const NEWS = [
   {
+    slug: "reformation-day-2026-book-giveaway",
+    date: "2026-07-01",
+    title: "Reformation Day 2026 — LHF Ethiopia to give away thousands of Lutheran books on October 31",
+    excerpt:
+      "LHF Ethiopia will mark Reformation Day with a public gathering in Addis Ababa on October 31. Thanks to a book grant from LHF, thousands of copies of Luther's Small Catechism, A Child's Garden of Bible Stories, and Daily Devotions for Families will be distributed free of charge in Amharic and Afaan Oromoo — a Christ-centred gift for families, pastors, and students across the city.",
+    tag: "Event",
+  },
+  {
     slug: "tigrinya-catechism-reprint",
     date: "2026-05-18",
     title: "Tigrinya catechism reprint reaches 65 congregations",
@@ -369,7 +377,7 @@ export const STORIES = [
     language: "Tigrinya",
     quote:
       "When the reprints arrived, I cried. For two years I had been preaching from notes in the margin of my one borrowed catechism. Now every elder in our parish has their own.",
-    photo: "/photos/story-pastor-1.jpg",
+    photo: "/podcast-host-1.jpg",
   },
   {
     slug: "selam-teacher",
@@ -379,7 +387,7 @@ export const STORIES = [
     language: "Amharic",
     quote:
       "The children's Bible stories in Amharic changed our Sunday school. The kids read aloud to their parents at home — sometimes the parents are the ones who learn.",
-    photo: "/photos/story-teacher-1.jpg",
+    photo: "/podcastlogo.png",
   },
   {
     slug: "abdi-translator",
@@ -389,7 +397,7 @@ export const STORIES = [
     language: "Afaan Oromoo",
     quote:
       "Translating Luther into Afaan Oromoo is not just word-for-word. We choose words a farmer in Bale would actually say, so the catechism lives in the language of the kitchen, not the lecture hall.",
-    photo: "/photos/story-translator-1.jpg",
+    photo: "/podcast-host-2.jpg",
   },
   {
     slug: "almaz-deaconess",
@@ -399,7 +407,7 @@ export const STORIES = [
     language: "Sidaamu Afoo",
     quote:
       "For the first time in my lifetime, I am holding a Lutheran book in Sidaamu Afoo. It is one small first edition — and it is everything.",
-    photo: "/photos/story-deaconess-1.jpg",
+    photo: "/podcastlogo.png",
   },
   {
     slug: "yohannes-printer",
@@ -409,7 +417,7 @@ export const STORIES = [
     language: "Multilingual",
     quote:
       "Most jobs through our press are textbooks or government forms. LHF Ethiopia is different — when those books leave the dock, they leave for free, and the press knows it.",
-    photo: "/photos/story-printer-1.jpg",
+    photo: "/podcast-studio-bw-1.jpg",
   },
 ] as const;
 
@@ -568,6 +576,16 @@ export const PODCAST_EPISODES = [
 
 export const EVENTS = [
   {
+    slug: "reformation-day-book-giveaway-2026",
+    title: "Reformation Day — Free Lutheran Book Giveaway",
+    date: "2026-10-31",
+    location: "LHF Ethiopia · Addis Ababa",
+    audience: "Public — pastors, students, families",
+    summary:
+      "A public Reformation Day gathering hosted by LHF Ethiopia. Free copies of Luther's Small Catechism, A Child's Garden of Bible Stories, and Daily Devotions for Families will be handed out in Amharic and Afaan Oromoo — one of the largest single-day giveaways of the year.",
+    status: "Upcoming",
+  },
+  {
     slug: "addis-distribution-day-jun",
     title: "Addis Distribution Day",
     date: "2026-07-12",
@@ -646,67 +664,37 @@ export const EVENTS = [
    ============================================================ */
 
 export const PHOTOS = {
-  // Vintage leather Bible — Aaron Burden's widely-used Unsplash photo
-  heroPrimary:
-    "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=1400&q=80&auto=format&fit=crop",
-  // Open Bible pages
-  heroSecondary:
-    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=80&auto=format&fit=crop",
-  // Antique books on shelf
-  heroTertiary:
-    "https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=900&q=80&auto=format&fit=crop",
-  // CONGREGATION — cathedral nave, candles, altar.
-  congregation:
-    "https://images.unsplash.com/photo-1543589077-47d81606c1bf?w=1400&q=80&auto=format&fit=crop",
-  // Open Bible / Psalter
-  openBible:
-    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80&auto=format&fit=crop",
-  // BOOKSHELF — antique books on shelf.
-  bookshelf:
-    "https://images.unsplash.com/photo-1492321936769-b49830bc1d1e?w=1200&q=80&auto=format&fit=crop",
-  // CHILDREN READING — open Bible / psalter (devotional, no modern close-ups).
-  childrenReading:
-    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80&auto=format&fit=crop",
-  // HANDS HOLDING — hands lit by candle / prayer (kept generic).
-  handsHolding:
-    "https://images.unsplash.com/photo-1532012197267-da84d127e765?w=1200&q=80&auto=format&fit=crop",
-  // TRANSLATOR AT DESK — illuminated manuscript / scribe imagery
-  translatorAtDesk:
-    "https://images.unsplash.com/photo-1532153975070-2e9ab71f1b14?w=1200&q=80&auto=format&fit=crop",
-  // PRINT PRESS — old letterpress / typesetting
-  printPress:
-    "https://images.unsplash.com/photo-1568667256549-094345857637?w=1200&q=80&auto=format&fit=crop",
-  // ETHIOPIA LANDSCAPE — Ethiopian highlands.
-  ethiopiaLandscape:
-    "https://images.unsplash.com/photo-1580458148391-44b4baa3f9d2?w=1600&q=80&auto=format&fit=crop",
-  // STORY PORTRAITS — use traditional / liturgical imagery rather than modern
-  // close-ups until the photo team supplies consented portraits.
-  pastor:
-    "https://images.unsplash.com/photo-1504052434569-70ad5836ab65?w=900&q=80&auto=format&fit=crop",
-  teacher:
-    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=900&q=80&auto=format&fit=crop",
-  translator:
-    "https://images.unsplash.com/photo-1532153975070-2e9ab71f1b14?w=900&q=80&auto=format&fit=crop",
-  deaconess:
-    "https://images.unsplash.com/photo-1580458148391-44b4baa3f9d2?w=900&q=80&auto=format&fit=crop",
-  printer:
-    "https://images.unsplash.com/photo-1568667256549-094345857637?w=900&q=80&auto=format&fit=crop",
-  // Podcast + digital outreach — studio imagery is fine as-is (modern context).
-  podcastStudio:
-    "https://images.unsplash.com/photo-1590602847861-f357a9332bbc?w=1400&q=80&auto=format&fit=crop",
-  podcastMic:
-    "https://images.unsplash.com/photo-1478737270239-2f02b77fc618?w=1200&q=80&auto=format&fit=crop",
-  podcastHost:
-    "https://images.unsplash.com/photo-1481627834876-b7833e8f5570?w=1200&q=80&auto=format&fit=crop",
-  music:
-    "https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=1200&q=80&auto=format&fit=crop",
-  // EVENTS — traditional gathering / cathedral arches.
-  eventGathering:
-    "https://images.unsplash.com/photo-1438232992991-995b7058bbb3?w=1400&q=80&auto=format&fit=crop",
-  eventTraining:
-    "https://images.unsplash.com/photo-1517048676732-d65bc937f952?w=1200&q=80&auto=format&fit=crop",
-  eventDistribution:
-    "https://images.unsplash.com/photo-1559027615-cd4628902d4a?w=1200&q=80&auto=format&fit=crop",
+  // Every entry below points at a locally-served asset in public/.
+  // Photo set: 3 podcast-host portraits, 1 wide studio shot with the
+  // "LHF Ethiopia Podcast" neon sign, 2 moody B&W studio shots, 1
+  // landscape episode still, the LHF Ethiopia crest, and the plain
+  // Lutheran-rose mark. Rotated so the same tile isn't reused twice
+  // on the same page.
+  heroPrimary: "/podcastlogo.png",
+  heroSecondary: "/podcast-studio-wide.jpg",
+  heroTertiary: "/podcast-episode-3.jpg",
+  congregation: "/podcast-studio-wide.jpg",
+  openBible: "/podcastlogo.png",
+  bookshelf: "/podcast-studio-wide.jpg",
+  childrenReading: "/podcastlogo.png",
+  handsHolding: "/podcast-host-3.jpg",
+  translatorAtDesk: "/podcast-host-1.jpg",
+  printPress: "/podcast-studio-bw-1.jpg",
+  ethiopiaLandscape: "/podcastlogo.png",
+  pastor: "/podcast-host-2.jpg",
+  teacher: "/podcastlogo.png",
+  translator: "/podcast-host-1.jpg",
+  deaconess: "/podcastlogo.png",
+  printer: "/podcast-studio-bw-1.jpg",
+  music: "/podcast-episode-3.jpg",
+  podcastStudio: "/podcast-studio-wide.jpg",
+  podcastMic: "/podcast-host-3.jpg",
+  podcastHost: "/podcast-host-2.jpg",
+  podcastStudioMoody: "/podcast-studio-bw-1.jpg",
+  podcastEpisodeThumb: "/podcast-episode-3.jpg",
+  eventGathering: "/podcast-studio-wide.jpg",
+  eventTraining: "/podcast-host-2.jpg",
+  eventDistribution: "/podcast-studio-wide.jpg",
 } as const;
 
 /* ============================================================

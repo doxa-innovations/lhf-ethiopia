@@ -232,6 +232,7 @@ export function BentoHero() {
             delay={0.46}
             tile="stat"
           >
+            <BooksBackdrop />
             <MiniStat
               value="42k+"
               label={
@@ -253,6 +254,7 @@ export function BentoHero() {
             delay={0.5}
             tile="sola"
           >
+            <ScriptureBackdrop />
             <QuoteTile
               line1={
                 <EditableText
@@ -415,6 +417,8 @@ function QuoteTile({
         color: tone === "light" ? "white" : "rgb(var(--ink))",
         lineHeight: 1.18,
         letterSpacing: "-0.01em",
+        position: "relative",
+        zIndex: 1,
       }}
     >
       <div>{line1}</div>
@@ -435,6 +439,8 @@ function MiniStat({ value, label }: { value: string; label: React.ReactNode }) {
           color: "rgb(var(--brand))",
           letterSpacing: "-0.02em",
           lineHeight: 1,
+          position: "relative",
+          zIndex: 1,
         }}
       >
         {value}
@@ -446,11 +452,135 @@ function MiniStat({ value, label }: { value: string; label: React.ReactNode }) {
           letterSpacing: "0.12em",
           textTransform: "uppercase",
           color: "rgb(var(--ink-faint))",
+          position: "relative",
+          zIndex: 1,
         }}
       >
         {label}
       </div>
     </>
+  );
+}
+
+/* Stack of catechisms drawn behind the "42k+ books" stat tile — the
+   brand-crimson spines fade in from the bottom-right corner so the
+   text stays legible on the left. */
+function BooksBackdrop() {
+  return (
+    <svg
+      viewBox="0 0 200 200"
+      aria-hidden
+      style={{
+        position: "absolute",
+        right: -18,
+        bottom: -14,
+        width: "78%",
+        height: "auto",
+        opacity: 0.42,
+        pointerEvents: "none",
+        zIndex: 0,
+      }}
+    >
+      <defs>
+        <linearGradient id="bookSpine" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgb(var(--brand))" stopOpacity="0.9" />
+          <stop offset="100%" stopColor="rgb(var(--navy))" stopOpacity="0.9" />
+        </linearGradient>
+        <linearGradient id="bookSpineAlt" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgb(var(--teal-strong))" stopOpacity="0.85" />
+          <stop offset="100%" stopColor="rgb(var(--navy))" stopOpacity="0.85" />
+        </linearGradient>
+      </defs>
+      {/* Bottom stack — three horizontal books */}
+      <rect x="30" y="140" width="150" height="18" rx="2" fill="url(#bookSpine)" />
+      <rect x="30" y="140" width="6" height="18" fill="rgba(255,255,255,0.35)" />
+      <rect x="40" y="158" width="140" height="16" rx="2" fill="url(#bookSpineAlt)" />
+      <rect x="40" y="158" width="5" height="16" fill="rgba(255,255,255,0.28)" />
+      <rect x="34" y="174" width="150" height="14" rx="2" fill="url(#bookSpine)" />
+      {/* Standing books on top */}
+      <rect x="60" y="90" width="14" height="48" rx="1.5" fill="url(#bookSpine)" />
+      <rect x="60" y="90" width="14" height="4" fill="rgba(255,255,255,0.5)" />
+      <rect x="78" y="82" width="14" height="56" rx="1.5" fill="url(#bookSpineAlt)" />
+      <rect x="78" y="82" width="14" height="4" fill="rgba(255,255,255,0.5)" />
+      <rect x="96" y="96" width="14" height="42" rx="1.5" fill="url(#bookSpine)" />
+      <rect x="114" y="88" width="14" height="50" rx="1.5" fill="url(#bookSpineAlt)" />
+      {/* Cross inscribed on the tallest spine — a quiet nod to the mission */}
+      <g stroke="rgba(255,255,255,0.55)" strokeWidth="1.2" strokeLinecap="round">
+        <line x1="85" y1="102" x2="85" y2="118" />
+        <line x1="80" y1="108" x2="90" y2="108" />
+      </g>
+    </svg>
+  );
+}
+
+/* Open-Bible / illuminated-page backdrop for the Sola Scriptura tile.
+   Warm parchment page behind the navy background, subtle so the serif
+   quote reads first. */
+function ScriptureBackdrop() {
+  return (
+    <svg
+      viewBox="0 0 200 200"
+      aria-hidden
+      style={{
+        position: "absolute",
+        right: -12,
+        bottom: -8,
+        width: "72%",
+        height: "auto",
+        opacity: 0.28,
+        pointerEvents: "none",
+        zIndex: 0,
+      }}
+    >
+      <defs>
+        <linearGradient id="page" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stopColor="rgba(255, 245, 220, 0.9)" />
+          <stop offset="100%" stopColor="rgba(255, 240, 200, 0.6)" />
+        </linearGradient>
+      </defs>
+      {/* Left page */}
+      <path
+        d="M 20 60 Q 100 40 100 40 L 100 175 Q 100 175 20 190 Z"
+        fill="url(#page)"
+        stroke="rgba(255,255,255,0.35)"
+        strokeWidth="1"
+      />
+      {/* Right page */}
+      <path
+        d="M 100 40 Q 100 40 180 60 L 180 190 Q 100 175 100 175 Z"
+        fill="url(#page)"
+        stroke="rgba(255,255,255,0.35)"
+        strokeWidth="1"
+      />
+      {/* Text lines on left page */}
+      <g stroke="rgba(30, 42, 71, 0.55)" strokeWidth="1.3" strokeLinecap="round">
+        <line x1="30" y1="80" x2="88" y2="76" />
+        <line x1="30" y1="92" x2="90" y2="88" />
+        <line x1="30" y1="104" x2="86" y2="100" />
+        <line x1="30" y1="116" x2="90" y2="112" />
+        <line x1="30" y1="128" x2="84" y2="124" />
+        <line x1="30" y1="140" x2="88" y2="136" />
+        <line x1="30" y1="152" x2="82" y2="148" />
+      </g>
+      {/* Text lines on right page */}
+      <g stroke="rgba(30, 42, 71, 0.55)" strokeWidth="1.3" strokeLinecap="round">
+        <line x1="112" y1="76" x2="170" y2="80" />
+        <line x1="110" y1="88" x2="170" y2="92" />
+        <line x1="114" y1="100" x2="170" y2="104" />
+        <line x1="110" y1="112" x2="168" y2="116" />
+        <line x1="116" y1="124" x2="170" y2="128" />
+        <line x1="110" y1="136" x2="168" y2="140" />
+        <line x1="118" y1="148" x2="170" y2="152" />
+      </g>
+      {/* Illuminated initial — small cross-in-circle on the right page */}
+      <g>
+        <circle cx="150" cy="70" r="6" fill="rgb(var(--brand))" opacity="0.75" />
+        <g stroke="rgba(255,245,220,0.9)" strokeWidth="1.2" strokeLinecap="round">
+          <line x1="150" y1="66" x2="150" y2="74" />
+          <line x1="146" y1="70" x2="154" y2="70" />
+        </g>
+      </g>
+    </svg>
   );
 }
 

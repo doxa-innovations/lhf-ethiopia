@@ -387,3 +387,38 @@ To switch to the canonical remote URL:
 ```bash
 git remote set-url origin https://github.com/doxa-innovations/lhf-ethiopia.git
 ```
+
+## 2026-07-03 — Real-asset ship + Reformation Day event
+
+- Renamed the 7 photo drops in `public/` from camera timestamps to
+  semantic slugs: `podcast-host-{1,2,3}.jpg`, `podcast-studio-wide.jpg`
+  (has the LHF Ethiopia neon sign — hero-quality brand shot),
+  `podcast-studio-bw-{1,2}.jpg`, `podcast-episode-3.jpg`.
+- `src/lib/content.ts`: swapped Unsplash podcast-studio/mic/host URLs
+  for the local files, added `podcastStudioMoody` + `podcastEpisodeThumb`
+  keys, and pointed `STORIES[0].photo` (pastor-tadesse) at
+  `/podcast-host-1.jpg`. Non-podcast slots (bookshelf, congregation,
+  ethiopia landscape, etc.) stay on Unsplash — no local replacements
+  available and the confessional imagery still suits the brand.
+- Fixed broken `/photos/story-*.jpg` refs — those files never existed;
+  all five stories now render either the local podcast portrait
+  (pastor) or the existing Unsplash portrait constants (rest).
+- **Reformation Day 2026 book giveaway** added to events + news:
+  - Event slug `reformation-day-book-giveaway-2026`, date 2026-10-31,
+    location "LHF Ethiopia · Addis Ababa", full trilingual copy.
+  - News slug `reformation-day-2026-book-giveaway`, dated 2026-07-01,
+    full article body citing the LHF (Macomb) book grant, Small
+    Catechism / Child's Garden / Daily Devotions in Amharic + Afaan
+    Oromoo, uses `/podcast-studio-wide.jpg` as the hero image.
+  - Both added at index 0 across all three locale JSON files
+    (`src/content/{en,am,om}.json`) so `seed-cms.ts` picks them up
+    without shifting existing rows.
+- `npm run seed` succeeded through publications → events → news →
+  values → stories → episodes; then hit the documented Neon
+  idle-disconnect on the dictionary loop (`home.statEpisodes` delete).
+  Real content is already committed; dictionary rows are unchanged
+  from the last successful seed. Not a regression.
+- `npm run build` clean at 40 pages including
+  `/news/reformation-day-2026-book-giveaway`. Dev server up on :3000,
+  smoke-tested / /podcast /events /news /about /publications /projects
+  /contact /donate → all 200; local assets served fine.
