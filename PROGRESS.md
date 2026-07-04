@@ -515,3 +515,23 @@ the only link is `DATABASE_URL`.
   (`NEXT_PUBLIC_*` is inlined at build time), mount a volume at
   `/app/public/uploads` or uploaded media vanishes on redeploy, keep
   the DB internal-only (no External Port).
+
+### Follow-up: first Dokploy build failed → get-content fail-soft
+
+First Nixpacks build on Dokploy died in "Collecting page data" for
+`/news/[slug]`: `getaddrinfo ENOTFOUND lhf-ethiopia-db-lz3xp5`.
+Root cause: Dokploy injects the runtime env (incl. `DATABASE_URL`)
+into the **build** container, but the DB hostname only resolves on
+`dokploy-network` at runtime. `getContent()`/`getAllLocalesContent()`
+only fell back to the checked-in JSON when `DATABASE_URL` was
+*unset* (the July 4 Vercel guard) — set-but-unreachable threw and
+killed the build.
+
+Fix in `src/lib/content/get-content.ts`: both functions now catch
+DB errors, `console.warn`, and serve the JSON fallback — the same
+fail-soft contract `getPublishedElements()` already had. Runtime
+freshness is unaffected: `revalidatePath("/", "layout")` on every
+CMS save re-renders with live DB data. Verified locally:
+build passes with an unreachable `DATABASE_URL` + `ENABLE_ADMIN=true`
+(the Dokploy build scenario, all prerenders warn + fall back) AND
+with no env at all (Vercel frontend-only, 40/40 static pages).

@@ -269,10 +269,31 @@ async function fetchLocale(locale: Locale): Promise<LocalizedContent> {
   };
 }
 
+/* A set-but-unreachable DATABASE_URL must also fall back, not throw:
+   Dokploy/Nixpacks injects the runtime env at build time, but the DB
+   hostname only resolves on the runtime Docker network — so build-time
+   prerenders can't connect. Same fail-soft contract as
+   getPublishedElements(): the public site never 500s over the DB, and
+   revalidatePath on CMS save re-renders with live data once reachable. */
+function warnFallback(scope: string, err: unknown): void {
+  const cause =
+    err instanceof Error
+      ? err.cause instanceof Error
+        ? err.cause.message
+        : err.message
+      : String(err);
+  console.warn(`[content] DB unreachable (${cause}); serving fallback JSON for ${scope}.`);
+}
+
 /** Fetch the body content for one locale. */
 export async function getContent(locale: Locale): Promise<LocalizedContent> {
   if (!process.env.DATABASE_URL) return FALLBACK[locale];
-  return fetchLocale(locale);
+  try {
+    return await fetchLocale(locale);
+  } catch (err) {
+    warnFallback(locale, err);
+    return FALLBACK[locale];
+  }
 }
 
 /** Fetch all three locales in parallel — used by the root layout so the
@@ -282,12 +303,17 @@ export async function getAllLocalesContent(): Promise<
   Record<Locale, LocalizedContent>
 > {
   if (!process.env.DATABASE_URL) return FALLBACK;
-  const [enLoc, amLoc, omLoc] = await Promise.all([
-    fetchLocale("en"),
-    fetchLocale("am"),
-    fetchLocale("om"),
-  ]);
-  return { en: enLoc, am: amLoc, om: omLoc };
+  try {
+    const [enLoc, amLoc, omLoc] = await Promise.all([
+      fetchLocale("en"),
+      fetchLocale("am"),
+      fetchLocale("om"),
+    ]);
+    return { en: enLoc, am: amLoc, om: omLoc };
+  } catch (err) {
+    warnFallback("all locales", err);
+    return FALLBACK;
+  }
 }
 
 export type ServerContent = LocalizedContent;
