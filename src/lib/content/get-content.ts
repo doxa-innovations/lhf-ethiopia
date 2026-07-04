@@ -4,6 +4,20 @@ import { db, schema } from "@/lib/db";
 import { withDbRetry } from "@/lib/db-retry";
 import type { Locale } from "@/lib/i18n/dictionary";
 import type { LocalizedContent } from "@/lib/i18n/content-types";
+import en from "@/content/en.json" with { type: "json" };
+import am from "@/content/am.json" with { type: "json" };
+import om from "@/content/om.json" with { type: "json" };
+
+/* When ENABLE_ADMIN is unset and there's no DATABASE_URL (frontend-only
+   deploys — e.g. Vercel without a Postgres attached), we bypass Drizzle
+   and serve the checked-in JSON content directly. Every field in the
+   JSON already conforms to LocalizedContent, so this is a straight
+   passthrough — no DB pool created, no connection to time out. */
+const FALLBACK: Record<Locale, LocalizedContent> = {
+  en: en as unknown as LocalizedContent,
+  am: am as unknown as LocalizedContent,
+  om: om as unknown as LocalizedContent,
+};
 
 /* -------------------------------------------------------------------- */
 /* Drizzle row → public LocalizedContent shape adapters.                */
@@ -257,6 +271,7 @@ async function fetchLocale(locale: Locale): Promise<LocalizedContent> {
 
 /** Fetch the body content for one locale. */
 export async function getContent(locale: Locale): Promise<LocalizedContent> {
+  if (!process.env.DATABASE_URL) return FALLBACK[locale];
   return fetchLocale(locale);
 }
 
@@ -266,12 +281,13 @@ export async function getContent(locale: Locale): Promise<LocalizedContent> {
 export async function getAllLocalesContent(): Promise<
   Record<Locale, LocalizedContent>
 > {
-  const [en, am, om] = await Promise.all([
+  if (!process.env.DATABASE_URL) return FALLBACK;
+  const [enLoc, amLoc, omLoc] = await Promise.all([
     fetchLocale("en"),
     fetchLocale("am"),
     fetchLocale("om"),
   ]);
-  return { en, am, om };
+  return { en: enLoc, am: amLoc, om: omLoc };
 }
 
 export type ServerContent = LocalizedContent;

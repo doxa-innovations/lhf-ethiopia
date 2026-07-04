@@ -11,12 +11,13 @@ export const SITE = {
   parent:
     "A regional initiative of the Lutheran Heritage Foundation (LHF), Macomb, MI, USA.",
   email: "Info@lhfethiopia.org",
-  phone: "+251 911 000 000",
+  phone: "+251 912 712 176",
   address: "Bole Sub-City, Addis Ababa, Ethiopia",
   social: {
     facebook: "https://facebook.com/lhfmissions",
     instagram: "https://instagram.com/lhfbooks",
     youtube: "https://youtube.com/@lhfmissions",
+    x: "https://x.com/lhfethiopia",
     spotify: "https://open.spotify.com",
     applePodcasts: "https://podcasts.apple.com",
   },

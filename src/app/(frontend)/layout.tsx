@@ -123,7 +123,12 @@ const ORG_LD = {
   },
   email: SITE.email,
   telephone: SITE.phone,
-  sameAs: [SITE.social.facebook, SITE.social.instagram, SITE.social.youtube],
+  sameAs: [
+    SITE.social.facebook,
+    SITE.social.instagram,
+    SITE.social.youtube,
+    SITE.social.x,
+  ],
 };
 
 const WEBSITE_LD = {

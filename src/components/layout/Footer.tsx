@@ -5,6 +5,7 @@ import {
   Facebook,
   Instagram,
   Youtube,
+  Twitter,
   Mail,
   Phone,
   MapPin,
@@ -334,6 +335,13 @@ export function Footer() {
                   style={socialIcon}
                 >
                   <Youtube size={15} />
+                </a>
+                <a
+                  href={SITE.social.x}
+                  aria-label="X (Twitter)"
+                  style={socialIcon}
+                >
+                  <Twitter size={15} />
                 </a>
               </div>
             </div>

@@ -3,9 +3,11 @@
  * Counts come directly from Drizzle (fast, no Payload boot).
  */
 import Link from "next/link";
+import { notFound } from "next/navigation";
 import { db, schema } from "@/lib/db";
 import { withDbRetry } from "@/lib/db-retry";
 import { sql } from "drizzle-orm";
+import { adminEnabled } from "@/lib/admin-flag";
 
 async function getCounts() {
   const t = schema;
@@ -107,6 +109,7 @@ function StatCard({
 }
 
 export default async function AdminDashboard() {
+  if (!adminEnabled) notFound();
   const c = await getCounts();
 
   return (
