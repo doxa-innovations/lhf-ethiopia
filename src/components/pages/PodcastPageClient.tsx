@@ -14,17 +14,16 @@ import { PodcastBrowser } from "@/components/podcast/PodcastBrowser";
 import { YouTubeEmbed } from "@/components/podcast/YouTubeEmbed";
 import { useT } from "@/components/providers/LanguageProvider";
 import { useContent } from "@/lib/i18n/useContent";
-import { PHOTOS, PODCAST, PODCAST_EPISODES } from "@/lib/content";
+import { PHOTOS, PODCAST } from "@/lib/content";
 import { EditableText } from "@/components/cms/EditableText";
 
 export function PodcastPageClient() {
   const { t } = useT();
   const { podcastEpisodes } = useContent();
-  // Pair each localized episode with its base date, sort newest first.
-  const latest = [...podcastEpisodes]
-    .map((ep) => ({ ...ep, date: PODCAST_EPISODES.find((b) => b.slug === ep.slug)?.date ?? "" }))
-    .sort((a, b) => (a.date < b.date ? 1 : -1))[0];
-  const featuredId = PODCAST.featuredYoutubeId;
+  const latest = [...podcastEpisodes].sort((a, b) =>
+    a.date < b.date ? 1 : -1,
+  )[0];
+  const featuredId = PODCAST.featuredYoutubeId || latest?.youtubeId || "";
 
   return (
     <>
@@ -114,7 +113,7 @@ export function PodcastPageClient() {
             </div>
 
             <Reveal direction="left" delay={0.1}>
-              <YouTubeEmbed videoId={featuredId} title={`Latest: ${latest.title}`} channelHref={PODCAST.channelUrl} />
+              <YouTubeEmbed videoId={featuredId} title={`Latest: ${latest?.title ?? PODCAST.title}`} channelHref={PODCAST.channelUrl} />
             </Reveal>
           </div>
         </div>

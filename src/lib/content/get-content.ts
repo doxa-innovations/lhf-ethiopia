@@ -7,6 +7,7 @@ import type { LocalizedContent } from "@/lib/i18n/content-types";
 import en from "@/content/en.json" with { type: "json" };
 import am from "@/content/am.json" with { type: "json" };
 import om from "@/content/om.json" with { type: "json" };
+import { fetchYouTubeEpisodes } from "@/lib/podcast/youtube-feed";
 
 /* When ENABLE_ADMIN is unset and there's no DATABASE_URL (frontend-only
    deploys — e.g. Vercel without a Postgres attached), we bypass Drizzle
@@ -258,11 +259,20 @@ async function fetchLocale(locale: Locale): Promise<LocalizedContent> {
         status: r.eventPhase,
         statusLabel: r.statusLabel ?? "",
       })),
+    // Episodes are always overridden by the RSS feed in getContent()/
+    // getAllLocalesContent(); this DB read only survives if the RSS fetch
+    // itself doesn't run for some reason. Ship the fields the type expects.
     podcastEpisodes: episodeRows.map((r) => ({
       slug: r.slug,
+      youtubeId: r.slug,
+      number: 0,
       title: r.title ?? "",
       summary: r.summary ?? "",
       language: r.languageDisplay ?? "",
+      date: "",
+      durationMin: 0,
+      topic: "Doctrine",
+      guest: "LHF Ethiopia",
     })),
     impactSeriesNames: ["Amharic", "Afaan Oromoo", "Tigrinya", "Other mother tongues"],
     titlesPerLanguage: [],
@@ -287,6 +297,14 @@ function warnFallback(scope: string, err: unknown): void {
 
 /** Fetch the body content for one locale. */
 export async function getContent(locale: Locale): Promise<LocalizedContent> {
+  const [base, episodes] = await Promise.all([
+    loadBase(locale),
+    fetchYouTubeEpisodes(),
+  ]);
+  return { ...base, podcastEpisodes: episodes };
+}
+
+async function loadBase(locale: Locale): Promise<LocalizedContent> {
   if (!process.env.DATABASE_URL) return FALLBACK[locale];
   try {
     return await fetchLocale(locale);
@@ -302,6 +320,18 @@ export async function getContent(locale: Locale): Promise<LocalizedContent> {
 export async function getAllLocalesContent(): Promise<
   Record<Locale, LocalizedContent>
 > {
+  const [base, episodes] = await Promise.all([
+    loadAllBase(),
+    fetchYouTubeEpisodes(),
+  ]);
+  return {
+    en: { ...base.en, podcastEpisodes: episodes },
+    am: { ...base.am, podcastEpisodes: episodes },
+    om: { ...base.om, podcastEpisodes: episodes },
+  };
+}
+
+async function loadAllBase(): Promise<Record<Locale, LocalizedContent>> {
   if (!process.env.DATABASE_URL) return FALLBACK;
   try {
     const [enLoc, amLoc, omLoc] = await Promise.all([

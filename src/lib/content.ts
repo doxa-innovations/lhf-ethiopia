@@ -445,7 +445,9 @@ export const PODCAST = {
     "A confessional Lutheran podcast from LHF Ethiopia. We bring the Gospel and the Book of Concord to the Ethiopian church — Bible-based, Christ-centered, Reformation-driven. New episodes on YouTube in Amharic and English.",
   cadence: "New episodes weekly",
   channelUrl: "https://www.youtube.com/@LHFEthiopiapodcast",
-  featuredYoutubeId: "UJVDr9Vt2Q4",
+  // Pin a specific video as the featured player on Home + /podcast hero.
+  // Empty string = auto-featured (latest episode from the RSS feed).
+  featuredYoutubeId: "",
   platforms: [
     {
       name: "YouTube",
@@ -454,10 +456,11 @@ export const PODCAST = {
   ],
 } as const;
 
-// Real videos from the LHF Ethiopia YouTube channel
+// Fallback snapshot of the LHF Ethiopia YouTube channel
 // (https://www.youtube.com/@LHFEthiopiapodcast, channel UCdYXcvhpvJ0I5yqD82rqogg).
-// To refresh: pull the RSS feed at
-// https://www.youtube.com/feeds/videos.xml?channel_id=UCdYXcvhpvJ0I5yqD82rqogg
+// Live episode list comes from the RSS feed via src/lib/podcast/youtube-feed.ts;
+// this array is only used when that fetch fails (network hiccup, RSS format
+// change, etc.). It doesn't need to be updated when new videos are published.
 export const PODCAST_EPISODES = [
   {
     slug: "ep-3-bible-based",

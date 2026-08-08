@@ -402,32 +402,7 @@
       "statusLabel": "Past"
     }
   ],
-  "podcastEpisodes": [
-    {
-      "slug": "ep-3-bible-based",
-      "title": "Bible-Based — መጽሐፍ ቅዱስን መሠረት ያደረገ",
-      "summary": "What does it mean to be Bible-based? Confessional Lutheran teaching on Scripture as the sole rule and norm of faith and life — in Amharic and English.",
-      "language": "Amharic / English"
-    },
-    {
-      "slug": "ep-2-christ-centered",
-      "title": "Christ-Centered — ክርስቶስን ማዕከል ያደረገ",
-      "summary": "What does it mean to be Christ-centered? Jesus did not come merely to be our example — He came to bear our sins, die for our forgiveness, and rise to give us life. Scripture points us to Christ as the Saviour of sinners.",
-      "language": "Amharic / English"
-    },
-    {
-      "slug": "ep-1-welcome",
-      "title": "Welcome to LHF Ethiopia Podcast",
-      "summary": "An introduction to the work of Lutheran Heritage Foundation Ethiopia — translating and publishing Bible-based, Christ-centered, Reformation-driven resources so the Gospel is heard in the language of the Ethiopian church.",
-      "language": "Amharic / English"
-    },
-    {
-      "slug": "channel-trailer",
-      "title": "Channel trailer — LHF Ethiopia Podcast",
-      "summary": "እንኳን ወደ LHF Ethiopia Podcast በሰላም መጣችሁ — a short welcome to the podcast in Amharic.",
-      "language": "Amharic"
-    }
-  ],
+  "podcastEpisodes": [],
   "impactSeriesNames": [
     "Amharic",
     "Afaan Oromoo",

@@ -402,32 +402,7 @@
       "statusLabel": "Darbe"
     }
   ],
-  "podcastEpisodes": [
-    {
-      "slug": "ep-3-bible-based",
-      "title": "Macaafa Qulqulluu Hundee Godhachuu — Bible-Based",
-      "summary": "Macaafa qulqulluu hundee godhachuu jechuun maal jechuu dha? Barsiisa Luuteraanaa Caaffata Qulqullaa'oon seera fi ulaagaa amantii fi jireenyaa qofa akka ta'e — Amaariffaa fi Afaan Ingiliffaan.",
-      "language": "Amaariffa / Afaan Ingiliffaa"
-    },
-    {
-      "slug": "ep-2-christ-centered",
-      "title": "Kiristoos Giddu-galeessa Godhachuu — Christ-Centered",
-      "summary": "Kiristoos giddu-galeessa godhachuu jechuun maal jechuu dha? Yesus fakkeenya qofa ta'uuf hin dhufne — cubbuu keenya baachuudhaaf, dhiifama keenyaaf du'uudhaaf, jireenya nuuf kennuudhaaf ka'uudhaaf dhufe. Caaffata Qulqullaa'oon Kiristoosin akka Fayyisaa cubbamootaatti nu argisiisu.",
-      "language": "Amaariffa / Afaan Ingiliffaa"
-    },
-    {
-      "slug": "ep-1-welcome",
-      "title": "Baga LHF Ethiopia Podcast'tti nagayaan dhuftan",
-      "summary": "Seensa hojii Lutheran Heritage Foundation Itoophiyaa — wangeelli afaan waldaa Itoophiyaan akka dhaga'amu qabeenya Macaafa Qulqulluu hundee godhate, Kiristoos giddu-galeessa godhate, fooyya'iinsaan geggeeffame hiikuu fi maxxansuu.",
-      "language": "Amaariffa / Afaan Ingiliffaa"
-    },
-    {
-      "slug": "channel-trailer",
-      "title": "Beeksisa Channel — LHF Ethiopia Podcast",
-      "summary": "እንኳን ወደ LHF Ethiopia Podcast በሰላም መጣችሁ — seensa gabaabaa Podcast Amaariffaan.",
-      "language": "Amaariffa"
-    }
-  ],
+  "podcastEpisodes": [],
   "impactSeriesNames": [
     "Amaariffa",
     "Afaan Oromoo",

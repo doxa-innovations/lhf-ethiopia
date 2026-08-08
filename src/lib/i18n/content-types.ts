@@ -77,9 +77,15 @@ export type EventItem = {
 
 export type PodcastEpisodeLocale = {
   slug: string;
+  youtubeId: string;
+  number: number;
   title: string;
   summary: string;
   language: string;
+  date: string;
+  durationMin: number;
+  topic: string;
+  guest: string;
 };
 
 export type TitlesPerLanguage = { language: string; titles: number };

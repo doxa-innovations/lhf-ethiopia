@@ -16,7 +16,7 @@ import { db, schema } from "../src/lib/db";
 import en from "../src/content/en.json" with { type: "json" };
 import am from "../src/content/am.json" with { type: "json" };
 import om from "../src/content/om.json" with { type: "json" };
-import { PODCAST_EPISODES, SITE } from "../src/lib/content";
+import { SITE } from "../src/lib/content";
 import { dictionary } from "../src/lib/i18n/dictionary";
 
 type Locale = "en" | "am" | "om";
@@ -458,71 +458,7 @@ async function seedStories() {
 }
 
 async function seedPodcastEpisodes() {
-  console.log("\n→ Podcast episodes");
-  const baseBySlug: Record<string, (typeof PODCAST_EPISODES)[number]> = {};
-  for (const e of PODCAST_EPISODES) baseBySlug[e.slug] = e;
-  for (let i = 0; i < en.podcastEpisodes.length; i++) {
-    const enRow = en.podcastEpisodes[i];
-    const base = baseBySlug[enRow.slug];
-    if (!base) {
-      console.log(`  ⚠ no base for ${enRow.slug}`);
-      continue;
-    }
-    const topicKey = base.topic.replace(/\s+/g, "");
-    const existing = await db
-      .select()
-      .from(schema.podcastEpisodes)
-      .where(eq(schema.podcastEpisodes.slug, enRow.slug))
-      .limit(1);
-    let id: number;
-    if (existing[0]) {
-      id = existing[0].id;
-      await db
-        .update(schema.podcastEpisodes)
-        .set({
-          number: base.number,
-          youtubeId: base.youtubeId,
-          date: base.date,
-          durationMin: base.durationMin,
-          topicKey,
-          isPublished: 1,
-        })
-        .where(eq(schema.podcastEpisodes.id, id));
-    } else {
-      const r = await db
-        .insert(schema.podcastEpisodes)
-        .values({
-          slug: enRow.slug,
-          number: base.number,
-          youtubeId: base.youtubeId,
-          date: base.date,
-          durationMin: base.durationMin,
-          topicKey,
-          isPublished: 1,
-        })
-        .returning({ id: schema.podcastEpisodes.id });
-      id = r[0].id;
-    }
-    for (const loc of LOCALES) {
-      const l = LOCALIZED[loc].podcastEpisodes[i];
-      await db
-        .delete(schema.podcastEpisodesTranslations)
-        .where(
-          and(
-            eq(schema.podcastEpisodesTranslations.episodeId, id),
-            eq(schema.podcastEpisodesTranslations.locale, loc),
-          ),
-        );
-      await db.insert(schema.podcastEpisodesTranslations).values({
-        episodeId: id,
-        locale: loc,
-        title: l.title,
-        summary: l.summary,
-        languageDisplay: l.language,
-      });
-    }
-    console.log(`  ✓ ${base.slug}`);
-  }
+  console.log("\n→ Podcast episodes: skipped — sourced from YouTube RSS at request time");
 }
 
 async function seedDictionary() {

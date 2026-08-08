@@ -29,30 +29,20 @@ import { YouTubeEmbed } from "@/components/podcast/YouTubeEmbed";
 import { useT } from "@/components/providers/LanguageProvider";
 import { useContent } from "@/lib/i18n/useContent";
 import { EditableText } from "@/components/cms/EditableText";
-import {
-  PHOTOS,
-  PODCAST,
-  PODCAST_EPISODES,
-} from "@/lib/content";
+import { PHOTOS, PODCAST } from "@/lib/content";
 import { ValuesAccordion } from "@/components/ui/ValuesAccordion";
 
 export default function HomePage() {
   const { t } = useT();
   const { events, languages, news, podcastEpisodes, values } = useContent();
   const upcomingEvents = events.filter((e) => e.status === "Upcoming").slice(0, 3);
-  // Sort by date — pull stable date from PODCAST_EPISODES base by slug.
-  const dateFor = (slug: string) =>
-    PODCAST_EPISODES.find((e) => e.slug === slug)?.date ?? "";
   const sortedEpisodes = [...podcastEpisodes].sort((a, b) =>
-    dateFor(a.slug) < dateFor(b.slug) ? 1 : -1,
+    a.date < b.date ? 1 : -1,
   );
-  // For the "more episodes" mini-list we also need stable `number` + `durationMin`.
-  const otherEpisodes = sortedEpisodes.slice(1, 4).map((ep) => {
-    const base = PODCAST_EPISODES.find((e) => e.slug === ep.slug);
-    return { ...ep, number: base?.number ?? 0, durationMin: base?.durationMin ?? 0 };
-  });
+  const otherEpisodes = sortedEpisodes.slice(1, 4);
   const latestEpisode = sortedEpisodes[0];
-  const featuredYoutubeId = PODCAST.featuredYoutubeId;
+  const featuredYoutubeId =
+    PODCAST.featuredYoutubeId || latestEpisode?.youtubeId || "";
 
   return (
     <>
@@ -342,7 +332,7 @@ export default function HomePage() {
                           whiteSpace: "nowrap",
                         }}
                       >
-                        {ep.durationMin} min
+                        {ep.durationMin ? `${ep.durationMin} min` : "YouTube"}
                       </span>
                     </Link>
                   ))}
@@ -353,7 +343,7 @@ export default function HomePage() {
             <Reveal direction="left" delay={0.12}>
               <YouTubeEmbed
                 videoId={featuredYoutubeId}
-                title={`Latest: ${latestEpisode.title}`}
+                title={`Latest: ${latestEpisode?.title ?? PODCAST.title}`}
                 channelHref={PODCAST.channelUrl}
               />
             </Reveal>

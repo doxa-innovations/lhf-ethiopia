@@ -4,16 +4,12 @@ import { useMemo, useState } from "react";
 import { Mic, Search, Youtube } from "lucide-react";
 import { motion } from "motion/react";
 import { Badge, Card, CardBody, Input } from "@/components/ui";
-import { PODCAST_EPISODES, PODCAST } from "@/lib/content";
+import { PODCAST } from "@/lib/content";
 import { useT } from "@/components/providers/LanguageProvider";
 import { useContent } from "@/lib/i18n/useContent";
+import type { PodcastEpisodeLocale } from "@/lib/i18n/content-types";
 
-type Episode = (typeof PODCAST_EPISODES)[number] & {
-  /* localized overlay */
-  localizedTitle: string;
-  localizedSummary: string;
-  localizedLanguage: string;
-};
+type Episode = PodcastEpisodeLocale;
 
 const TOPICS = [
   "All",
@@ -40,33 +36,20 @@ export function PodcastBrowser() {
   const [query, setQuery] = useState("");
   const [topic, setTopic] = useState<Topic>("All");
 
-  // Merge stable base episode data with localized title/summary/language for current locale.
-  const merged: Episode[] = useMemo(() => {
-    return PODCAST_EPISODES.map((base) => {
-      const loc = podcastEpisodes.find((e) => e.slug === base.slug);
-      return {
-        ...base,
-        localizedTitle: loc?.title ?? base.title,
-        localizedSummary: loc?.summary ?? base.summary,
-        localizedLanguage: loc?.language ?? base.language,
-      };
-    });
-  }, [podcastEpisodes]);
-
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
-    return merged.filter((ep) => {
+    return podcastEpisodes.filter((ep) => {
       if (topic !== "All" && ep.topic !== topic) return false;
       if (!q) return true;
       return (
-        ep.localizedTitle.toLowerCase().includes(q) ||
-        ep.localizedSummary.toLowerCase().includes(q) ||
+        ep.title.toLowerCase().includes(q) ||
+        ep.summary.toLowerCase().includes(q) ||
         ep.guest.toLowerCase().includes(q) ||
-        ep.localizedLanguage.toLowerCase().includes(q) ||
+        ep.language.toLowerCase().includes(q) ||
         ep.topic.toLowerCase().includes(q)
       );
     });
-  }, [merged, query, topic]);
+  }, [podcastEpisodes, query, topic]);
 
   return (
     <div>
@@ -231,7 +214,7 @@ function EpisodeCard({ ep }: { ep: Episode }) {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={`https://i.ytimg.com/vi/${ep.youtubeId}/hqdefault.jpg`}
-                alt={ep.localizedTitle}
+                alt={ep.title}
                 loading="lazy"
                 style={{
                   position: "absolute",
@@ -314,8 +297,8 @@ function EpisodeCard({ ep }: { ep: Episode }) {
               textShadow: "0 1px 3px rgba(0,0,0,0.6)",
             }}
           >
-            <span>{ep.durationMin} min</span>
-            <span>#{ep.number}</span>
+            <span>{ep.durationMin ? `${ep.durationMin} min` : "YouTube"}</span>
+            {ep.number ? <span>#{ep.number}</span> : <span />}
           </span>
         </a>
 
@@ -332,7 +315,7 @@ function EpisodeCard({ ep }: { ep: Episode }) {
             <Badge tone="navy">
               <Mic size={11} /> {t(TOPIC_LABEL_KEYS[ep.topic as Topic] as Parameters<typeof t>[0])}
             </Badge>
-            <Badge tone="cream">{ep.localizedLanguage}</Badge>
+            <Badge tone="cream">{ep.language}</Badge>
           </div>
           <h3
             className="font-display"
@@ -344,7 +327,7 @@ function EpisodeCard({ ep }: { ep: Episode }) {
               overflowWrap: "anywhere",
             }}
           >
-            {ep.localizedTitle}
+            {ep.title}
           </h3>
           <p
             style={{
@@ -358,7 +341,7 @@ function EpisodeCard({ ep }: { ep: Episode }) {
               overflow: "hidden",
             }}
           >
-            {ep.localizedSummary}
+            {ep.summary}
           </p>
           <div
             style={{
