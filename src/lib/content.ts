@@ -16,7 +16,7 @@ export const SITE = {
   social: {
     facebook: "https://facebook.com/lhfmissions",
     instagram: "https://instagram.com/lhfbooks",
-    youtube: "https://youtube.com/@lhfmissions",
+    youtube: "https://www.youtube.com/@LHFEthiopiapodcast",
     x: "https://x.com/lhfethiopia",
     spotify: "https://open.spotify.com",
     applePodcasts: "https://podcasts.apple.com",
@@ -278,6 +278,14 @@ export const PROJECTS = [
 
 export const NEWS = [
   {
+    slug: "lhf-ethiopia-podcast-launch",
+    date: "2026-08-06",
+    title: "LHF Ethiopia launches its own podcast on YouTube",
+    excerpt:
+      "The Lutheran Heritage Foundation Ethiopia podcast is now live on YouTube, bringing Bible-based, Christ-centred, Reformation-driven teaching to the Ethiopian church in Amharic and English.",
+    tag: "Podcast",
+  },
+  {
     slug: "reformation-day-2026-book-giveaway",
     date: "2026-07-01",
     title: "Reformation Day 2026 — LHF Ethiopia to give away thousands of Lutheran books on October 31",
@@ -427,147 +435,81 @@ export const STORIES = [
    ============================================================ */
 
 export const PODCAST = {
-  title: "Scripture Alone Podcast",
-  native: "ቃሉ ብቻ ፖድካስት",
-  tagline: "Sola Scriptura. Bible study in Amharic and English.",
-  host: "Featured partner podcast",
+  title: "LHF Ethiopia Podcast",
+  native: "የLHF ኢትዮጵያ ፖድካስት",
+  tagline: "Bible-based. Christ-centered. Reformation-driven.",
+  host: "Lutheran Heritage Foundation Ethiopia",
   hostBio:
-    "An Ethiopian Bible-study podcast featured by LHF Ethiopia as part of its digital outreach. Confessional teaching grounded in scripture alone — episodes range from Luther's Small Catechism to verse-by-verse studies of 1 Timothy.",
+    "The official podcast of Lutheran Heritage Foundation Ethiopia — proclaiming the historic Christian faith through Scripture and the Lutheran Confessions, in Amharic and English.",
   description:
-    "An Ethiopian video podcast — confessional Bible study in Amharic (ቃሉ ብቻ ፖድካስት) and English. Sola Scriptura, the Small Catechism, and walk-through studies of scripture. Watch on YouTube, or listen on Spotify, Apple Podcasts, and Telegram.",
+    "A confessional Lutheran podcast from LHF Ethiopia. We bring the Gospel and the Book of Concord to the Ethiopian church — Bible-based, Christ-centered, Reformation-driven. New episodes on YouTube in Amharic and English.",
   cadence: "New episodes weekly",
-  channelUrl: "https://www.youtube.com/@scripturealonepodcast6447",
-  // Featured player on Home + /podcast hero. Latest full episode at time of
-  // writing (Ep 129 — Salvation by Faith). Refresh as new episodes drop.
-  featuredYoutubeId: "znymBLaMsYY",
+  channelUrl: "https://www.youtube.com/@LHFEthiopiapodcast",
+  featuredYoutubeId: "UJVDr9Vt2Q4",
   platforms: [
     {
       name: "YouTube",
-      href: "https://www.youtube.com/@scripturealonepodcast6447",
-    },
-    {
-      name: "Spotify",
-      href: "https://open.spotify.com/show/4yMPgfglhDyuNe5xe8WSwh",
-    },
-    {
-      name: "Apple Podcasts",
-      href: "https://podcasts.apple.com/us/podcast/scripture-alone-podcast/id1536167258",
-    },
-    {
-      name: "Telegram",
-      href: "https://t.me/solascripturakalubicha",
+      href: "https://www.youtube.com/@LHFEthiopiapodcast",
     },
   ],
 } as const;
 
-// Real video IDs pulled from the Scripture Alone Podcast YouTube channel
-// (https://www.youtube.com/@scripturealonepodcast6447) on 2026-06-15.
-// To refresh: fetch the channel RSS feed at
-// https://www.youtube.com/feeds/videos.xml?channel_id=UCH4uGyZQCCvrppCIFN_V_Wg
+// Real videos from the LHF Ethiopia YouTube channel
+// (https://www.youtube.com/@LHFEthiopiapodcast, channel UCdYXcvhpvJ0I5yqD82rqogg).
+// To refresh: pull the RSS feed at
+// https://www.youtube.com/feeds/videos.xml?channel_id=UCdYXcvhpvJ0I5yqD82rqogg
 export const PODCAST_EPISODES = [
   {
-    slug: "ep-129-salvation-by-faith",
-    number: 129,
-    title: "Salvation by Faith — መዳን በእምነት",
-    guest: "Scripture Alone Podcast",
-    durationMin: 38,
-    date: "2025-09-24",
+    slug: "ep-3-bible-based",
+    number: 3,
+    title: "Bible-Based — መጽሐፍ ቅዱስን መሠረት ያደረገ",
+    guest: "LHF Ethiopia",
+    durationMin: 21,
+    date: "2026-08-07",
     summary:
-      "Salvation by faith alone, or by faith plus works? A scripture-grounded walk-through of the Lutheran answer in Amharic and English.",
+      "What does it mean to be Bible-based? Confessional Lutheran teaching on Scripture as the sole rule and norm of faith and life — in Amharic and English.",
     language: "Amharic / English",
     topic: "Doctrine",
-    youtubeId: "znymBLaMsYY",
+    youtubeId: "UJVDr9Vt2Q4",
   },
   {
-    slug: "ep-128-original-sin",
-    number: 128,
-    title: "Original Sin — የውርስ ሃጥያት",
-    guest: "Scripture Alone Podcast",
-    durationMin: 36,
-    date: "2025-09-20",
+    slug: "ep-2-christ-centered",
+    number: 2,
+    title: "Christ-Centered — ክርስቶስን ማዕከል ያደረገ",
+    guest: "LHF Ethiopia",
+    durationMin: 19,
+    date: "2026-08-06",
     summary:
-      "What does scripture teach about original sin, and how does it shape the way we read the Gospel? Episode 128, in Amharic with English exposition.",
+      "What does it mean to be Christ-centered? Jesus did not come merely to be our example — He came to bear our sins, die for our forgiveness, and rise to give us life. From Genesis to Revelation, Scripture points us to Christ as the Saviour of sinners.",
     language: "Amharic / English",
     topic: "Doctrine",
-    youtubeId: "AwCX027ON2Q",
+    youtubeId: "75yAbtDWLTY",
   },
   {
-    slug: "ep-127-1-tim-1-our-hope",
-    number: 127,
-    title: "1 Timothy 1:1 — Our Hope, Jesus Christ",
-    guest: "Scripture Alone Podcast",
-    durationMin: 34,
-    date: "2025-09-17",
+    slug: "ep-1-welcome",
+    number: 1,
+    title: "Welcome to LHF Ethiopia Podcast",
+    guest: "LHF Ethiopia",
+    durationMin: 19,
+    date: "2026-08-06",
     summary:
-      "Verse-by-verse study of 1 Timothy 1:1 — ተስፋችን እየሱስ ክርስቶስ. Why Paul opens with hope, and what it means for the Ethiopian church today.",
+      "An introduction to the work of Lutheran Heritage Foundation Ethiopia — translating and publishing Bible-based, Christ-centered, Reformation-driven resources so the Gospel is heard in the language of the Ethiopian church.",
     language: "Amharic / English",
-    topic: "Bible Study",
-    youtubeId: "QhfxfbGyTPQ",
+    topic: "Doctrine",
+    youtubeId: "zjLCU7w3Z0A",
   },
   {
-    slug: "ep-126-small-catechism",
-    number: 126,
-    title: "Luther's Small Catechism — የሉተር ትንሹ ካቴኪዝም",
-    guest: "Scripture Alone Podcast",
-    durationMin: 41,
-    date: "2025-09-13",
-    summary:
-      "Why the Small Catechism still matters 500 years on — a walk-through of its structure and how it shapes parish life in Ethiopia.",
-    language: "Amharic / English",
-    topic: "Catechism",
-    youtubeId: "cB6dp_EChg4",
-  },
-  {
-    slug: "short-salvation-by-faith",
+    slug: "channel-trailer",
     number: 0,
-    title: "Salvation by Faith — short clip",
-    guest: "Scripture Alone Podcast",
+    title: "Channel trailer — LHF Ethiopia Podcast",
+    guest: "LHF Ethiopia",
     durationMin: 1,
-    date: "2025-09-22",
+    date: "2026-08-03",
     summary:
-      "A one-minute clip from the Original Sin episode — what scripture says about inherited sin.",
+      "እንኳን ወደ LHF Ethiopia Podcast በሰላም መጣችሁ — a short welcome to the podcast in Amharic.",
     language: "Amharic",
     topic: "Doctrine",
-    youtubeId: "_4Ar2_XYKCw",
-  },
-  {
-    slug: "short-our-hope-jesus",
-    number: 0,
-    title: "Our Hope, Jesus Christ — short clip",
-    guest: "Scripture Alone Podcast",
-    durationMin: 1,
-    date: "2025-09-18",
-    summary:
-      "ተስፋችን እየሱስ ክርስቶስ — a short reflection from the 1 Timothy series.",
-    language: "Amharic",
-    topic: "Bible Study",
-    youtubeId: "yoAqqhUJbJI",
-  },
-  {
-    slug: "short-small-catechism",
-    number: 0,
-    title: "Small Catechism — short clip",
-    guest: "Scripture Alone Podcast",
-    durationMin: 1,
-    date: "2025-09-13",
-    summary:
-      "Why every Lutheran congregation needs a copy of Luther's Small Catechism in its mother tongue.",
-    language: "Amharic",
-    topic: "Catechism",
-    youtubeId: "uw8hL9rfe2U",
-  },
-  {
-    slug: "short-channel-trailer",
-    number: 0,
-    title: "Channel trailer — ቃሉ ብቻ ፖድካስት",
-    guest: "Scripture Alone Podcast",
-    durationMin: 1,
-    date: "2025-09-26",
-    summary:
-      "A short introduction to the show — scripture alone, in Amharic, for the Ethiopian church.",
-    language: "Amharic",
-    topic: "Bible Study",
-    youtubeId: "CxBWXGWRFls",
+    youtubeId: "LlDo6AcSJ3E",
   },
 ] as const;
 

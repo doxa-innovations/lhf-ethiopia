@@ -134,7 +134,7 @@ export function PodcastPageClient() {
                   <EditableText elementId="podcast.browseTitle" defaultValue={t("podcast.browseTitle")} />
                 </h2>
               </div>
-              <Button href="/donate" variant="teal" size="sm">
+              <Button href="/donate" variant="primary" size="sm">
                 <EditableText elementId="common.sponsorShow" defaultValue={t("common.sponsorShow")} />
               </Button>
             </div>

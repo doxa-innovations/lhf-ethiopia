@@ -98,7 +98,8 @@ export const dictionary = {
       distribution: "Distribution",
       distributionBody:
         "We deliver to congregations, Sunday schools, and pastoral training centers countrywide — and they receive every title at no cost.",
-      podcastTagline: "Sola Scriptura. Bible study in Amharic and English.",
+      podcastTagline:
+        "Bible-based. Christ-centered. Reformation-driven — in Amharic and English.",
       moreEpisodes: "More recent episodes",
       allEpisodes: "All episodes",
       impactTitle: "The Word, multiplying.",
@@ -316,7 +317,7 @@ export const dictionary = {
       aboutDesc: "Our mission and history in Ethiopia.",
       believeDesc: "Confessional Lutheran teaching, Scripture alone.",
       publicationsDesc: "Books in Amharic, Afaan Oromoo, Tigrinya and more.",
-      podcastDesc: "Scripture Alone Podcast — Bible study on YouTube.",
+      podcastDesc: "LHF Ethiopia Podcast — Bible-based teaching on YouTube.",
       projectsDesc: "Adopt a translation, reprint, or distribution.",
       eventsDesc: "Distribution days, trainings, launches.",
     },
@@ -404,7 +405,8 @@ export const dictionary = {
       distribution: "ሥርጭት",
       distributionBody:
         "ለጉባኤዎች፣ ለሰንበት ትምህርት ቤቶችና ለፓስተር ሥልጠና ማዕከላት በመላ አገሪቷ እናደርሳለን — እያንዳንዱን መጽሐፍ ያለ ክፍያ ይቀበላሉ።",
-      podcastTagline: "ቅዱስ ቃሉ ብቻ። በአማርኛና በእንግሊዝኛ የመጽሐፍ ቅዱስ ጥናት።",
+      podcastTagline:
+        "መጽሐፍ ቅዱስን መሠረት ያደረገ። ክርስቶስን ማዕከል ያደረገ። በተሐድሶ የተመራ — በአማርኛና በእንግሊዝኛ።",
       moreEpisodes: "ሌሎች የቅርብ ጊዜ ክፍሎች",
       allEpisodes: "ሁሉም ክፍሎች",
       impactTitle: "ቃሉ ይባዛል።",
@@ -619,7 +621,7 @@ export const dictionary = {
       aboutDesc: "የእኛ ተልዕኮ እና በኢትዮጵያ ያለ ታሪክ።",
       believeDesc: "በመጽሐፍ ቅዱስ ላይ ብቻ የተመሰረተ የሉተራን ትምህርት።",
       publicationsDesc: "በአማርኛ፣ አፋን ኦሮሞ፣ ትግርኛ እና ሌሎች መጻሕፍት።",
-      podcastDesc: "Scripture Alone Podcast — በዩቲዩብ የመጽሐፍ ቅዱስ ጥናት።",
+      podcastDesc: "LHF ኢትዮጵያ ፖድካስት — በዩቲዩብ መጽሐፍ ቅዱስን መሠረት ያደረገ ትምህርት።",
       projectsDesc: "ትርጉም፣ እንደገና ህትመት ወይም ስርጭት ይምረጡ።",
       eventsDesc: "የስርጭት ቀኖች፣ ስልጠናዎች፣ ምረቃዎች።",
     },
@@ -708,7 +710,7 @@ export const dictionary = {
       distributionBody:
         "Waldaalee, mana barumsaa Sanbataa fi giddugala leenjii pastoraatti biyya guutuu raabsina — kitaaba hundumaa tola fudhatu.",
       podcastTagline:
-        "Sola Scriptura. Macaafa Qulqulluu Amaariffa fi Afaan Ingiliffaan qo'achuu.",
+        "Macaafa Qulqulluu hundee. Kiristoos giddu-galeessa. Fooyya'iinsaan geggeeffame — Amaariffaa fi Afaan Ingiliffaan.",
       moreEpisodes: "Kutaalee biroo dhiyeenya",
       allEpisodes: "Kutaalee hundaa",
       impactTitle: "Dubbiin, baay'achaa jira.",
@@ -927,7 +929,7 @@ export const dictionary = {
       aboutDesc: "Ergama keenya fi seenaa Itoophiyaa keessaa.",
       believeDesc: "Barsiisa Luuteraanaa amantii — Caaffanni qulqullaa'oon qofa.",
       publicationsDesc: "Kitaabota Amaariffa, Afaan Oromoo, Tigriiffa fi kkf.",
-      podcastDesc: "Scripture Alone Podcast — qo'annoo Macaafa Qulqulluu YouTube irratti.",
+      podcastDesc: "LHF Itoophiyaa Podcast — barsiisa Macaafa Qulqulluu hundee godhate YouTube irratti.",
       projectsDesc: "Hiika, deebii maxxansaa ykn raabsaa filadhu.",
       eventsDesc: "Guyyoota raabsaa, leenjii, eebbifama.",
     },

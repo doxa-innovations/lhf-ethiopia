@@ -202,6 +202,15 @@
   ],
   "news": [
     {
+      "slug": "lhf-ethiopia-podcast-launch",
+      "date": "2026-08-06",
+      "title": "LHF Ethiopia launches its own podcast on YouTube",
+      "excerpt": "The Lutheran Heritage Foundation Ethiopia podcast is now live on YouTube, bringing Bible-based, Christ-centred, Reformation-driven teaching to the Ethiopian church in Amharic and English.",
+      "tag": "Podcast",
+      "image": "/podcastlogo.png",
+      "body": "LHF Ethiopia has launched its own YouTube podcast — a confessional Lutheran show grounded in Scripture and the Book of Concord, produced in Bishoftu and Addis Ababa and delivered in Amharic and English.\n\nThe channel opened with a short trailer on August 3, followed by the first two full episodes on August 6 (\"Welcome to LHF Ethiopia Podcast\" and \"Christ-Centered — ክርስቶስን ማዕከል ያደረገ\") and a third episode on August 7 (\"Bible-Based — መጽሐፍ ቅዱስን መሠረት ያደረገ\").\n\nEvery episode holds to the same three commitments that shape everything LHF publishes in Ethiopia — Bible-based, Christ-centered, Reformation-driven. Early episodes lay the doctrinal groundwork: what it means to be centred on the crucified and risen Christ, and why Scripture alone is the rule and norm of faith and life.\n\nNew episodes are planned regularly. Subscribe on YouTube at @LHFEthiopiapodcast to be notified when each one drops."
+    },
+    {
       "slug": "reformation-day-2026-book-giveaway",
       "date": "2026-07-01",
       "title": "Reformation Day 2026 — LHF Ethiopia to give away thousands of Lutheran books on October 31",
@@ -395,51 +404,27 @@
   ],
   "podcastEpisodes": [
     {
-      "slug": "ep-129-salvation-by-faith",
-      "title": "Salvation by Faith — መዳን በእምነት",
-      "summary": "Salvation by faith alone, or by faith plus works? A scripture-grounded walk-through of the Lutheran answer in Amharic and English.",
+      "slug": "ep-3-bible-based",
+      "title": "Bible-Based — መጽሐፍ ቅዱስን መሠረት ያደረገ",
+      "summary": "What does it mean to be Bible-based? Confessional Lutheran teaching on Scripture as the sole rule and norm of faith and life — in Amharic and English.",
       "language": "Amharic / English"
     },
     {
-      "slug": "ep-128-original-sin",
-      "title": "Original Sin — የውርስ ሃጥያት",
-      "summary": "What does scripture teach about original sin, and how does it shape the way we read the Gospel? Episode 128, in Amharic with English exposition.",
+      "slug": "ep-2-christ-centered",
+      "title": "Christ-Centered — ክርስቶስን ማዕከል ያደረገ",
+      "summary": "What does it mean to be Christ-centered? Jesus did not come merely to be our example — He came to bear our sins, die for our forgiveness, and rise to give us life. Scripture points us to Christ as the Saviour of sinners.",
       "language": "Amharic / English"
     },
     {
-      "slug": "ep-127-1-tim-1-our-hope",
-      "title": "1 Timothy 1:1 — Our Hope, Jesus Christ",
-      "summary": "Verse-by-verse study of 1 Timothy 1:1 — ተስፋችን እየሱስ ክርስቶስ. Why Paul opens with hope, and what it means for the Ethiopian church today.",
+      "slug": "ep-1-welcome",
+      "title": "Welcome to LHF Ethiopia Podcast",
+      "summary": "An introduction to the work of Lutheran Heritage Foundation Ethiopia — translating and publishing Bible-based, Christ-centered, Reformation-driven resources so the Gospel is heard in the language of the Ethiopian church.",
       "language": "Amharic / English"
     },
     {
-      "slug": "ep-126-small-catechism",
-      "title": "Luther's Small Catechism — የሉተር ትንሹ ካቴኪዝም",
-      "summary": "Why the Small Catechism still matters 500 years on — a walk-through of its structure and how it shapes parish life in Ethiopia.",
-      "language": "Amharic / English"
-    },
-    {
-      "slug": "short-salvation-by-faith",
-      "title": "Salvation by Faith — short clip",
-      "summary": "A one-minute clip from the Original Sin episode — what scripture says about inherited sin.",
-      "language": "Amharic"
-    },
-    {
-      "slug": "short-our-hope-jesus",
-      "title": "Our Hope, Jesus Christ — short clip",
-      "summary": "ተስፋችን እየሱስ ክርስቶስ — a short reflection from the 1 Timothy series.",
-      "language": "Amharic"
-    },
-    {
-      "slug": "short-small-catechism",
-      "title": "Small Catechism — short clip",
-      "summary": "Why every Lutheran congregation needs a copy of Luther's Small Catechism in its mother tongue.",
-      "language": "Amharic"
-    },
-    {
-      "slug": "short-channel-trailer",
-      "title": "Channel trailer — ቃሉ ብቻ ፖድካስት",
-      "summary": "A short introduction to the show — scripture alone, in Amharic, for the Ethiopian church.",
+      "slug": "channel-trailer",
+      "title": "Channel trailer — LHF Ethiopia Podcast",
+      "summary": "እንኳን ወደ LHF Ethiopia Podcast በሰላም መጣችሁ — a short welcome to the podcast in Amharic.",
       "language": "Amharic"
     }
   ],

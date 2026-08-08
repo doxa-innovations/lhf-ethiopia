@@ -204,7 +204,7 @@ export function Navbar() {
           <LanguageSwitcher variant="light" />
           <Link
             href="/donate"
-            className="btn btn-teal btn-sm"
+            className="btn btn-primary btn-sm"
             style={{ whiteSpace: "nowrap" }}
           >
             <EditableText elementId="nav.donate" defaultValue={t("nav.donate")} />
@@ -332,7 +332,7 @@ export function Navbar() {
                 }}
               >
                 <LanguageSwitcher variant="chips" />
-                <Button href="/donate" variant="teal" size="sm">
+                <Button href="/donate" variant="primary" size="sm">
                   <EditableText
                     elementId="nav.donateMobile"
                     defaultValue={t("nav.donate")}

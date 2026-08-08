@@ -202,6 +202,15 @@
   ],
   "news": [
     {
+      "slug": "lhf-ethiopia-podcast-launch",
+      "date": "2026-08-06",
+      "title": "LHF Itoophiyaan Podcast mataa isaa YouTube irratti eegale",
+      "excerpt": "Podcast Lutheran Heritage Foundation Itoophiyaa amma YouTube irratti banameera — barsiisa Macaafa Qulqulluu hundee godhate, Kiristoos giddu-galeessa godhate, fooyya'iinsaan geggeeffame Amaariffaa fi Afaan Ingiliffaan waldaa Itoophiyaaf dhiheessa.",
+      "tag": "Podcast",
+      "image": "/podcastlogo.png",
+      "body": "LHF Itoophiyaan channel YouTube mataa isaa eegaleera — sagantaa Luuteraanaa Caaffata Qulqullaa'oon fi Kitaaba Concord irratti hundaa'e, Bishooftuu fi Finfinnee keessatti Amaariffaa fi Afaan Ingiliffaan dhihaachaa jira.\n\nChannel'ichi Hagayya 3 seensa gabaabaan bane, Hagayya 6 kutaalee lama guutuu (\"Baga LHF Ethiopia Podcast'tti nagayaan dhuftan\" fi \"Kiristoos Giddu-galeessa — Christ-Centered\") baase, Hagayya 7 immoo kutaa sadaffaa (\"Macaafa Qulqulluu Hundee Godhachuu — Bible-Based\") baase.\n\nKutaan hundi kutannoo sadan LHF Itoophiyaa keessatti maxxansu boca'e qabata — Macaafa Qulqulluu hundee godhachuu, Kiristoos giddu-galeessa godhachuu, fooyya'iinsaan geggeeffamuu.\n\nKutaaleen haaraan yeroo yeroon karoorfamu. Yeroo kutaan haaraan ba'u beeksisa argachuuf YouTube irratti @LHFEthiopiapodcast'tti galmaa'aa."
+    },
+    {
       "slug": "reformation-day-2026-book-giveaway",
       "date": "2026-07-01",
       "title": "Guyyaa Riformeshinii 2026 — LHF Itoophiyaan Onkololeessa 31 kitaabota Luuteraanaa kumaatamaan lakkaawaman tolaan raabsiti",
@@ -395,51 +404,27 @@
   ],
   "podcastEpisodes": [
     {
-      "slug": "ep-129-salvation-by-faith",
-      "title": "Fayyina Amantiin — Salvation by Faith",
-      "summary": "Fayyinni amantii qofaan moo, amantii fi hojii dabalataan? Deebii Luuteraanaa Caaffanni Qulqullaa'oon irratti hundaa'e Amaariffaa fi Afaan Ingiliffaan ibsame.",
+      "slug": "ep-3-bible-based",
+      "title": "Macaafa Qulqulluu Hundee Godhachuu — Bible-Based",
+      "summary": "Macaafa qulqulluu hundee godhachuu jechuun maal jechuu dha? Barsiisa Luuteraanaa Caaffata Qulqullaa'oon seera fi ulaagaa amantii fi jireenyaa qofa akka ta'e — Amaariffaa fi Afaan Ingiliffaan.",
       "language": "Amaariffa / Afaan Ingiliffaa"
     },
     {
-      "slug": "ep-128-original-sin",
-      "title": "Cubbuu Dhalootaa — Original Sin",
-      "summary": "Caaffanni qulqullaa'oon waa'ee cubbuu dhalootaa maal barsiisa, akkamiin yaada wangeela dubbisnu boca? Kutaa 128, Amaariffaan ibsa Afaan Ingiliffaan qabu.",
+      "slug": "ep-2-christ-centered",
+      "title": "Kiristoos Giddu-galeessa Godhachuu — Christ-Centered",
+      "summary": "Kiristoos giddu-galeessa godhachuu jechuun maal jechuu dha? Yesus fakkeenya qofa ta'uuf hin dhufne — cubbuu keenya baachuudhaaf, dhiifama keenyaaf du'uudhaaf, jireenya nuuf kennuudhaaf ka'uudhaaf dhufe. Caaffata Qulqullaa'oon Kiristoosin akka Fayyisaa cubbamootaatti nu argisiisu.",
       "language": "Amaariffa / Afaan Ingiliffaa"
     },
     {
-      "slug": "ep-127-1-tim-1-our-hope",
-      "title": "1 Ximotewos 1፥1 — Abdiin Keenya, Yesus Kiristoos",
-      "summary": "Qo'annoo lakkoofsa-lakkoofsa 1 Ximotewos 1፥1. Maaliif Phaawulos abdii waliin bana, har'a Itoophiyaa fi bataskaanaaf maal jechuu dha.",
+      "slug": "ep-1-welcome",
+      "title": "Baga LHF Ethiopia Podcast'tti nagayaan dhuftan",
+      "summary": "Seensa hojii Lutheran Heritage Foundation Itoophiyaa — wangeelli afaan waldaa Itoophiyaan akka dhaga'amu qabeenya Macaafa Qulqulluu hundee godhate, Kiristoos giddu-galeessa godhate, fooyya'iinsaan geggeeffame hiikuu fi maxxansuu.",
       "language": "Amaariffa / Afaan Ingiliffaa"
     },
     {
-      "slug": "ep-126-small-catechism",
-      "title": "Catechism Xiqqaa Luuter — Small Catechism",
-      "summary": "Maaliif catechism xiqqaan waggaa 500 booda illee barbaachisaa ta'a — caasaa isaa fi jireenya waldaa Itoophiyaa keessa akkamitti akka boca'u.",
-      "language": "Amaariffa / Afaan Ingiliffaa"
-    },
-    {
-      "slug": "short-salvation-by-faith",
-      "title": "Fayyina Amantiin — gaggabaaboo",
-      "summary": "Daqiiqaa tokko gaggabaaboo kutaa Cubbuu Dhalootaa irraa — caaffanni qulqullaa'oon cubbuu dhaalamaa ilaalchisee maal jedha.",
-      "language": "Amaariffa"
-    },
-    {
-      "slug": "short-our-hope-jesus",
-      "title": "Abdiin Keenya, Yesus Kiristoos — gaggabaaboo",
-      "summary": "ተስፋችን እየሱስ ክርስቶስ — yaada gaggabaaboo tartiibaa 1 Ximotewos irraa.",
-      "language": "Amaariffa"
-    },
-    {
-      "slug": "short-small-catechism",
-      "title": "Catechism Xiqqaa — gaggabaaboo",
-      "summary": "Maaliif waldaan Luuteraanaa hundi catechism xiqqaa Luuter afaan haadhaa isaatiin qabaachuu qaba.",
-      "language": "Amaariffa"
-    },
-    {
-      "slug": "short-channel-trailer",
-      "title": "Beeksisa Channel — ቃሉ ብቻ ፖድካስት",
-      "summary": "Beeksisa gaggabaaboo sagantaaf — caaffanni qulqullaa'oon qofa, Amaariffaan, bataskaana Itoophiyaaf.",
+      "slug": "channel-trailer",
+      "title": "Beeksisa Channel — LHF Ethiopia Podcast",
+      "summary": "እንኳን ወደ LHF Ethiopia Podcast በሰላም መጣችሁ — seensa gabaabaa Podcast Amaariffaan.",
       "language": "Amaariffa"
     }
   ],
