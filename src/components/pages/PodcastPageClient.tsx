@@ -155,7 +155,7 @@ export function PodcastPageClient() {
                     </Badge>
                     <Badge tone="cream">{PODCAST.cadence}</Badge>
                   </div>
-                  <h3 className="text-h2">{PODCAST.host}</h3>
+                  <h2 className="text-h2">{PODCAST.host}</h2>
                   <p className="text-body" style={{ marginTop: 8 }}>{PODCAST.hostBio}</p>
                 </CardBody>
               </Card>

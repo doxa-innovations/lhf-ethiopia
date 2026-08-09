@@ -265,11 +265,11 @@ export function Footer() {
                   required
                   aria-label={tFb("footer.emailAriaLabel", "Email address")}
                   placeholder={tFb("footer.emailPlaceholder", "you@example.com")}
+                  className="footer-newsletter-input"
                   style={{
                     flex: 1,
                     background: "transparent",
                     border: "none",
-                    outline: "none",
                     color: "white",
                     padding: "8px 10px",
                     fontSize: 14,
@@ -496,6 +496,11 @@ export function Footer() {
           gap: 10px;
           font-size: 12.5px;
           color: rgba(255,255,255,0.5);
+        }
+        .footer-newsletter-input:focus-visible {
+          outline: 2px solid rgb(var(--teal-soft));
+          outline-offset: 2px;
+          border-radius: 6px;
         }
         @media (min-width: 480px) {
           .footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }

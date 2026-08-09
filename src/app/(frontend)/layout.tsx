@@ -174,12 +174,15 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         />
       </head>
       <body>
+        <a href="#main-content" className="skip-to-content">
+          Skip to main content
+        </a>
         <LanguageProvider>
           <PublishedElementsProvider value={published}>
             <ContentProvider value={content}>
               <MotionProvider>
                 <Navbar />
-                <main>{children}</main>
+                <main id="main-content">{children}</main>
                 <Footer />
                 <LanguagePromptModal />
               </MotionProvider>
