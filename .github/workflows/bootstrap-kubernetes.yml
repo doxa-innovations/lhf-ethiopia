@@ -1,12 +1,14 @@
 name: Bootstrap Kubernetes image
 
-# One-time migration bootstrap. This creates a staging image first, then the
-# production image from the exact same source SHA. After the first successful
-# run this workflow is disabled; normal releases use staging.yml/production.yml.
+# One-time migration bootstrap retained only for an explicit manual rerun.
+# Normal releases use staging.yml and production.yml.
 on:
-  push:
-    branches:
-      - main
+  workflow_dispatch:
+    inputs:
+      source_sha:
+        description: Exact source SHA to rebuild through staging and production
+        required: true
+        type: string
 
 permissions:
   contents: read
@@ -17,7 +19,7 @@ jobs:
   staging:
     uses: doxa-innovations/.github/.github/workflows/doxa-container-build.yml@main
     with:
-      source_sha: ${{ github.sha }}
+      source_sha: ${{ inputs.source_sha }}
       environment: staging
       image: ghcr.io/doxa-innovations/lhf-ethiopia
       use_infisical: false
@@ -26,7 +28,7 @@ jobs:
     needs: staging
     uses: doxa-innovations/.github/.github/workflows/doxa-container-build.yml@main
     with:
-      source_sha: ${{ github.sha }}
+      source_sha: ${{ inputs.source_sha }}
       environment: production
       image: ghcr.io/doxa-innovations/lhf-ethiopia
       use_infisical: false
