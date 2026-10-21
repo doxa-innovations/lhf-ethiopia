@@ -1,9 +1,9 @@
-FROM node:24.20.0-alpine3.24 AS deps
+FROM node:24.22.1-alpine3.24 AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci
 
-FROM node:24.20.0-alpine3.24 AS builder
+FROM node:24.22.1-alpine3.24 AS builder
 WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 # ENABLE_ADMIN is intentionally non-secret. Setting it at build time ensures
@@ -15,7 +15,7 @@ COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 RUN npm run build
 
-FROM node:24.20.0-alpine3.24 AS runner
+FROM node:24.22.1-alpine3.24 AS runner
 WORKDIR /app
 ENV NODE_ENV=production \
     NEXT_TELEMETRY_DISABLED=1 \
