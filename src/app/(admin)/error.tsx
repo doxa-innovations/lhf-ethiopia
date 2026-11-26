@@ -1,5 +1,6 @@
 "use client";
 
+import { captureException } from "@doxa-innovations/watch/next/client";
 import { useEffect } from "react";
 
 export default function AdminError({
@@ -11,6 +12,7 @@ export default function AdminError({
 }) {
   useEffect(() => {
     console.error("[admin error]", error);
+    captureException(error);
   }, [error]);
 
   return (

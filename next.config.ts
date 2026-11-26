@@ -1,3 +1,4 @@
+import { withDoxaWatch } from "@doxa-innovations/watch/next";
 import type { NextConfig } from "next";
 import { dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -15,4 +16,6 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+// Doxa Watch: source maps for stack traces (browser maps are moved out of the public folder by
+// `doxa-watch postbuild`) and the collector kept out of the server bundle.
+export default withDoxaWatch(nextConfig);
