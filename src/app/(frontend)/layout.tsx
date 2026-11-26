@@ -11,6 +11,7 @@ import { getAllLocalesContent } from "@/lib/content/get-content";
 import { PublishedElementsProvider } from "@/components/cms/PublishedElementsProvider";
 import { getPublishedElements } from "@/lib/cms/get-published-elements";
 import { SITE } from "@/lib/content";
+import { DoxaWatchClient } from "../doxa-watch";
 
 /*
  * NOTE: `next/font/google` was producing
@@ -174,6 +175,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         />
       </head>
       <body>
+        <DoxaWatchClient />
         <a href="#main-content" className="skip-to-content">
           Skip to main content
         </a>

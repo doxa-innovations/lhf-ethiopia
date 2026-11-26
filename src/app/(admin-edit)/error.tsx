@@ -1,5 +1,6 @@
 "use client";
 
+import { captureException } from "@doxa-innovations/watch/next/client";
 import { useEffect } from "react";
 import Link from "next/link";
 
@@ -12,6 +13,7 @@ export default function EditorError({
 }) {
   useEffect(() => {
     console.error("[editor error]", error);
+    captureException(error);
   }, [error]);
 
   return (
